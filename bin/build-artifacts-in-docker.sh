@@ -28,6 +28,7 @@ docker run --name ${CONTAINER_NAME} -v ${ROOT_DIR}:${CONTAINER_DIR} --rm -i ${BA
     pip install tox-travis==0.10
     # use explicit versions of dependent packages
     pip install pycparser==2.18
+    # list presto-admin package dependencies versions
     pip install Babel==2.5.3
     pip install cffi==1.11.5
     pip install PyNaCl==1.2.1
