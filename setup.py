@@ -45,7 +45,7 @@ requirements = [
     'pycparser==2.18',
     'argparse==1.4',
     'paramiko==1.15.3',
-    'Fabric==1.10.1',
+    'Fabric==1.10.3',
     'requests==2.7.0',
     'overrides==0.5',
     'pip==8.1.2',
