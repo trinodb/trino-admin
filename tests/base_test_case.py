@@ -108,7 +108,10 @@ class BaseTestCase(unittest.TestCase):
         try:
             callable_object(*args, **callable_kwargs)
         except expected_exception as e:
-            self.assertRegexpMatches(str(e), expected_regexp, msg)
+            text = e.message
+            if not text:
+                text = e
+            self.assertRegexpMatches(str(text), expected_regexp, msg)
         else:
             self.fail("Expected exception " + str(expected_exception) +
                       " not raised" + msg)
