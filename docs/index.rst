@@ -2,8 +2,8 @@ Presto-Admin
 ============
 
 `Mailing list <http://groups.google.com/group/presto-users>`_ |
-`Issues <https://github.com/prestodb/presto-admin/issues>`_ |
-`Github <https://github.com/prestodb/presto-admin>`_ |
+`Issues <https://github.com/prestosql/presto-admin/issues>`_ |
+`Github <https://github.com/prestosql/presto-admin>`_ |
 
 Introduction
 ------------

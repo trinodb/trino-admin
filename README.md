@@ -1,8 +1,8 @@
-# presto-admin [![Build Status](https://travis-ci.org/prestodb/presto-admin.svg?branch=master)](https://travis-ci.org/prestodb/presto-admin)
+# presto-admin [![Build Status](https://travis-ci.org/prestosql/presto-admin.svg?branch=master)](https://travis-ci.org/prestosql/presto-admin)
 
 presto-admin installs, configures, and manages Presto installations.
 
-Comprehensive documentation can be found [here](http://prestodb.github.io/presto-admin/).
+Comprehensive documentation can be found [here](http://prestosql.github.io/presto-admin/).
 
 ## Requirements
 
@@ -30,7 +30,7 @@ Presto-admin makes use of `make` as its build tool. `make` in turn calls out to 
 
 In order to get started with `presto-admin`,
 
-1. Fork the `presto-admin` repo on GitHub, https://github.com/prestodb/presto-admin.
+1. Fork the `presto-admin` repo on GitHub, https://github.com/prestosql/presto-admin.
 2. Clone your fork locally ::
 
         $ git clone git@github.com:your_name_here/presto-admin.git

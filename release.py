@@ -27,7 +27,7 @@ try:
 except ImportError:
     from distutils.core import Command
 
-GITHUB_REPOSITORY_API_PATH = 'https://api.github.com/repos/prestodb/presto-admin'
+GITHUB_REPOSITORY_API_PATH = 'https://api.github.com/repos/prestosql/presto-admin'
 CURRENT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 
 

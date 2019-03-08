@@ -13,7 +13,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/prestodb/presto-admin/issues.
+Report bugs at https://github.com/prestosql/presto-admin/issues.
 
 If you are reporting a bug, please include:
 
@@ -43,7 +43,7 @@ articles, and such.
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to file an issue at https://github.com/prestodb/presto-admin/issues.
+The best way to send feedback is to file an issue at https://github.com/prestosql/presto-admin/issues.
 
 If you are proposing a feature:
 
@@ -55,7 +55,7 @@ Get Started!
 
 Ready to contribute? Here's how to set up `presto-admin` for local development.
 
-1. Fork the `presto-admin` repo on GitHub, https://github.com/prestodb/presto-admin.
+1. Fork the `presto-admin` repo on GitHub, https://github.com/prestosql/presto-admin.
 2. Clone your fork locally::
 
     $ git clone git@github.com:your_name_here/presto-admin.git
