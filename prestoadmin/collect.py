@@ -45,7 +45,7 @@ import prestoadmin
 
 TMP_PRESTO_DEBUG = '/tmp/presto-debug/'
 TMP_PRESTO_DEBUG_REMOTE = '/tmp/presto-debug-remote'
-OUTPUT_FILENAME_FOR_LOGS = '/tmp/presto-debug-logs.tar.gz'
+OUTPUT_FILENAME_FOR_LOGS = 'presto-debug-logs.tar.gz'
 OUTPUT_FILENAME_FOR_SYS_INFO = '/tmp/presto-debug-sysinfo.tar.gz'
 PRESTOADMIN_LOG_NAME = 'presto-admin.log'
 _LOGGER = logging.getLogger(__name__)
@@ -58,20 +58,23 @@ __all__ = ['logs', 'query_info', 'system_info']
 @task
 @runs_once
 @requires_config(StandaloneConfig)
-def logs():
+def logs(dest_dir=TMP_PRESTO_DEBUG):
     """
     Gather all the server logs and presto-admin log and create a tar file.
+
+    Parameters:
+        dest_dir - logs destination dir.  default /tmp/presto-debug
     """
-    downloaded_logs_location = os.path.join(TMP_PRESTO_DEBUG, "logs")
+    downloaded_logs_location = os.path.join(dest_dir, "logs")
     ensure_directory_exists(downloaded_logs_location)
 
     print 'Downloading logs from all the nodes...'
     execute(get_remote_log_files, downloaded_logs_location, roles=env.roles)
 
     copy_admin_log(downloaded_logs_location)
-
-    make_tarfile(OUTPUT_FILENAME_FOR_LOGS, downloaded_logs_location)
-    print 'logs archive created: ' + OUTPUT_FILENAME_FOR_LOGS
+    logs_tar_file_location = os.path.join(dest_dir, OUTPUT_FILENAME_FOR_LOGS)
+    make_tarfile(logs_tar_file_location, downloaded_logs_location)
+    print 'logs archive created: ' + logs_tar_file_location
 
 
 def copy_admin_log(log_folder):
