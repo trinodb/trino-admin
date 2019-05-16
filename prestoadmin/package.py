@@ -100,10 +100,7 @@ def _rpm_install(package_path):
 
 
 def _nodeps_rpm_option():
-    nodeps = ''
-    if env.nodeps:
-        nodeps = '--nodeps '
-    return nodeps
+    return '--nodeps ' if env.nodeps else ''
 
 
 def rpm_install(rpm_name):
