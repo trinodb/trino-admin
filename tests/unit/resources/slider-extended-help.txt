@@ -7,6 +7,7 @@ Options:
   --extended-help       print out all options, including advanced ones
   -I, --initial-password-prompt
                         Force password prompt up-front
+  --no-config-update    Don't update the cluster after rpm install
   -p PASSWORD, --password=PASSWORD
                         password for use with authentication and/or sudo
 
