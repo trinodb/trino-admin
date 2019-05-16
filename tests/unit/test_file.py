@@ -44,3 +44,26 @@ class TestFile(BaseUnitCase):
             [call('chmod u+x /my/remote/path/script.sh'),
              call('/my/remote/path/script.sh'),
              call('rm /my/remote/path/script.sh')], any_order=False)
+
+    @patch('prestoadmin.file.sudo')
+    @patch('prestoadmin.file.put')
+    def test_script_with_params(self, put_mock, sudo_mock):
+        file.run(script='/my/local/path/script.sh', params='-a -b')
+        put_mock.assert_called_with('/my/local/path/script.sh',
+                                    '/tmp/script.sh -a -b')
+        sudo_mock.assert_has_calls(
+            [call('chmod u+x /my/remote/path/script.sh'),
+             call('/tmp/script.sh -a -b'),
+             call('rm /tmp/script.sh')], any_order=False)
+
+    @patch('prestoadmin.file.sudo')
+    @patch('prestoadmin.file.put')
+    def test_script_with_params_and_specify_dir(self, put_mock, sudo_mock):
+        file.run(script='/my/local/path/script.sh', remote_dir='/my/remote/path', params='-a -b')
+        put_mock.assert_called_with('/my/local/path/script.sh',
+                                    '/my/remote/path/script.sh -a -b')
+        sudo_mock.assert_has_calls(
+            [call('chmod u+x /my/remote/path/script.sh'),
+             call('/my/remote/path/script.sh -a -b'),
+             call('rm /my/remote/path/script.sh')], any_order=False)
+
