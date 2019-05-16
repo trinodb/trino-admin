@@ -317,6 +317,14 @@ def parser_for_options():
     )
 
     parser.add_option(
+        '--no-config-update',
+        action='store_true',
+        dest='no_config_update',
+        default=False,
+        help="Don't update the cluster after rpm install"
+    )
+
+    parser.add_option(
         '--force',
         action='store_true',
         dest='force',

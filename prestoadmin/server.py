@@ -375,6 +375,8 @@ def install(rpm_specifier):
                         should ignore checking Presto rpm package
                         dependencies. Equivalent to adding --nodeps
                         flag to rpm -i.
+
+        --no-config-update - pass this in order to avoid server update after installation
     """
     rpm_fetcher = PrestoRpmFetcher(rpm_specifier)
     path_to_rpm = rpm_fetcher.get_path_to_presto_rpm()
@@ -382,9 +384,14 @@ def install(rpm_specifier):
     return execute(deploy_install_configure, path_to_rpm, hosts=get_host_list())
 
 
+def _do_config():
+    return False if env.no_config_update else True
+
+
 def deploy_install_configure(local_path):
     package.deploy_install(local_path)
-    update_configs()
+    if _do_config():
+        update_configs()
     wait_for_presto_user()
 
 

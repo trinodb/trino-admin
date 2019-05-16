@@ -315,11 +315,24 @@ class TestInstall(BaseUnitCase):
     def test_specifier_as_local_path_with_file_scheme_not_located(self):
         self.check_rpm_specifier_with_location(rpm_specifier='file:///path/to/rpm', location='none')
 
+    @patch('prestoadmin.server._do_config', return_value=False)
     @patch('prestoadmin.server.sudo')
     @patch('prestoadmin.server.package.deploy_install')
     @patch('prestoadmin.server.update_configs')
-    def test_deploy_install_configure(self, mock_update, mock_install,
-                                      mock_sudo):
+    def test_deploy_install_without_configure(self, mock_update, mock_install, mock_sudo, mock_config):
+        rpm_specifier = "/any/path/rpm"
+        mock_sudo.side_effect = self.mock_fail_then_succeed()
+
+        server.deploy_install_configure(rpm_specifier)
+        mock_install.assert_called_with(rpm_specifier)
+        self.assertFalse(mock_update.called)
+        mock_sudo.assert_called_with('getent passwd presto', quiet=True)
+
+    @patch('prestoadmin.server._do_config', return_value=True)
+    @patch('prestoadmin.server.sudo')
+    @patch('prestoadmin.server.package.deploy_install')
+    @patch('prestoadmin.server.update_configs')
+    def test_deploy_install_configure(self, mock_update, mock_install, mock_sudo, mock_config):
         rpm_specifier = "/any/path/rpm"
         mock_sudo.side_effect = self.mock_fail_then_succeed()
 
