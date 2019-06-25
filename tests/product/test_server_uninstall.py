@@ -22,11 +22,6 @@ from tests.product.cluster_types import STANDALONE_PRESTO_CLUSTER
 from tests.product.constants import LOCAL_RESOURCES_DIR
 from tests.product.standalone.presto_installer import StandalonePrestoInstaller
 
-uninstall_output = ['Package uninstalled successfully on: slave1',
-                    'Package uninstalled successfully on: slave2',
-                    'Package uninstalled successfully on: slave3',
-                    'Package uninstalled successfully on: master']
-
 
 class TestServerUninstall(BaseProductTestCase):
     def setUp(self):
@@ -40,18 +35,15 @@ class TestServerUninstall(BaseProductTestCase):
         process_per_host = self.get_process_per_host(start_output.splitlines())
         self.assert_started(process_per_host)
 
-        cmd_output = self.run_prestoadmin(
+        self.run_prestoadmin(
             'server uninstall', raise_error=False).splitlines()
         self.assert_stopped(process_per_host)
-        expected = uninstall_output + self.expected_stop()[:]
-        self.assertRegexpMatchesLineByLine(cmd_output, expected)
 
         for container in self.cluster.all_hosts():
             self.assert_uninstalled_dirs_removed(container)
 
     def assert_uninstalled_dirs_removed(self, container):
         self.installer.assert_uninstalled(container)
-        self.assert_path_removed(container, '/etc/presto')
         self.assert_path_removed(container, '/usr/lib/presto')
         self.assert_path_removed(container, '/var/lib/presto')
         self.assert_path_removed(container, '/usr/shared/doc/presto')
