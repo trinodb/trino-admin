@@ -54,7 +54,7 @@ requirements = [
     'flake8==2.5.4',
     'tox==1.9.2',
     'retrying==1.3.3',
-    'pyjks==0.5.1'
+    'pyjks==0.3.0.1'
 ]
 
 test_requirements = [

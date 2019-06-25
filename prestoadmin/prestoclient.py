@@ -15,10 +15,13 @@
 """
 Simple client to communicate with a Presto server.
 """
+import base64
+import jks
 import json
 import logging
 import os
 import socket
+import textwrap
 import urlparse
 from httplib import HTTPConnection, HTTPException
 from tempfile import mkstemp
@@ -27,7 +30,6 @@ from StringIO import StringIO
 from fabric.operations import get
 from fabric.state import env
 from fabric.utils import error
-from jks import jks, base64, textwrap
 from prestoadmin.util.constants import REMOTE_CONF_DIR, CONFIG_PROPERTIES
 from prestoadmin.util.exception import InvalidArgumentError
 from prestoadmin.util.httpscacertconnection import HTTPSCaCertConnection
