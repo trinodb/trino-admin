@@ -30,7 +30,7 @@ work.
 To install ``presto-admin``:
 
 1. Download an offline installer from
-`releases page <https://github.com/prestodb/presto-admin/releases>`_.
+`releases page <https://github.com/prestosql/presto-admin/releases>`_.
 
 2. Copy the installer ``prestoadmin-<version>-offline.tar.gz`` to the
 location where you want ``presto-admin`` to run.

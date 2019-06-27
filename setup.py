@@ -97,8 +97,8 @@ setup(
     description="Presto-admin installs, configures, and manages Presto " + \
                 "installations.",
     long_description=readme,
-    author="PrestoDB Team",
-    url='https://github.com/prestodb/presto-admin',
+    author="Presto Team",
+    url='https://github.com/prestosql/presto-admin',
     packages=find_packages(exclude=['*tests*']),
     package_dir={'prestoadmin':
                  'prestoadmin'},
