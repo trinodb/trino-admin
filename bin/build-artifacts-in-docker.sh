@@ -7,7 +7,7 @@ set -x
 ROOT_DIR=$(readlink -f $(dirname $0)/..)
 
 if [[ -z "${BASE_IMAGE_NAME}" ]]; then
-  BASE_IMAGE_NAME="prestodb/centos6-presto-admin-tests"
+  BASE_IMAGE_NAME="prestodev/centos6-presto-admin-tests"
 fi
 
 BASE_IMAGE_NAME=${BASE_IMAGE_NAME}-build
