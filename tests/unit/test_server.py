@@ -277,21 +277,21 @@ class TestInstall(BaseUnitCase):
         self.check_rpm_specifier_with_location(rpm_specifier='latest', location='none')
 
     def test_specifier_as_url_download(self):
-        self.check_rpm_specifier_with_location(rpm_specifier='http://search.maven.org/remotecontent?filepath=com/'
-                                                             'facebook/presto/presto-server-rpm/0.148/'
-                                                             'presto-server-rpm-0.148.rpm',
+        self.check_rpm_specifier_with_location(rpm_specifier='http://search.maven.org/remotecontent?filepath=io/'
+                                                             'prestosql/presto-server-rpm/316/'
+                                                             'presto-server-rpm-316.rpm',
                                                location='download')
 
     def test_specifier_as_url_found_locally(self):
-        self.check_rpm_specifier_with_location(rpm_specifier='http://search.maven.org/remotecontent?filepath=com/'
-                                                             'facebook/presto/presto-server-rpm/0.148/'
-                                                             'presto-server-rpm-0.148.rpm',
+        self.check_rpm_specifier_with_location(rpm_specifier='http://search.maven.org/remotecontent?filepath=io/'
+                                                             'prestosql/presto-server-rpm/316/'
+                                                             'presto-server-rpm-316.rpm',
                                                location='local')
 
     def test_specifier_as_url_not_located(self):
-        self.check_rpm_specifier_with_location(rpm_specifier='http://search.maven.org/remotecontent?filepath=com/'
-                                                             'facebook/presto/presto-server-rpm/0.148/'
-                                                             'presto-server-rpm-0.148.rpm',
+        self.check_rpm_specifier_with_location(rpm_specifier='http://search.maven.org/remotecontent?filepath=io/'
+                                                             'prestosql/presto-server-rpm/316/'
+                                                             'presto-server-rpm-316.rpm',
                                                location='none')
 
     def test_specifier_as_version_download(self):

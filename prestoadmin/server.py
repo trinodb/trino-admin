@@ -248,7 +248,7 @@ class PrestoRpmFetcher:
 
     def _find_or_download_rpm_by_version(self, rpm_version):
         # See here for more information: http://search.maven.org/#api
-        download_url = 'http://search.maven.org/remotecontent?filepath=com/facebook/presto/' \
+        download_url = 'http://search.maven.org/remotecontent?filepath=io/prestosql/' \
                        'presto-server-rpm/' + rpm_version + '/presto-server-rpm-' + \
                        rpm_version + '.rpm'
         return self.find_or_download_rpm_by_url(download_url, rpm_version)

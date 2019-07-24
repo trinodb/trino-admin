@@ -431,8 +431,8 @@ Example
 ::
 
     ./presto-admin server install /tmp/presto.rpm
-    ./presto-admin server install 0.148
-    ./presto-admin server install http://search.maven.org/remotecontent?filepath=com/facebook/presto/presto-server-rpm/0.150/presto-server-rpm-0.150.rpm
+    ./presto-admin server install 316
+    ./presto-admin server install http://search.maven.org/remotecontent?filepath=io/prestosql/presto-server-rpm/316/presto-server-rpm-316.rpm
     ./presto-admin server install latest
 
 **Standalone RPM Install**
