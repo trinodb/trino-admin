@@ -2,7 +2,7 @@
 
 presto-admin installs, configures, and manages Presto installations.
 
-Comprehensive documentation can be found [here](http://prestosql.github.io/presto-admin/).
+Comprehensive documentation can be found at https://prestosql.github.io/presto-admin/.
 
 ## Requirements
 
