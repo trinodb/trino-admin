@@ -1,7 +1,7 @@
 idna==2.1
 pycparser==2.18 # BSD
 argparse==1.4 # Python
-paramiko==1.15.3  # LGPL
+paramiko==1.16.0  # LGPL
 flake8==2.5.4  # MIT
 mock==1.0.1  # License :: OSI Approved :: BSD License
 py==1.4.26  # MIT license
