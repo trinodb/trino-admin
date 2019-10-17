@@ -295,13 +295,13 @@ class TestInstall(BaseUnitCase):
                                                location='none')
 
     def test_specifier_as_version_download(self):
-        self.check_rpm_specifier_with_location(rpm_specifier='0.144.6', location='download')
+        self.check_rpm_specifier_with_location(rpm_specifier='322', location='download')
 
     def test_specifier_as_version_found_locally(self):
-        self.check_rpm_specifier_with_location(rpm_specifier='0.144.6', location='local')
+        self.check_rpm_specifier_with_location(rpm_specifier='322', location='local')
 
     def test_specifier_as_version_not_located(self):
-        self.check_rpm_specifier_with_location(rpm_specifier='0.144.6', location='none')
+        self.check_rpm_specifier_with_location(rpm_specifier='322', location='none')
 
     def test_specifier_as_local_path_without_file_scheme_found_locally(self):
         self.check_rpm_specifier_with_location(rpm_specifier='/path/to/rpm', location='local')
