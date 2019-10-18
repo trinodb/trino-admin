@@ -46,6 +46,7 @@ import prestoadmin
 TMP_PRESTO_DEBUG = '/tmp/presto-debug/'
 TMP_PRESTO_DEBUG_REMOTE = '/tmp/presto-debug-remote'
 OUTPUT_FILENAME_FOR_LOGS = 'presto-debug-logs.tar.gz'
+DEFAULT_PATH_FOR_LOGS = TMP_PRESTO_DEBUG + OUTPUT_FILENAME_FOR_LOGS
 OUTPUT_FILENAME_FOR_SYS_INFO = '/tmp/presto-debug-sysinfo.tar.gz'
 PRESTOADMIN_LOG_NAME = 'presto-admin.log'
 _LOGGER = logging.getLogger(__name__)
