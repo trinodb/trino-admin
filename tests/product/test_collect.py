@@ -23,7 +23,8 @@ from nose.plugins.attrib import attr
 from nose.tools import nottest
 
 from prestoadmin.collect import OUTPUT_FILENAME_FOR_LOGS, TMP_PRESTO_DEBUG, \
-    PRESTOADMIN_LOG_NAME, OUTPUT_FILENAME_FOR_SYS_INFO, TMP_PRESTO_DEBUG_REMOTE
+    PRESTOADMIN_LOG_NAME, OUTPUT_FILENAME_FOR_SYS_INFO, TMP_PRESTO_DEBUG_REMOTE, \
+    DEFAULT_PATH_FOR_LOGS
 from tests.no_hadoop_bare_image_provider import NoHadoopBareImageProvider
 from tests.product.base_product_case import BaseProductTestCase, PrestoError
 from tests.product.cluster_types import STANDALONE_PRESTO_CLUSTER, STANDALONE_PA_CLUSTER
@@ -42,10 +43,10 @@ class TestCollect(BaseProductTestCase):
         actual = self.run_prestoadmin('collect logs')
 
         expected = 'Downloading logs from all the nodes...\n' + \
-                   'logs archive created: ' + OUTPUT_FILENAME_FOR_LOGS + '\n'
+                   'logs archive created: ' + DEFAULT_PATH_FOR_LOGS + '\n'
         self.assertLazyMessage(lambda: self.log_msg(actual, expected),
                                self.assertEqual, actual, expected)
-        self.assert_path_exists(self.cluster.master, OUTPUT_FILENAME_FOR_LOGS)
+        self.assert_path_exists(self.cluster.master, DEFAULT_PATH_FOR_LOGS)
         self.assert_path_exists(self.cluster.master, TMP_PRESTO_DEBUG)
 
         downloaded_logs_location = path.join(TMP_PRESTO_DEBUG, 'logs')
@@ -202,9 +203,9 @@ class TestCollect(BaseProductTestCase):
 
     def _collect_logs_and_unzip(self):
         self.run_prestoadmin('collect logs')
-        self.assert_path_exists(self.cluster.master, OUTPUT_FILENAME_FOR_LOGS)
+        self.assert_path_exists(self.cluster.master, DEFAULT_PATH_FOR_LOGS)
         log_filename = path.basename(OUTPUT_FILENAME_FOR_LOGS)
-        self.run_script_from_prestoadmin_dir('cp %s .; tar xvf %s' % (OUTPUT_FILENAME_FOR_LOGS, log_filename))
+        self.run_script_from_prestoadmin_dir('cp %s .; tar xvf %s' % (DEFAULT_PATH_FOR_LOGS, log_filename))
 
     def test_collect_logs_nonstandard_location(self):
         self.setup_cluster(NoHadoopBareImageProvider(), STANDALONE_PRESTO_CLUSTER)
@@ -247,7 +248,7 @@ class TestCollect(BaseProductTestCase):
         self.cluster.write_content_to_host('Stuff that I logged!', '/var/log/presto/server.log-2', self.cluster.master)
         actual = self.run_prestoadmin('collect logs')
 
-        expected = 'Downloading logs from all the nodes...\nlogs archive created: ' + OUTPUT_FILENAME_FOR_LOGS + '\n'
+        expected = 'Downloading logs from all the nodes...\nlogs archive created: ' + DEFAULT_PATH_FOR_LOGS + '\n'
         self.assertLazyMessage(lambda: self.log_msg(actual, expected),
                                self.assertEqual, actual, expected)
 

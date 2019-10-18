@@ -27,9 +27,8 @@ from prestoadmin import collect
 from prestoadmin.collect import \
     TMP_PRESTO_DEBUG, \
     PRESTOADMIN_LOG_NAME, \
-    OUTPUT_FILENAME_FOR_LOGS, \
     OUTPUT_FILENAME_FOR_SYS_INFO, \
-    TMP_PRESTO_DEBUG_REMOTE
+    TMP_PRESTO_DEBUG_REMOTE, DEFAULT_PATH_FOR_LOGS
 from prestoadmin.util.local_config_util import get_log_directory
 from tests.unit.base_unit_case import BaseUnitCase, PRESTO_CONFIG
 
@@ -53,7 +52,7 @@ class TestCollect(BaseUnitCase):
                                                PRESTOADMIN_LOG_NAME),
                                      downloaded_logs_loc)
 
-        tarfile_open_mock.assert_called_with(TMP_PRESTO_DEBUG + OUTPUT_FILENAME_FOR_LOGS, 'w:gz')
+        tarfile_open_mock.assert_called_with(DEFAULT_PATH_FOR_LOGS, 'w:gz')
         tar = tarfile_open_mock.return_value
         tar.add.assert_called_with(downloaded_logs_loc,
                                    arcname=path.basename(downloaded_logs_loc))
