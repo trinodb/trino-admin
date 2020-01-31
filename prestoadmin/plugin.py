@@ -43,7 +43,7 @@ def add_jar(local_path, plugin_name, plugin_dir=REMOTE_PLUGIN_DIR):
         local_path - Local path to the jar to be deployed
         plugin_name - Name of the plugin subdirectory to deploy jars to
         plugin_dir - (Optional) The plugin directory.  If no directory is
-                     given, '/usr/lib/presto/lib/plugin' is used by default.
+                     given, '/usr/lib/presto/plugin' is used by default.
     """
     _LOGGER.info('deploying jars on %s' % env.host)
     write(local_path, os.path.join(plugin_dir, plugin_name))

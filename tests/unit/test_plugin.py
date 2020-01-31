@@ -25,7 +25,7 @@ class TestPlugin(BaseUnitCase):
     def test_add_jar(self, write_mock):
         plugin.add_jar('/my/local/path.jar', 'hive-hadoop2')
         write_mock.assert_called_with(
-            '/my/local/path.jar', '/usr/lib/presto/lib/plugin/hive-hadoop2')
+            '/my/local/path.jar', '/usr/lib/presto/plugin/hive-hadoop2')
 
     @patch('prestoadmin.plugin.write')
     def test_add_jar_provide_dir(self, write_mock):

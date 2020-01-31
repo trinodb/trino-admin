@@ -23,7 +23,7 @@ from tests.product.cluster_types import STANDALONE_PA_CLUSTER
 from tests.product.config_dir_utils import get_install_directory
 
 TMP_JAR_PATH = os.path.join(get_install_directory(), 'pretend.jar')
-STD_REMOTE_PATH = '/usr/lib/presto/lib/plugin/hive-cdh5/pretend.jar'
+STD_REMOTE_PATH = '/usr/lib/presto/plugin/hive-cdh5/pretend.jar'
 
 
 class TestPlugin(BaseProductTestCase):
