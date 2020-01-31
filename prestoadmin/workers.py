@@ -41,8 +41,7 @@ class Worker(Node):
                                '/var/log/presto/launcher.log',
                            'node.server-log-file':
                                '/var/log/presto/server.log',
-                           'catalog.config-dir': '/etc/presto/catalog',
-                           'plugin.dir': '/usr/lib/presto/lib/plugin'},
+                           'catalog.config-dir': '/etc/presto/catalog'},
                           'jvm.config': ['-server',
                                          '-Xmx16G',
                                          '-XX:-UseBiasedLocking',
