@@ -54,7 +54,7 @@ node.data-dir=/var/lib/presto/data
 node.environment=presto
 node.launcher-log-file=/var/log/presto/launcher.log
 node.server-log-file=/var/log/presto/server.log
-plugin.dir=/usr/lib/presto/lib/plugin\n"""
+"""
 
     default_jvm_config_ = """-server
 -Xmx16G
