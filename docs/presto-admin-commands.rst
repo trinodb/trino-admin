@@ -58,7 +58,7 @@ Example: ::
    ./presto-admin server restart
 
 The ``add_jar`` command assumes the default plugin location of
-``/usr/lib/presto/lib/plugin`` (see `plugin add_jar`_).  As with the default
+``/usr/lib/presto/plugin`` (see `plugin add_jar`_).  As with the default
 connectors, a ``my_connector.properties`` file must be created. Refer to the
 custom connector's documentation for the properties to specify.
 
@@ -355,7 +355,7 @@ plugin add_jar
     presto-admin plugin add_jar <local-path> <plugin-name> [<plugin-dir>]
 
 This command deploys the jar at ``local-path`` to the plugin directory for
-``plugin-name``.  By default ``/usr/lib/presto/lib/plugin`` is used as the
+``plugin-name``.  By default ``/usr/lib/presto/plugin`` is used as the
 top-level plugin directory. To deploy the jar to a different location, use the
 optional ``plugin-dir`` argument.
 
@@ -367,7 +367,7 @@ Example
     ./presto-admin plugin add_jar connector.jar my_connector /my/plugin/dir
 
 The first example will deploy connector.jar to
-``/usr/lib/presto/lib/plugin/my_connector/connector.jar``
+``/usr/lib/presto/plugin/my_connector/connector.jar``
 The second example will deploy it to ``/my/plugin/dir/my_connector/program.jar``.
 
 **********
