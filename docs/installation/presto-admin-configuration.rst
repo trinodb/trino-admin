@@ -38,7 +38,7 @@ Use the following configuration as a template for Amazon EMR:
  "port": "<ssh_port>",
  "coordinator": "<EMR_master_node_host_name>",
  "workers": ["<host_name_1>", "<host_name_2>", ... "<host_name_n>"],
- "java8_home":"<path/to/java8/on/presto/nodes>"
+ "java_home":"<path/to/java/on/presto/nodes>"
  }
 
 Also, for running Presto Admin commands on Amazon EMR, do the following:
@@ -61,7 +61,7 @@ Use the following configuration as a template for other clusters:
  "port": "<ssh_port>",
  "coordinator": "<host_name>",
  "workers": ["<host_name_1>", "<host_name_2>", ... "<host_name_n>"],
- "java8_home":"<path/to/java8/on/presto/nodes>"
+ "java_home":"<path/to/java/on/presto/nodes>"
  }
 
 Do not use localhost as host_name for a multi-node cluster.
@@ -76,11 +76,11 @@ be used:
  "workers": ["localhost"]
  }
 
-Note that ``java8_home`` is not set by default.  It only needs to be set if
-Java 8 is in a non-standard location on the Presto nodes.  The property is used
-to tell the Presto RPM where to find Java 8.
+Note that ``java_home`` is not set by default.  It only needs to be set if
+Java is in a non-standard location on the Presto nodes.  The property is used
+to tell the Presto RPM where to find Java.
 
-.. NOTE:: If you have installed the JDK, ``java8_home`` should be set so refer to the ``jre`` subdirectory of the JDK.
+.. NOTE:: If you have installed the JDK, ``java_home`` should be set so refer to the ``jre`` subdirectory of the JDK.
 
 You can also specify some but not all of the properties. For example, the
 default configuration is for a single-node installation of Presto on the same

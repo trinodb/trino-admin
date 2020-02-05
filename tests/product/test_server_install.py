@@ -182,13 +182,13 @@ query.max-memory=50GB\n"""
                                            self.default_workers_config_regex_)
 
     @attr('smoketest')
-    def test_install_with_java8_home(self):
+    def test_install_with_java_home(self):
         installer = StandalonePrestoInstaller(self)
 
         with relocate_jdk_directory(self.cluster, '/usr') as new_java_home:
             topology = {"coordinator": "master",
                         "workers": ["slave1", "slave2", "slave3"],
-                        "java8_home": new_java_home}
+                        "java_home": new_java_home}
             self.upload_topology(topology)
 
             cmd_output = installer.install()
