@@ -87,9 +87,11 @@ query.max-memory=50GB\n"""
     # The two strings below (down_node_connection_string and status_down_node_string) aggregate
     # all possible error messages one might encounter when trying to perform an action when a
     # node is not accessible. The variety in error messages comes from differences in the OS.
-    down_node_connection_string = r'\nWarning: (\[%(host)s\] )?Name lookup failed for %(host)s'
+    down_node_connection_string = r'(\nWarning: (\[%(host)s\] )?Name lookup failed for %(host)s)*'\
+                                  r'(Timed out trying to connect to %(host)s)*'
 
-    status_down_node_string = r'\tName lookup failed for %(host)s'
+    status_down_node_string = r'(\tName lookup failed for %(host)s)*' \
+                              r'(\tTimed out trying to connect to %(host)s \(tried 1 time\))*'
 
     len_down_node_error = 6
 
