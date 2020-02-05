@@ -30,7 +30,7 @@ class TestRpm(BaseProductTestCase):
         self.setup_cluster(NoHadoopBareImageProvider(), STANDALONE_PA_CLUSTER)
 
     @docker_only
-    def test_install_fails_java8_not_found(self):
+    def test_install_fails_java_not_found(self):
         installer = StandalonePrestoInstaller(self)
         with relocate_jdk_directory(self.cluster, '/usr'):
             self.upload_topology()
@@ -48,7 +48,7 @@ class TestRpm(BaseProductTestCase):
                 installer.assert_uninstalled(container)
 
     @docker_only
-    def test_server_starts_java8_in_bin_java(self):
+    def test_server_starts_java_in_bin_java(self):
         installer = StandalonePrestoInstaller(self)
 
         with relocate_jdk_directory(self.cluster, '/usr') as new_java_home:
@@ -62,14 +62,14 @@ class TestRpm(BaseProductTestCase):
 
             installer.install()
 
-            # starts successfully with java8_home set
+            # starts successfully with java_home set
             output = self.run_prestoadmin('server start')
             self.assertFalse(
-                'Warning: No value found for JAVA8_HOME. Default Java will be '
+                'Warning: No value found for JAVA_HOME. Default Java will be '
                 'used.' in output)
 
     @docker_only
-    def test_server_starts_no_java8_variable(self):
+    def test_server_starts_no_java_variable(self):
         self.setup_cluster(NoHadoopBareImageProvider(), STANDALONE_PRESTO_CLUSTER)
         self.run_script_from_prestoadmin_dir('rm /etc/presto/env.sh')
         # tests that no error is encountered

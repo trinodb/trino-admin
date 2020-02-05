@@ -44,7 +44,7 @@ WORKERS = 'workers'
 STANDALONE_CONFIG_LOADED = 'standalone_config_loaded'
 
 PRESTO_ADMIN_PROPERTIES = ['username', 'port', 'coordinator', 'workers',
-                           'java8_home', CERTIFICATE_ALIAS]
+                           'java_home', CERTIFICATE_ALIAS]
 
 DEFAULT_PROPERTIES = {USERNAME: 'root',
                       PORT: 22,
@@ -83,8 +83,8 @@ _TOPOLOGY_CONFIG = [
 ]
 
 
-def validate_java8_home(java8_home):
-    return java8_home
+def validate_java_home(java_home):
+    return java_home
 
 
 def validate(conf):
@@ -100,11 +100,11 @@ def validate(conf):
         conf['username'] = validate_username(username)
 
     try:
-        java8_home = conf['java8_home']
+        java_home = conf['java_home']
     except KeyError:
         pass
     else:
-        conf['java8_home'] = validate_java8_home(java8_home)
+        conf['java_home'] = validate_java_home(java_home)
 
     try:
         coordinator = conf['coordinator']
@@ -191,9 +191,9 @@ class StandaloneConfig(BaseConfig):
         env.user = conf['username']
         env.port = conf['port']
         try:
-            env.java8_home = conf['java8_home']
+            env.java_home = conf['java_home']
         except KeyError:
-            env.java8_home = None
+            env.java_home = None
         env.roledefs['coordinator'] = [conf['coordinator']]
         env.roledefs['worker'] = conf['workers']
         env.roledefs['all'] = self._dedup_list(util.get_coordinator_role() +

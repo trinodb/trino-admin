@@ -92,10 +92,10 @@ def deploy(local_path=None):
 def _rpm_install(package_path):
     nodeps = _nodeps_rpm_option()
 
-    if 'java8_home' not in env or env.java8_home is None:
+    if 'java_home' not in env or env.java_home is None:
         return sudo('rpm -i %s%s' % (nodeps, package_path))
     else:
-        with shell_env(JAVA8_HOME='%s' % env.java8_home):
+        with shell_env(JAVA_HOME='%s' % env.java_home):
             return sudo('rpm -i %s%s' % (nodeps, package_path))
 
 
