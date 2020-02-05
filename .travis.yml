@@ -24,9 +24,8 @@ before_install:
   - sudo apt-get update
   - sudo apt-get -y install docker-ce
 install:
-  - pip install --upgrade pip==9.0.1
   - pip install -r requirements.txt
-  - pip install tox==3.0.0 tox-travis==0.10 more-itertools==5.0.0
+  - pip install tox-travis==0.10 more-itertools==5.0.0
 before_script:
   - make docker-images
   - make presto-server-rpm.rpm
