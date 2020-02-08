@@ -45,11 +45,14 @@ class Coordinator(Node):
                                          '-XX:+UseG1GC',
                                          '-XX:G1HeapRegionSize=32M',
                                          '-XX:+ExplicitGCInvokesConcurrent',
-                                         '-XX:+HeapDumpOnOutOfMemoryError',
-                                         '-XX:+UseGCOverheadLimit',
                                          '-XX:+ExitOnOutOfMemoryError',
+                                         '-XX:+UseGCOverheadLimit',
+                                         '-XX:+HeapDumpOnOutOfMemoryError',
                                          '-XX:ReservedCodeCacheSize=512M',
-                                         '-DHADOOP_USER_NAME=hive'],
+                                         '-Djdk.attach.allowAttachSelf=true',
+                                         '-Djdk.nio.maxCachedBufferSize=2000000',
+                                         '-DHADOOP_USER_NAME=hive',  # not Presto default
+                                         ],
                           'config.properties': {
                               'coordinator': 'true',
                               'discovery-server.enabled': 'true',
