@@ -23,18 +23,16 @@ CONTAINER_DIR="/mnt/presto-admin"
 
 docker run --name ${CONTAINER_NAME} -v ${ROOT_DIR}:${CONTAINER_DIR} --rm -i ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG} \
   env CONTAINER_DIR="${CONTAINER_DIR}" bash <<"EOF"
+    set -x
     cd ${CONTAINER_DIR}
-    pip install --upgrade pip==9.0.1
+    pip install --ignore-installed -r requirements.txt
     pip install tox-travis==0.10
-    # use explicit versions of dependent packages
-    pip install pycparser==2.18
     # list presto-admin package dependencies versions
     pip install Babel==2.5.3
     pip install cffi==1.11.5
     pip install PyNaCl==1.2.1
-    pip install idna==2.1
     pip install cryptography==2.1.1
-    pip install -r requirements.txt
     export PYTHONPATH=${PYTHONPATH}:$(pwd)
-    make dist dist-offline
+    make dist
+    make dist-offline
 EOF
