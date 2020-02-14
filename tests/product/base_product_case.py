@@ -62,10 +62,12 @@ node.server-log-file=/var/log/presto/server.log
 -XX:+UseG1GC
 -XX:G1HeapRegionSize=32M
 -XX:+ExplicitGCInvokesConcurrent
--XX:+HeapDumpOnOutOfMemoryError
--XX:+UseGCOverheadLimit
 -XX:+ExitOnOutOfMemoryError
+-XX:+UseGCOverheadLimit
+-XX:+HeapDumpOnOutOfMemoryError
 -XX:ReservedCodeCacheSize=512M
+-Djdk.attach.allowAttachSelf=true
+-Djdk.nio.maxCachedBufferSize=2000000
 -DHADOOP_USER_NAME=hive\n"""
 
     default_coordinator_config_ = """coordinator=true
