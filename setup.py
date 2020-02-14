@@ -48,21 +48,19 @@ requirements = [
     'Fabric==1.10.3',
     'requests==2.7.0',
     'overrides==0.5',
-    'pip==8.1.2',
+    'pip==9.0.2',
     'setuptools==20.1.1',
-    'wheel==0.23.0',
+    'wheel==0.29.0',
     'flake8==2.5.4',
-    'tox==1.9.2',
     'retrying==1.3.3',
     'pyjks==0.3.0.1'
 ]
 
 test_requirements = [
-    'tox==1.9.2',
+    'tox==2.9.1',
     'nose==1.3.7',
     'nose-timer==0.6',
     'mock==1.0.1',
-    'wheel==0.23.0',
     'docker-py==1.5.0',
     'certifi==2015.4.28',
     'fudge==1.1.0',
