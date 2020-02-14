@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-set -e
+set -ex
 
 PYTHON_BIN=python
 
