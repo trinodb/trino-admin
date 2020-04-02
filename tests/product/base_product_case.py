@@ -68,7 +68,8 @@ node.server-log-file=/var/log/presto/server.log
 -XX:ReservedCodeCacheSize=512M
 -Djdk.attach.allowAttachSelf=true
 -Djdk.nio.maxCachedBufferSize=2000000
--DHADOOP_USER_NAME=hive\n"""
+-DHADOOP_USER_NAME=hive
+-Dpresto-temporarily-allow-java8=true\n"""
 
     default_coordinator_config_ = """coordinator=true
 discovery-server.enabled=true

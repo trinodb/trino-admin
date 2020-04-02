@@ -21,6 +21,7 @@ master: Configuration file at /etc/presto/jvm.config:
 -Djdk.attach.allowAttachSelf=true
 -Djdk.nio.maxCachedBufferSize=2000000
 -DHADOOP_USER_NAME=hive
+-Dpresto-temporarily-allow-java8=true
 
 
 master: Configuration file at /etc/presto/config.properties:
@@ -56,6 +57,7 @@ slave1: Configuration file at /etc/presto/jvm.config:
 -Djdk.attach.allowAttachSelf=true
 -Djdk.nio.maxCachedBufferSize=2000000
 -DHADOOP_USER_NAME=hive
+-Dpresto-temporarily-allow-java8=true
 
 
 slave1: Configuration file at /etc/presto/config.properties:
@@ -89,6 +91,7 @@ slave2: Configuration file at /etc/presto/jvm.config:
 -Djdk.attach.allowAttachSelf=true
 -Djdk.nio.maxCachedBufferSize=2000000
 -DHADOOP_USER_NAME=hive
+-Dpresto-temporarily-allow-java8=true
 
 
 slave2: Configuration file at /etc/presto/config.properties:
@@ -122,6 +125,7 @@ slave3: Configuration file at /etc/presto/jvm.config:
 -Djdk.attach.allowAttachSelf=true
 -Djdk.nio.maxCachedBufferSize=2000000
 -DHADOOP_USER_NAME=hive
+-Dpresto-temporarily-allow-java8=true
 
 
 slave3: Configuration file at /etc/presto/config.properties:
