@@ -160,7 +160,7 @@ def query_info(query_id):
 
 def get_request(url, err_msg):
         try:
-            req = requests.get(url)
+            req = requests.get(url, auth=("'%s'" % (env.user,), ''))
         except requests.ConnectionError:
             abort(err_msg)
 
