@@ -19,6 +19,7 @@ from nose.plugins.attrib import attr
 from tests.no_hadoop_bare_image_provider import NoHadoopBareImageProvider
 from tests.product.base_product_case import BaseProductTestCase, \
     docker_only
+from tests.product.base_product_case import PACKAGE_NAME
 from tests.product.cluster_types import STANDALONE_PA_CLUSTER
 from tests.product.standalone.presto_installer import StandalonePrestoInstaller
 
@@ -35,7 +36,7 @@ class TestPackageInstall(BaseProductTestCase):
         super(TestPackageInstall, self).tearDown()
 
     def _assert_uninstall(self):
-        output = self.run_prestoadmin('package uninstall presto-server-rpm --force')
+        output = self.run_prestoadmin('package uninstall %s --force' % (PACKAGE_NAME,))
         for container in self.cluster.all_hosts():
             self.installer.assert_uninstalled(container, msg=output)
 
@@ -50,7 +51,7 @@ class TestPackageInstall(BaseProductTestCase):
             self.installer.assert_installed(self, container, msg=output)
 
         # uninstall
-        output = self.run_prestoadmin('package uninstall presto-server-rpm')
+        output = self.run_prestoadmin('package uninstall %s' % (PACKAGE_NAME,))
         for container in self.cluster.all_hosts():
             self.installer.assert_uninstalled(container, msg=output)
 
@@ -67,13 +68,13 @@ class TestPackageInstall(BaseProductTestCase):
         self.installer.assert_uninstalled(self.cluster.slaves[2], msg=output)
 
         # uninstall on slave2
-        output = self.run_prestoadmin('package uninstall presto-server-rpm -H %(slave2)s')
+        output = self.run_prestoadmin('package uninstall ' + PACKAGE_NAME + ' -H %(slave2)s')
         self.installer.assert_installed(self, self.cluster.master, msg=output)
         for container in self.cluster.slaves:
             self.installer.assert_uninstalled(container, msg=output)
 
         # uninstall on rest
-        output = self.run_prestoadmin('package uninstall presto-server-rpm --force')
+        output = self.run_prestoadmin('package uninstall %s --force' % (PACKAGE_NAME,))
         for container in self.cluster.all_hosts():
             self.installer.assert_uninstalled(container, msg=output)
 
@@ -89,7 +90,7 @@ class TestPackageInstall(BaseProductTestCase):
         self.installer.assert_installed(self, self.cluster.slaves[2], msg=output)
 
         # uninstall
-        output = self.run_prestoadmin('package uninstall presto-server-rpm -x %(master)s,%(slave2)s')
+        output = self.run_prestoadmin('package uninstall ' + PACKAGE_NAME + ' -x %(master)s,%(slave2)s')
         for container in self.cluster.all_hosts():
             self.installer.assert_uninstalled(container, msg=output)
 

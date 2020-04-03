@@ -106,7 +106,7 @@ class ConfigurableCluster(BaseCluster):
             # is resolved https://github.com/prestodb/presto-admin/issues/226
             script = """
             sudo service presto stop
-            sudo rpm -e presto-server-rpm
+            sudo rpm -e starburst-presto-server-rpm
             rm -rf {install_dir}
             rm -rf ~/prestoadmin*.tar.gz
             rm -rf {config_dir}

@@ -438,6 +438,8 @@ def uninstall():
         package.rpm_uninstall('presto-server')
     elif package.is_rpm_installed('presto-server-rpm'):
         package.rpm_uninstall('presto-server-rpm')
+    elif package.is_rpm_installed('starburst-presto-server-rpm'):
+        package.rpm_uninstall('starburst-presto-server-rpm')
     else:
         abort('Unable to uninstall package on: ' + env.host)
 
@@ -591,6 +593,8 @@ def presto_installed():
         package_search = run('rpm -q presto')
         if not package_search.succeeded:
             package_search = run('rpm -q presto-server-rpm')
+        if not package_search.succeeded:
+            package_search = run('rpm -q starburst-presto-server-rpm')
         return package_search.succeeded
 
 
@@ -600,6 +604,8 @@ def get_presto_version():
         # currently we have two rpm names out so we need this retry
         if not version.succeeded:
             version = run('rpm -q --qf \"%{VERSION}\\n\" presto-server-rpm')
+        if not version.succeeded:
+            version = run('rpm -q --qf \"%{VERSION}\\n\" starburst-presto-server-rpm')
         version = version.strip()
         _LOGGER.debug('Presto rpm version: ' + version)
         return version

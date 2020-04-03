@@ -26,10 +26,10 @@ from tests.product.mode_installers import StandaloneModeInstaller
 from tests.product.prestoadmin_installer import PrestoadminInstaller
 from tests.product.topology_installer import TopologyInstaller
 
-RPM_BASENAME = r'presto.*'
+RPM_BASENAME = r'starburst-presto.*'
 PRESTO_RPM_GLOB = r'presto*.rpm'
 
-PACKAGE_NAME = 'presto-server-rpm'
+PACKAGE_NAME = 'starburst-presto-server-rpm'
 
 
 class StandalonePrestoInstaller(BaseInstaller):
