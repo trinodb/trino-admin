@@ -94,8 +94,7 @@ query.max-memory=50GB\n"""
     down_node_connection_string = r'(\nWarning: (\[%(host)s\] )?Name lookup failed for %(host)s)*'\
                                   r'(Timed out trying to connect to %(host)s)*'
 
-    status_down_node_string = r'(\tName lookup failed for %(host)s)*' \
-                              r'(\tTimed out trying to connect to %(host)s \(tried 1 time\))*'
+    status_down_node_string = r'(\tName lookup failed for %(host)s)*'
 
     len_down_node_error = 6
 
