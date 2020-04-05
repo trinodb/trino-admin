@@ -40,7 +40,6 @@ from tests.product.standalone.presto_installer import StandalonePrestoInstaller
 PRESTO_VERSION = r'.+'
 RETRY_TIMEOUT = 120
 RETRY_INTERVAL = 5
-PACKAGE_NAME = 'starburst-presto-server-rpm'
 
 
 class BaseProductTestCase(BaseTestCase):

@@ -29,6 +29,7 @@ import yaml
 from prestoadmin import main_dir
 from tests.base_cluster import BaseCluster
 from tests.product.config_dir_utils import get_config_file_path, get_install_directory, get_config_directory
+from tests.product.constants import PRESTO_RPM_NAME
 
 CONFIG_FILE_GLOB = r'*.yaml'
 DIST_DIR = os.path.join(main_dir, 'tmp/installer')
@@ -106,7 +107,7 @@ class ConfigurableCluster(BaseCluster):
             # is resolved https://github.com/prestodb/presto-admin/issues/226
             script = """
             sudo service presto stop
-            sudo rpm -e starburst-presto-server-rpm
+            sudo rpm -e {rpm_name}
             rm -rf {install_dir}
             rm -rf ~/prestoadmin*.tar.gz
             rm -rf {config_dir}
@@ -116,7 +117,8 @@ class ConfigurableCluster(BaseCluster):
             sudo rm -rf /tmp/presto-debug-remote
             sudo rm -rf /var/log/presto
             rm -rf {mount_dir}
-            """.format(install_dir=get_install_directory(),
+            """.format(rpm_name=PRESTO_RPM_NAME,
+                       install_dir=get_install_directory(),
                        config_dir=get_config_directory(),
                        mount_dir=self.mount_dir)
             self.run_script_on_host(script, host)

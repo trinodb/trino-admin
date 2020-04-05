@@ -22,14 +22,13 @@ import os
 import prestoadmin
 
 from tests.base_installer import BaseInstaller
+from tests.product.constants import PRESTO_RPM_NAME
 from tests.product.mode_installers import StandaloneModeInstaller
 from tests.product.prestoadmin_installer import PrestoadminInstaller
 from tests.product.topology_installer import TopologyInstaller
 
-RPM_BASENAME = r'starburst-presto.*'
+RPM_BASENAME = r'starburst-presto.*|presto.*'
 PRESTO_RPM_GLOB = r'presto*.rpm'
-
-PACKAGE_NAME = 'starburst-presto-server-rpm'
 
 
 class StandalonePrestoInstaller(BaseInstaller):
@@ -79,7 +78,7 @@ class StandalonePrestoInstaller(BaseInstaller):
 
         try:
             check_rpm = cluster.exec_cmd_on_host(
-                container, 'rpm -q %s' % (PACKAGE_NAME,))
+                container, 'rpm -q %s' % (PRESTO_RPM_NAME,))
             testcase.assertRegexpMatches(
                 check_rpm, RPM_BASENAME + '\n', msg=msg
             )
@@ -126,8 +125,8 @@ class StandalonePrestoInstaller(BaseInstaller):
         )
 
     def assert_uninstalled(self, container, msg=None):
-        failure_msg = 'package %s is not installed' % (PACKAGE_NAME,)
-        rpm_cmd = 'rpm -q %s' % (PACKAGE_NAME,)
+        failure_msg = 'package %s is not installed' % (PRESTO_RPM_NAME,)
+        rpm_cmd = 'rpm -q %s' % (PRESTO_RPM_NAME,)
 
         self.testcase.assertRaisesRegexp(
             OSError,

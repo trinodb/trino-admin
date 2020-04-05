@@ -48,3 +48,13 @@ LOCAL_RESOURCES_DIR = os.path.join(prestoadmin.main_dir,
 
 DEFAULT_DOCKER_MOUNT_POINT = '/mnt/presto-admin'
 DEFAULT_LOCAL_MOUNT_POINT = os.path.join(main_dir, 'tmp/docker-pa/')
+
+
+PRESTO_RPM_NAME = os.environ.get('PRESTO_RPM_NAME')
+DUMMY_RPM = os.environ.get('DUMMY_RPM')
+
+if PRESTO_RPM_NAME is None:
+    PRESTO_RPM_NAME = 'presto-server-rpm'
+
+if DUMMY_RPM is None:
+    DUMMY_RPM = 'dummy-presto-server-rpm.rpm'

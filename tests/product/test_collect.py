@@ -27,9 +27,9 @@ from prestoadmin.collect import OUTPUT_FILENAME_FOR_LOGS, TMP_PRESTO_DEBUG, \
     DEFAULT_PATH_FOR_LOGS
 from tests.no_hadoop_bare_image_provider import NoHadoopBareImageProvider
 from tests.product.base_product_case import BaseProductTestCase, PrestoError
-from tests.product.base_product_case import PACKAGE_NAME
 from tests.product.cluster_types import STANDALONE_PRESTO_CLUSTER, STANDALONE_PA_CLUSTER
 from tests.product.config_dir_utils import get_install_directory
+from tests.product.constants import PRESTO_RPM_NAME
 from tests.product.standalone.presto_installer import StandalonePrestoInstaller
 
 
@@ -212,7 +212,7 @@ class TestCollect(BaseProductTestCase):
         self.setup_cluster(NoHadoopBareImageProvider(), STANDALONE_PRESTO_CLUSTER)
 
         version = self.cluster.exec_cmd_on_host(self.cluster.master,
-                                                'rpm -q --qf \"%{VERSION}\\n\" ' + PACKAGE_NAME)
+                                                'rpm -q --qf \"%{VERSION}\\n\" ' + PRESTO_RPM_NAME)
         if '127t' not in version:
             print 'test_collect_logs_nonstandard_location only valid for 127t'
             return
