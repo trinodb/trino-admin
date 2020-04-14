@@ -33,6 +33,5 @@ docker run --name ${CONTAINER_NAME} -v ${ROOT_DIR}:${CONTAINER_DIR} --rm -i ${BA
     pip install PyNaCl==1.2.1
     pip install cryptography==2.1.1
     export PYTHONPATH=${PYTHONPATH}:$(pwd)
-    make dist
-    make dist-offline
+    make dist dist-offline
 EOF
