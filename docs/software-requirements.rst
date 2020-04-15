@@ -20,4 +20,5 @@ For more on SSH configuration, see :ref:`ssh-configuration-label`.
 
 **Other Configuration**
 
-* Sudo privileges on both the node running ``presto-admin`` and the nodes where Presto will be installed are required for a non-root presto-admin user.
+* Sudo privileges  are required on both the node running ``presto-admin`` and
+  the nodes where Presto is installed.
