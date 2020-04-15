@@ -42,11 +42,12 @@ of the nodes in the cluster.
      For Amazon EMR, use the online installer instead of the offline installer.
 
 3. Extract and run the installation script from within the ``prestoadmin`` directory.
-::
 
- $ tar xvf prestoadmin-<version>-offline.tar.gz
- $ cd prestoadmin
- $ ./install-prestoadmin.sh
+.. code-block:: none
+
+    $ tar xvf prestoadmin-<version>-offline.tar.gz
+    $ cd prestoadmin
+    $ ./install-prestoadmin.sh
 
 The installation script will create a ``presto-admin-install`` directory and an
 executable ``presto-admin`` script. By default, the ``presto-admin`` config and log
@@ -58,9 +59,10 @@ directories already exist, the installation script will not erase their contents
 
 4. Verify that ``presto-admin`` was installed properly by running the following
 command:
-::
 
- $ ./presto-admin --help
+.. code-block:: none
+
+    $ ./presto-admin --help
 
 Please note that you should only run one ``presto-admin`` command on your
 cluster at a time.

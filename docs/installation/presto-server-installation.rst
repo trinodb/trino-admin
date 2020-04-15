@@ -11,7 +11,9 @@ To install the Presto query engine on a cluster of nodes using ``presto-admin``:
 
 2. Copy the RPM to a location accessible by ``presto-admin``.
 
-3. Run the following command to install Presto: ::
+3. Run the following command to install Presto:
+
+.. code-block:: none
 
     $ ./presto-admin server install <local_path_to_rpm>
 
@@ -26,7 +28,9 @@ must be changed for optimal performance. These configuration changes can be done
 before or after starting the Presto server and running queries for the first time, though
 all configuration changes require a restart of the Presto servers.
 
-4. Now, you are ready to start Presto: ::
+4. Now, you are ready to start Presto:
+
+.. code-block:: none
 
     $ ./presto-admin server start
 
