@@ -15,12 +15,14 @@ Troubleshooting
 #. You can check the status of Presto on your cluster by using
    :ref:`server-status`.
 #. If Presto is not running and you try to execute any command from the Presto CLI you might get:
-   ::
+
+.. code-block:: none
 
     $ Error running command: Server refused connection: http://localhost:8080/v1/statement
 
    To fix this, start Presto with:
-   ::
+
+.. code-block:: none
 
      $ ./presto-admin server start
 

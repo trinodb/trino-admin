@@ -18,7 +18,9 @@ To install Java via RPM using ``presto-admin``:
 
 2. Copy the RPM to a location accessible by ``presto-admin``.
 
-3. Run the following command to install Java 8 on each node in the Presto cluster: ::
+3. Run the following command to install Java 8 on each node in the Presto cluster:
+
+.. code-block:: none
 
     $ ./presto-admin package install <local_path_to_java_rpm>
 

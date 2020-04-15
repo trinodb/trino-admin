@@ -25,6 +25,8 @@ Content
    user-guide
    contributing
    release
+   compatibility
+
 
 .. toctree::
    :hidden:
