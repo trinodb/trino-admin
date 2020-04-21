@@ -32,7 +32,7 @@ before_script:
 script:
   - |
     if [ -v ARTIFACTS ]; then
-      ./bin/build-artifacts-in-docker.sh
+      ./bin/build-artifacts-in-docker.sh --base_image_name ${BASE_IMAGE_NAME} --base_image_tag ${BASE_IMAGE_TAG} --online-dist --offline-dist
     elif [ -v SHORT_PRODUCT_TEST_GROUP ]; then
       ALL_PRODUCT_TESTS=$(find tests/product/ -name 'test_*py' | grep -v __init__ | xargs wc -l | sort -n | head -n -1 | awk '{print $2}' | tr '\n' ' ')
       for LONG_PRODUCT_TEST in ${LONG_PRODUCT_TESTS[@]}; do
