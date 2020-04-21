@@ -20,14 +20,14 @@ import errno
 import fnmatch
 import os
 import shutil
+import tempfile
+import subprocess
 
 import prestoadmin
 from tests.base_installer import BaseInstaller
 from tests.configurable_cluster import ConfigurableCluster
-from tests.docker_cluster import DockerCluster
-from tests.no_hadoop_bare_image_provider import NoHadoopBareImageProvider
 from tests.product.config_dir_utils import get_install_directory
-from tests.product.constants import LOCAL_RESOURCES_DIR
+from tests.product.constants import LOCAL_RESOURCES_DIR, _BASE_IMAGE_NAME, BASE_IMAGE_TAG
 
 
 class PrestoadminInstaller(BaseInstaller):
@@ -82,69 +82,35 @@ class PrestoadminInstaller(BaseInstaller):
         if isinstance(cluster, ConfigurableCluster):
             online_installer = True
 
-        container_name = 'installer'
-        cluster_type = 'installer_builder'
-        bare_image_provider = NoHadoopBareImageProvider("build")
-
-        installer_container, created_bare = DockerCluster.start_cluster(
-            bare_image_provider, cluster_type, 'installer', [])
-
-        if created_bare:
-            installer_container.commit_images(
-                bare_image_provider, cluster_type)
+        temp_dir = os.path.join(tempfile.mkdtemp(), "presto-admin")
 
         try:
             shutil.copytree(
                 prestoadmin.main_dir,
-                os.path.join(
-                    installer_container.get_local_mount_dir(container_name),
-                    'presto-admin'),
+                temp_dir,
                 ignore=shutil.ignore_patterns('tmp', '.git', 'presto*.rpm')
             )
 
-            # Pin pip to 7.1.2 because 8.0.0 removed support for distutils
-            # installed projects, of which the system setuptools is one on our
-            # Docker image. pip 8.0.1 or 8.0.2 replaced the error with a
-            # deprecation warning, and also warns that Python 2.6 is
-            # deprecated. While we still need to support Python 2.6, we'll pin
-            # pip to a 7.x version, but we should revisit this once we no
-            # longer need to support 2.6:
-            # https://github.com/pypa/pip/issues/3384
-            installer_container.run_script_on_host(
-                'set -e\n'
-                # use explicit versions of dependent packages
-                'pip install --upgrade pycparser==2.18 cffi==1.11.5\n'
-                'pip install --upgrade pycparser==2.18 PyNaCl==1.2.1\n'
-                'pip install --upgrade pycparser==2.18 idna==2.1 cryptography==2.1.1\n'
-                'pip install --upgrade pip==9.0.2\n'
-                'pip install --upgrade wheel==0.23.0\n'
-                'pip install --upgrade setuptools==20.1.1\n'
-                'mv %s/presto-admin ~/\n'
-                'cd ~/presto-admin\n'
-                'make %s\n'
-                'cp dist/prestoadmin-*.tar.gz %s'
-                % (installer_container.mount_dir,
-                   'dist' if online_installer else 'dist-offline',
-                   installer_container.mount_dir),
-                container_name)
+            cmd = [prestoadmin.main_dir + "/bin/build-artifacts-in-docker.sh",
+                   "--root_dir", temp_dir,
+                   "--base_image_name", _BASE_IMAGE_NAME,
+                   "--base_image_tag", BASE_IMAGE_TAG,
+                   "--online-dist" if online_installer else "--offline-dist"]
+            subprocess.check_call(cmd)
 
             try:
                 os.makedirs(cluster.get_dist_dir(unique))
             except OSError, e:
                 if e.errno != errno.EEXIST:
                     raise
-            local_container_dist_dir = os.path.join(
-                prestoadmin.main_dir,
-                installer_container.get_local_mount_dir(container_name)
-            )
             installer_file = fnmatch.filter(
-                os.listdir(local_container_dist_dir),
+                os.listdir(os.path.join(temp_dir, "dist")),
                 'prestoadmin-*.tar.gz')[0]
             shutil.copy(
-                os.path.join(local_container_dist_dir, installer_file),
+                os.path.join(os.path.join(temp_dir, "dist"), installer_file),
                 cluster.get_dist_dir(unique))
         finally:
-            installer_container.tear_down()
+            shutil.rmtree(os.path.abspath(os.path.join(temp_dir, os.pardir)), ignore_errors=True)
 
     @staticmethod
     def _copy_dist_to_host(cluster, local_dist_dir, dest_host):
