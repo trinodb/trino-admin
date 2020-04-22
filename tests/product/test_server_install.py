@@ -22,7 +22,6 @@ from tests.product.base_product_case import BaseProductTestCase
 from tests.product.cluster_types import STANDALONE_PA_CLUSTER
 from tests.product.config_dir_utils import get_catalog_directory
 from tests.product.standalone.presto_installer import StandalonePrestoInstaller
-from tests.product.constants import LOCAL_RESOURCES_DIR
 
 
 install_with_ext_host_pa_master_out = ['Deploying rpm on slave1...',
@@ -102,16 +101,16 @@ installed_all_hosts_output = ['Deploying rpm on {master}...',
                               'Package deployed successfully on: {slave2}',
                               'Package installed successfully on: {slave2}',
                               'Deploying configuration on: {slave3}',
-                              'Deploying tpch.properties catalog '
+                              'Deploying jmx.properties, tpch.properties catalog '
                               'configurations on: {slave3} ',
                               'Deploying configuration on: {slave1}',
-                              'Deploying tpch.properties catalog '
+                              'Deploying jmx.properties, tpch.properties catalog '
                               'configurations on: {slave1} ',
                               'Deploying configuration on: {slave2}',
-                              'Deploying tpch.properties catalog '
+                              'Deploying jmx.properties, tpch.properties catalog '
                               'configurations on: {slave2} ',
                               'Deploying configuration on: {master}',
-                              'Deploying tpch.properties catalog '
+                              'Deploying jmx.properties, tpch.properties catalog '
                               'configurations on: {master} ',
                               'Using rpm_specifier as a local path',
                               'Fetching local presto rpm at path: .*',
@@ -190,6 +189,11 @@ query.max-memory=50GB\n"""
                         "workers": ["slave1", "slave2", "slave3"],
                         "java_home": new_java_home}
             self.upload_topology(topology)
+            self.cluster.write_content_to_host(
+                'connector.name=jmx',
+                os.path.join(get_catalog_directory(), 'jmx.properties'),
+                self.cluster.master
+            )
 
             cmd_output = installer.install()
             expected = self.format_err_msgs_with_internal_hosts(installed_all_hosts_output)
@@ -201,6 +205,7 @@ query.max-memory=50GB\n"""
                 installer.assert_installed(self, host)
                 self.assert_has_default_config(host)
                 self.assert_has_default_catalog(host)
+                self.assert_has_jmx_catalog(host)
 
     def test_install_ext_host_is_pa_master(self):
         installer = StandalonePrestoInstaller(self)
@@ -219,92 +224,6 @@ query.max-memory=50GB\n"""
             [self.cluster.slaves[1],
              self.cluster.slaves[2]])
 
-    def test_install_when_catalog_json_exists(self):
-        installer = StandalonePrestoInstaller(self)
-        topology = {"coordinator": "master",
-                    "workers": ["slave1"]}
-        self.upload_topology(topology)
-        self.cluster.write_content_to_host(
-            'connector.name=jmx',
-            os.path.join(get_catalog_directory(), 'jmx.properties'),
-            self.cluster.master
-        )
-
-        cmd_output = installer.install()
-        expected = ['Deploying rpm on master...',
-                    'Deploying rpm on slave1...',
-                    'Package deployed successfully on: slave1',
-                    'Package installed successfully on: slave1',
-                    'Package deployed successfully on: master',
-                    'Package installed successfully on: master',
-                    'Deploying configuration on: master',
-                    'Deploying jmx.properties, tpch.properties '
-                    'catalog configurations on: master ',
-                    'Deploying configuration on: slave1',
-                    'Deploying jmx.properties, tpch.properties '
-                    'catalog configurations on: slave1 ',
-                    'Using rpm_specifier as a local path',
-                    'Fetching local presto rpm at path: .*',
-                    'Found existing rpm at: .*']
-
-        actual = cmd_output.splitlines()
-        self.assertRegexpMatchesLineByLine(actual, expected)
-
-        for container in [self.cluster.master,
-                          self.cluster.slaves[0]]:
-            installer.assert_installed(self, container)
-            self.assert_has_default_config(container)
-            self.assert_has_default_catalog(container)
-            self.assert_has_jmx_catalog(container)
-
-    def test_install_when_topology_has_ips(self):
-        installer = StandalonePrestoInstaller(self)
-        ips = self.cluster.get_ip_address_dict()
-        topology = {"coordinator": ips[self.cluster.internal_master],
-                    "workers": [ips[self.cluster.internal_slaves[0]]]}
-        self.upload_topology(topology)
-        self.cluster.write_content_to_host(
-            'connector.name=jmx',
-            os.path.join(get_catalog_directory(), 'jmx.properties'),
-            self.cluster.master
-        )
-
-        cmd_output = installer.install().splitlines()
-        expected = [
-            r'Deploying rpm on %s...' % ips[self.cluster.internal_master],
-            r'Deploying rpm on %s...' % ips[self.cluster.internal_slaves[0]],
-            r'Package deployed successfully on: ' +
-            ips[self.cluster.internal_master],
-            r'Package installed successfully on: ' +
-            ips[self.cluster.internal_master],
-            r'Package deployed successfully on: ' +
-            ips[self.cluster.internal_slaves[0]],
-            r'Package installed successfully on: ' +
-            ips[self.cluster.internal_slaves[0]],
-            r'Deploying configuration on: ' +
-            ips[self.cluster.internal_master],
-            r'Deploying jmx.properties, tpch.properties '
-            r'catalog configurations on: ' +
-            ips[self.cluster.internal_master] + r' ',
-            r'Deploying configuration on: ' +
-            ips[self.cluster.internal_slaves[0]],
-            r'Deploying jmx.properties, tpch.properties '
-            r'catalog configurations on: ' +
-            ips[self.cluster.internal_slaves[0]] + r' ',
-            r'Using rpm_specifier as a local path',
-            r'Fetching local presto rpm at path: .*',
-            r'Found existing rpm at: .*']
-
-        cmd_output.sort()
-        expected.sort()
-        self.assertRegexpMatchesLineByLine(cmd_output, expected)
-
-        self.assert_installed_with_regex_configs(
-            self.cluster.master,
-            [self.cluster.slaves[0]])
-        for host in [self.cluster.master, self.cluster.slaves[0]]:
-            self.assert_has_jmx_catalog(host)
-
     def test_install_interactive(self):
         installer = StandalonePrestoInstaller(self)
         self.cluster.write_content_to_host(
@@ -312,60 +231,35 @@ query.max-memory=50GB\n"""
             os.path.join(get_catalog_directory(), 'jmx.properties'),
             self.cluster.master
         )
+        ips = self.cluster.get_ip_address_dict()
+        self.upload_topology(
+            {"coordinator": ips[self.cluster.internal_master],
+             "workers": [ips[self.cluster.internal_slaves[0]],
+                         ips[self.cluster.internal_slaves[1]],
+                         ips[self.cluster.internal_slaves[2]]],
+             "username": "app-admin"}
+        )
+
         rpm_name = installer.copy_presto_rpm_to_master()
-        self.write_test_configs(self.cluster)
+        self.write_test_configs(self.cluster, coordinator=ips[self.cluster.internal_master])
 
         additional_keywords = {
-            'user': self.cluster.user,
+            'user': "app-admin",
             'rpm_dir': self.cluster.rpm_cache_dir,
             'rpm': rpm_name
         }
 
-        cmd_output = self.run_script_from_prestoadmin_dir(
+        self.run_script_from_prestoadmin_dir(
             'echo -e "%(user)s\n22\n%(master)s\n%(slave1)s\n" | '
-            './presto-admin server install %(rpm_dir)s/%(rpm)s ',
+            './presto-admin server install %(rpm_dir)s/%(rpm)s -p password',
             **additional_keywords)
 
-        actual = cmd_output.splitlines()
-        expected = [r'Enter user name for SSH connection to all nodes: '
-                    r'\[root\] '
-                    r'Enter port number for SSH connections to all nodes: '
-                    r'\[22\] '
-                    r'Enter host name or IP address for coordinator node. '
-                    r'Enter an external host name or ip address if this is a '
-                    r'multi-node cluster: \[localhost\] '
-                    r'Enter host names or IP addresses for worker nodes '
-                    r'separated by spaces: '
-                    r'\[localhost\] Using rpm_specifier as a local path',
-                    r'Package deployed successfully on: ' +
-                    self.cluster.internal_master,
-                    r'Package installed successfully on: ' +
-                    self.cluster.internal_master,
-                    r'Package deployed successfully on: ' +
-                    self.cluster.internal_slaves[0],
-                    r'Package installed successfully on: ' +
-                    self.cluster.internal_slaves[0],
-                    r'Deploying configuration on: ' +
-                    self.cluster.internal_master,
-                    r'Deploying jmx.properties, tpch.properties catalog '
-                    r'configurations on: ' +
-                    self.cluster.internal_master,
-                    r'Deploying configuration on: ' +
-                    self.cluster.internal_slaves[0],
-                    r'Deploying jmx.properties, tpch.properties catalog '
-                    r'configurations on: ' +
-                    self.cluster.internal_slaves[0],
-                    r'Deploying rpm on .*\.\.\.',
-                    r'Deploying rpm on .*\.\.\.',
-                    r'Fetching local presto rpm at path: .*',
-                    r'Found existing rpm at: .*'
-                    ]
+        self.assert_installed_with_regex_configs(
+            self.cluster.master,
+            [self.cluster.slaves[0], self.cluster.slaves[1], self.cluster.slaves[2]])
 
-        self.assertRegexpMatchesLineByLine(actual, expected)
-        for container in [self.cluster.master,
-                          self.cluster.slaves[0]]:
+        for container in self.cluster.all_hosts():
             installer.assert_installed(self, container)
-            self.assert_has_default_config(container)
             self.assert_has_default_catalog(container)
             self.assert_has_jmx_catalog(container)
 
@@ -397,57 +291,6 @@ query.max-memory=50GB\n"""
                 '/etc/presto/config.properties',
                 self.default_workers_config_with_slave1_
             )
-
-    def test_install_twice(self):
-        installer = StandalonePrestoInstaller(self)
-        self.upload_topology()
-        cmd_output = installer.install()
-        expected = self.format_err_msgs_with_internal_hosts(installed_all_hosts_output)
-
-        actual = cmd_output.splitlines()
-        self.assertRegexpMatchesLineByLine(actual, expected)
-
-        for container in self.cluster.all_hosts():
-            installer.assert_installed(self, container)
-            self.assert_has_default_config(container)
-            self.assert_has_default_catalog(container)
-
-        output = installer.install(pa_raise_error=False)
-
-        self.default_keywords.update(installer.get_keywords())
-
-        with open(os.path.join(LOCAL_RESOURCES_DIR, 'install_twice.txt'),
-                  'r') as f:
-            expected = f.read()
-        expected = self.escape_for_regex(
-            self.replace_keywords(expected))
-
-        self.assertRegexpMatchesLineByLine(output.splitlines(),
-                                           expected.splitlines())
-        for container in self.cluster.all_hosts():
-            installer.assert_installed(self, container)
-            self.assert_has_default_config(container)
-            self.assert_has_default_catalog(container)
-
-    def test_install_non_root_user(self):
-        installer = StandalonePrestoInstaller(self)
-        self.upload_topology(
-            {"coordinator": "master",
-             "workers": ["slave1", "slave2", "slave3"],
-             "username": "app-admin"}
-        )
-
-        rpm_name = installer.copy_presto_rpm_to_master(cluster=self.cluster)
-        self.write_test_configs(self.cluster)
-        self.run_prestoadmin(
-            'server install {rpm_dir}/{name} -p password'.format(
-                rpm_dir=self.cluster.rpm_cache_dir, name=rpm_name)
-        )
-
-        for container in self.cluster.all_hosts():
-            installer.assert_installed(self, container)
-            self.assert_has_default_config(container)
-            self.assert_has_default_catalog(container)
 
     def format_err_msgs_with_internal_hosts(self, msgs):
         formatted_msg = []
