@@ -33,8 +33,8 @@ class ImageBuilder:
 
         self.testcase.cluster.tear_down()
 
-    def _setup_image_with_no_hadoop_provider(self, cluster_type):
-        self._setup_image(NoHadoopBareImageProvider(),
+    def _setup_image_with_no_hadoop_provider(self, cluster_type, build_or_runtime="runtime"):
+        self._setup_image(NoHadoopBareImageProvider(build_or_runtime=build_or_runtime),
                           cluster_type)
 
     def setup_standalone_presto_images(self):
@@ -48,6 +48,7 @@ class ImageBuilder:
     def setup_standalone_bare_images(self):
         cluster_type = STANDALONE_BARE_CLUSTER
         self._setup_image_with_no_hadoop_provider(cluster_type)
+        self._setup_image_with_no_hadoop_provider(cluster_type, build_or_runtime="build")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
