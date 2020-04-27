@@ -12,14 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-
 from nose.plugins.attrib import attr
 
 from tests.no_hadoop_bare_image_provider import NoHadoopBareImageProvider
 from tests.product.base_product_case import BaseProductTestCase
 from tests.product.cluster_types import STANDALONE_PRESTO_CLUSTER
-from tests.product.constants import LOCAL_RESOURCES_DIR
 from tests.product.standalone.presto_installer import StandalonePrestoInstaller
 
 
@@ -48,16 +45,6 @@ class TestServerUninstall(BaseProductTestCase):
         self.assert_path_removed(container, '/var/lib/presto')
         self.assert_path_removed(container, '/usr/shared/doc/presto')
         self.assert_path_removed(container, '/etc/init.d/presto')
-
-    def test_uninstall_twice(self):
-        self.test_uninstall()
-
-        output = self.run_prestoadmin('server uninstall', raise_error=False)
-        with open(os.path.join(LOCAL_RESOURCES_DIR, 'uninstall_twice.txt'),
-                  'r') as f:
-            expected = f.read()
-
-        self.assertEqualIgnoringOrder(expected, output)
 
     def test_uninstall_lost_host(self):
         self.setup_cluster(NoHadoopBareImageProvider(), STANDALONE_PRESTO_CLUSTER)
