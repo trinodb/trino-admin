@@ -1,78 +1,16 @@
 master: Configuration file at /etc/presto/node.properties:
-node.id=.*
-catalog.config-dir=/etc/presto/catalog
-node.data-dir=/var/lib/presto/data
-node.environment=presto
-node.launcher-log-file=/var/log/presto/launcher.log
-node.server-log-file=/var/log/presto/server.log
-
-
+(.|\n)*
 master: Configuration file at /etc/presto/jvm.config:
--server
--Xmx16G
--XX:\-UseBiasedLocking
--XX:\+UseG1GC
--XX:G1HeapRegionSize=32M
--XX:\+ExplicitGCInvokesConcurrent
--XX:\+ExitOnOutOfMemoryError
--XX:\+UseGCOverheadLimit
--XX:\+HeapDumpOnOutOfMemoryError
--XX:ReservedCodeCacheSize=512M
--Djdk.attach.allowAttachSelf=true
--Djdk.nio.maxCachedBufferSize=2000000
--DHADOOP_USER_NAME=hive
-
-
+(.|\n)*
 master: Configuration file at /etc/presto/config.properties:
-coordinator=true
-discovery-server.enabled=true
-discovery.uri=http://master:7070
-http-server.http.port=7070
-node-scheduler.include-coordinator=false
-query.max-memory-per-node=512MB
-query.max-memory=50GB
-
-
+(.|\n)*
 master: Configuration file at /etc/presto/log.properties:
-# Enable verbose logging from Presto
-#io.prestosql=DEBUG
-#.*
-
-
+(.|\n)*
 slave1: Configuration file at /etc/presto/node.properties:
-node.id=.*
-catalog.config-dir=/etc/presto/catalog
-node.data-dir=/var/lib/presto/data
-node.environment=presto
-node.launcher-log-file=/var/log/presto/launcher.log
-node.server-log-file=/var/log/presto/server.log
-
-
+(.|\n)*
 slave1: Configuration file at /etc/presto/jvm.config:
--server
--Xmx16G
--XX:\-UseBiasedLocking
--XX:\+UseG1GC
--XX:G1HeapRegionSize=32M
--XX:\+ExplicitGCInvokesConcurrent
--XX:\+ExitOnOutOfMemoryError
--XX:\+UseGCOverheadLimit
--XX:\+HeapDumpOnOutOfMemoryError
--XX:ReservedCodeCacheSize=512M
--Djdk.attach.allowAttachSelf=true
--Djdk.nio.maxCachedBufferSize=2000000
--DHADOOP_USER_NAME=hive
-
-
+(.|\n)*
 slave1: Configuration file at /etc/presto/config.properties:
-coordinator=false
-discovery.uri=http://master:7070
-http-server.http.port=7070
-query.max-memory-per-node=512MB
-query.max-memory=50GB
-
-
+(.|\n)*
 slave1: Configuration file at /etc/presto/log.properties:
-# Enable verbose logging from Presto
-#io.prestosql=DEBUG
-#.*
+(.|\n)*
