@@ -20,7 +20,6 @@ import os
 
 from nose.plugins.attrib import attr
 
-from prestoadmin.standalone.config import PRESTO_STANDALONE_USER
 from prestoadmin.util import constants
 from tests.no_hadoop_bare_image_provider import NoHadoopBareImageProvider
 from tests.product.base_product_case import BaseProductTestCase
@@ -298,10 +297,14 @@ class TestConfiguration(BaseProductTestCase):
             expected = f.read()
         self.assertEqual(output, expected)
 
-    def test_configuration_show_coord_worker_using_dash_h(self):
-        self.upload_topology()
+    def test_configuration_using_dash_h_and_dash_x(self):
+        self.upload_topology(
+            {"coordinator": "master",
+             "workers": ["slave1", "slave2", "slave3"],
+             "username": "app-admin"}
+        )
 
-        self.run_prestoadmin('configuration deploy')
+        self.run_prestoadmin('configuration deploy -p password')
 
         # show default configuration for master and slave1
         output = self.run_prestoadmin('configuration show '
@@ -312,43 +315,8 @@ class TestConfiguration(BaseProductTestCase):
             expected = f.read()
         self.assertRegexpMatches(output, expected)
 
-    def test_configuration_show_coord_worker_using_dash_x(self):
-        self.upload_topology()
-
-        self.run_prestoadmin('configuration deploy')
-
-        # show default configuration for all except master and slave1
+        # show default configuration for master and slave1 by excluding
+        # slave2 and slave3
         output = self.run_prestoadmin('configuration show '
-                                      '-x %(master)s,%(slave1)s')
-        with open(os.path.join(LOCAL_RESOURCES_DIR,
-                               'configuration_show_default_slave2_slave3.txt'),
-                  'r') as f:
-            expected = f.read()
-        self.assertRegexpMatches(output, expected)
-
-    def test_configuration_no_presto_user(self):
-        for host in self.cluster.all_hosts():
-            self.cluster.exec_cmd_on_host(
-                host, "userdel %s" % (PRESTO_STANDALONE_USER,), invoke_sudo=True)
-
-        self.assertRaisesRegexp(
-            OSError, "User presto does not exist", self.run_prestoadmin,
-            'configuration deploy')
-
-    def test_configuration_show_non_root_user(self):
-        self.upload_topology(
-            {"coordinator": "master",
-             "workers": ["slave1", "slave2", "slave3"],
-             "username": "app-admin"}
-        )
-        for host in self.cluster.all_hosts():
-            self.cluster.exec_cmd_on_host(host, 'rm -rf /etc/presto', invoke_sudo=True)
-
-        self.run_prestoadmin('configuration deploy -p password')
-
-        # configuration show default configuration
-        output = self.run_prestoadmin('configuration show -p password')
-        with open(os.path.join(LOCAL_RESOURCES_DIR,
-                               'configuration_show_default.txt'), 'r') as f:
-            expected = f.read()
+                                      '-x %(slave2)s,%(slave3)s')
         self.assertRegexpMatches(output, expected)
