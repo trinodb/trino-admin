@@ -52,7 +52,6 @@ class Coordinator(Node):
                                          '-Djdk.attach.allowAttachSelf=true',
                                          '-Djdk.nio.maxCachedBufferSize=2000000',
                                          '-DHADOOP_USER_NAME=hive',  # not Presto default
-                                         '-Dpresto-temporarily-allow-java8=true',
                                          ],
                           'config.properties': {
                               'coordinator': 'true',

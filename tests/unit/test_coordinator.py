@@ -47,8 +47,7 @@ class TestCoordinator(BaseTestCase):
                                    '-XX:ReservedCodeCacheSize=512M',
                                    '-Djdk.attach.allowAttachSelf=true',
                                    '-Djdk.nio.maxCachedBufferSize=2000000',
-                                   '-DHADOOP_USER_NAME=hive',
-                                   '-Dpresto-temporarily-allow-java8=true'],
+                                   '-DHADOOP_USER_NAME=hive'],
                     'config.properties': {
                         'coordinator': 'true',
                         'discovery-server.enabled': 'true',
@@ -83,8 +82,7 @@ class TestCoordinator(BaseTestCase):
                                    '-XX:ReservedCodeCacheSize=512M',
                                    '-Djdk.attach.allowAttachSelf=true',
                                    '-Djdk.nio.maxCachedBufferSize=2000000',
-                                   '-DHADOOP_USER_NAME=hive',
-                                   '-Dpresto-temporarily-allow-java8=true'],
+                                   '-DHADOOP_USER_NAME=hive'],
                     'config.properties': {
                         'coordinator': 'true',
                         'discovery-server.enabled': 'true',
@@ -172,8 +170,7 @@ class TestCoordinator(BaseTestCase):
                                    '-XX:ReservedCodeCacheSize=512M',
                                    '-Djdk.attach.allowAttachSelf=true',
                                    '-Djdk.nio.maxCachedBufferSize=2000000',
-                                   '-DHADOOP_USER_NAME=hive',
-                                   '-Dpresto-temporarily-allow-java8=true'],
+                                   '-DHADOOP_USER_NAME=hive'],
                     'config.properties': {
                         'coordinator': 'true',
                         'discovery-server.enabled': 'true',
