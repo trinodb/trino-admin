@@ -17,7 +17,7 @@ To run a query via the Presto CLI:
     $ mv presto-cli-<version>-executable.jar presto
     $ chmod +x presto
 
-.. NOTE:: Presto must run with Java 8, so if Java 7 is the default on your cluster, you will need to explicitly specify the Java 8 executable. For example, ``<path_to_java_8_executable> -jar presto``. It may be helpful to add an alias for the Presto CLI: ``alias presto='<path_to_java_8_executable> -jar <path_to_presto>'``.
+.. NOTE:: Presto must run with at least Java 11, so if another version is default on your cluster, you will need to explicitly specify the Java 11 executable. For example, ``<path_to_java_11_executable> -jar presto``. It may be helpful to add an alias for the Presto CLI: ``alias presto='<path_to_java_11_executable> -jar <path_to_presto>'``.
 
 3. By default, ``presto-admin`` configures a TPC-H catalog, which generates TPC-H data on-the-fly.
    Using this catalog, issue the following commands to run your first Presto query:

@@ -39,10 +39,10 @@ You can switch to a new coordinator by following the steps below:
    ``~/.prestoadmin/config.json``.
 
 3. To install Presto on the new node, run the following two ``presto-admin``
-   commands. The first command is needed only if Java 8 is not already installed
+   commands. The first command is needed only if Java is not already installed
    on the new coordinator: ::
 
-     ./presto-admin package install -H new_coordinator /path/to/jdk8.rpm
+     ./presto-admin package install -H new_coordinator /path/to/jdk.rpm
      ./presto-admin server install -H new_coordinator /path/to/presto-server.rpm
 
 4. Update the coordinator and worker configuration files controlled by
