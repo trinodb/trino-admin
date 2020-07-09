@@ -7,6 +7,7 @@ The following matrix details the compatible Presto Admin and Presto versions.
 ============================ ==========================
 Presto-Admin Version         Compatible Presto Versions
 ============================ ==========================
+2.11                         338
 2.10                         332
 2.9                          332
 2.8                          323
