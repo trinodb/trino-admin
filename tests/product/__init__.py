@@ -17,6 +17,8 @@ import os
 
 from exceptions import Exception
 
+ZULU_JDK = 'zulu-11'
+
 
 def determine_jdk_directory(cluster):
     """
@@ -29,11 +31,18 @@ def determine_jdk_directory(cluster):
 
     :param cluster: cluster on which to search for the JDK directory
     """
-    number_of_jdks = cluster.exec_cmd_on_host(cluster.master, 'bash -c "ls -ld /usr/java/j*| wc -l"')
-    if int(number_of_jdks) != 1:
-        raise Exception('The number of JDK directories matching /usr/java/jdk* is not 1')
-    output = cluster.exec_cmd_on_host(cluster.master, 'ls -d /usr/java/j*')
-    return output.split(os.path.sep)[-1].strip('\n')
+    # TODO: remove this Oracle JDK checks once we port all OS type images to JDK 11
+    zulu_jdk = cluster.exec_cmd_on_host(cluster.master, 'bash -c "ls -ld /usr/lib/jvm/zulu-11| wc -l"')
+    try:
+        if int(zulu_jdk) == 1:
+            return ZULU_JDK
+        raise Exception('The number of Zulu JDK directories matching /usr/lib/jvm/zulu-11 is not 1')
+    except ValueError:
+        number_of_jdks = cluster.exec_cmd_on_host(cluster.master, 'bash -c "ls -ld /usr/java/j*| wc -l"')
+        if int(number_of_jdks) != 1:
+            raise Exception('The number of JDK directories matching /usr/java/jdk* is not 1')
+        output = cluster.exec_cmd_on_host(cluster.master, 'ls -d /usr/java/j*')
+        return output.split(os.path.sep)[-1].strip('\n')
 
 
 @contextlib.contextmanager
@@ -47,7 +56,10 @@ def relocate_jdk_directory(cluster, destination):
     """
     # assume that Java is installed in the same folder on all nodes
     jdk_directory = determine_jdk_directory(cluster)
-    source_jdk = os.path.join('/usr/java', jdk_directory)
+    if jdk_directory == ZULU_JDK:
+        source_jdk = os.path.join('/usr/lib/jvm', jdk_directory)
+    else:
+        source_jdk = os.path.join('/usr/java', jdk_directory)
     destination_jdk = os.path.join(destination, jdk_directory)
     for host in cluster.all_hosts():
         cluster.exec_cmd_on_host(
