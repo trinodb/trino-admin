@@ -5,22 +5,27 @@ Installing Java
 ===============
 Prerequisites: :ref:`presto-admin-installation-label` and :ref:`presto-admin-configuration-label`
 
-JDK 11, is a prerequisite for Presto. If a suitable 64-bit version of JDK 11 is already installed on the cluster, you can skip this step.
+A Java 11 runtime environment is a `requirement for running Presto
+<https://prestosql.io/docs/current/installation/deployment.html#requirements>`_.
 
-There are two ways to install Java: via RPM and via tarball.  The RPM installation sets the default Java on your machine to be Java 11. If
-it is acceptable to set the default Java to be Java 11, you can use ``presto-admin`` to install Java, otherwise you will need to install manually.
+If a suitable 64-bit version of Java 11 is already installed on the nodes, you
+can skip this step. Otherwise you have to install Java via RPM or a tarball.
 
-To install Java via RPM using ``presto-admin``:
+``presto-admin`` can be used to install a Java RPM package on all nodes in the
+cluster:
 
 1. Download the JDK 11 RPM for Linux.
 
 2. Copy the RPM to a location accessible by ``presto-admin``.
 
-3. Run the following command to install Java on each node in the Presto cluster:
+3. Run the following command to install Java:
 
 .. code-block:: none
 
     $ ./presto-admin package install <local_path_to_java_rpm>
 
+.. note::
 
-.. NOTE:: If installing Java on SLES, you will need to specify the flag ``--nodeps`` for ``presto-admin package install``, so that the RPM is installed without checking or validating dependencies.
+  If installing Java on SLES, you need to specify the flag ``--nodeps`` for
+  ``presto-admin package install``, so that the RPM is installed without 
+  checking or validating dependencies.

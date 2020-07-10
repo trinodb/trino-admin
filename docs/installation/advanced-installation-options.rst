@@ -42,7 +42,7 @@ You can switch to a new coordinator by following the steps below:
    commands. The first command is needed only if Java is not already installed
    on the new coordinator: ::
 
-     ./presto-admin package install -H new_coordinator /path/to/jdk.rpm
+     ./presto-admin package install -H new_coordinator /path/to/jre.rpm
      ./presto-admin server install -H new_coordinator /path/to/presto-server.rpm
 
 4. Update the coordinator and worker configuration files controlled by
