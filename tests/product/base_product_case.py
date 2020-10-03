@@ -27,7 +27,7 @@ from retrying import Retrying
 
 from prestoadmin.prestoclient import PrestoClient
 from prestoadmin.util import constants
-from prestoadmin.util.constants import CONFIG_PROPERTIES, COORDINATOR_DIR_NAME, LOCAL_CONF_DIR
+from prestoadmin.util.constants import CONFIG_PROPERTIES, COORDINATOR_DIR_NAME, LOCAL_CONF_DIR, NODE_PROPERTIES
 from prestoadmin.util.presto_config import PrestoConfig
 from tests.base_test_case import BaseTestCase
 from tests.configurable_cluster import ConfigurableCluster
@@ -480,10 +480,16 @@ query.max-memory=50GB\n"""
         ips = self.cluster.get_ip_address_dict()
         config_path = os.path.join('~', LOCAL_CONF_DIR, COORDINATOR_DIR_NAME, CONFIG_PROPERTIES)
         config = self.cluster.exec_cmd_on_host(self.cluster.master, 'cat ' + config_path)
+        node_config_path = os.path.join('~', LOCAL_CONF_DIR, COORDINATOR_DIR_NAME, NODE_PROPERTIES)
+        node_config = self.cluster.exec_cmd_on_host(self.cluster.master, 'cat ' + node_config_path)
         user = 'root'
         if host is None:
             host = self.cluster.master
-        return PrestoClient(ips[host], user, PrestoConfig.from_file(StringIO(config), config_path, host))
+        return PrestoClient(ips[host], user, PrestoConfig.from_file(
+            StringIO(config),
+            StringIO(node_config),
+            config_path,
+            host))
 
 
 def docker_only(original_function):

@@ -23,6 +23,9 @@ import os
 import socket
 import textwrap
 import urlparse
+import datetime
+import jwt
+import hashlib
 from httplib import HTTPConnection, HTTPException
 from tempfile import mkstemp
 
@@ -30,11 +33,10 @@ from StringIO import StringIO
 from fabric.operations import get
 from fabric.state import env
 from fabric.utils import error
-from prestoadmin.util.constants import REMOTE_CONF_DIR, CONFIG_PROPERTIES
 from prestoadmin.util.exception import InvalidArgumentError
 from prestoadmin.util.httpscacertconnection import HTTPSCaCertConnection
 from prestoadmin.util.local_config_util import get_coordinator_directory, get_topology_path
-from prestoadmin.util.presto_config import PrestoConfig, LDAP_CLIENT_USER_KEY, LDAP_CLIENT_PASSWORD_KEY
+from prestoadmin.util.presto_config import PrestoConfig
 
 _LOGGER = logging.getLogger(__name__)
 URL_TIMEOUT_MS = 5000
@@ -115,7 +117,6 @@ class PrestoClient:
 
         headers = {"X-Presto-Catalog": catalog,
                    "X-Presto-Schema": schema,
-                   "X-Presto-User": self.user,
                    "X-Presto-Source": "presto-admin"}
         answer = ''
         try:
@@ -320,28 +321,25 @@ class PrestoClient:
                    all_keys))
 
     def _add_auth_headers(self, headers):
-        if self.coordinator_config.use_ldap():
-            if self.coordinator_config.use_ldap():
-                auth_headers = self._create_auth_headers(
-                    self.coordinator_config.get_ldap_user(),
-                    self.coordinator_config.get_ldap_password())
-                headers.update(auth_headers)
-                _LOGGER.info("Using LDAP = %s" % self.coordinator_config.use_ldap())
+        internal_secret = self.coordinator_config.get_internal_communication_secret()
+        if not internal_secret:
+            node_environment = self.coordinator_config.get_node_environment()
+            _LOGGER.info('Using \'node.environment=%s\' for internal communication secret' % node_environment)
+            internal_secret = node_environment
+        auth_headers = self._create_auth_headers(internal_secret)
+        headers.update(auth_headers)
+
+    def _create_auth_headers(self, secret=None):
+        if not secret:
+            _LOGGER.warn('No internal secret found. '
+                         'Fallback to using user %s for auth header X-Presto-User' % self.user)
+            return {"X-Presto-User": self.user}
+
+        return {'X-Presto-Internal-Bearer': '%s' % self.__generate_presto_token(secret.rstrip())}
 
     @staticmethod
-    def _create_auth_headers(user, password):
-        if not user:
-            error('LDAP user (taken from %s in %s on the coordinator) cannot be null or empty' %
-                  (LDAP_CLIENT_USER_KEY, os.path.join(REMOTE_CONF_DIR, CONFIG_PROPERTIES)))
-            return {}
-        if not password:
-            error('LDAP password (taken from %s in %s on the coordinator) cannot be null or empty' %
-                  (LDAP_CLIENT_PASSWORD_KEY, os.path.join(REMOTE_CONF_DIR, CONFIG_PROPERTIES)))
-            return {}
-
-        if ':' in user:
-            error("LDAP user cannot contain ':': %s" % user)
-
-        # base64 encode the username and password
-        auth = base64.encodestring('%s:%s' % (user, password)).replace('\n', '')
-        return {'Authorization': 'Basic %s' % auth}
+    def __generate_presto_token(secret):
+        key = hashlib.sha256(secret.encode()).digest()
+        expire = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
+        payload = {'sub': 'PrestoAdmin', 'exp': expire}
+        return jwt.encode(payload, key, algorithm='HS256')
