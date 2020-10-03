@@ -30,54 +30,34 @@ http-server.https.port=8444
 http-server.https.enabled=true
 http-server.https.keystore.path=/tmp/mykeystore.jks
 http-server.https.keystore.key=testldap
-http-server.authentication.type=LDAP
-authentication.ldap.url=ldaps://10.25.171.180:636
-authentication.ldap.user-bind-pattern=${USER}@presto.testldap.com
+internal-communication.shared-secret=internal-secret
     """
 
-    def _get_presto_config(self, config):
+    def _get_presto_config(self, config, node_config):
         config_file = StringIO(config)
-        return PrestoConfig.from_file(config_file)
+        return PrestoConfig.from_file(config_file, StringIO(node_config))
 
-    def _assert_use_https(self, expected, config):
-        presto_config = self._get_presto_config(config)
+    def _assert_use_https(self, expected, config, node_config):
+        presto_config = self._get_presto_config(config, node_config)
         self.assertEqual(presto_config.use_https(), expected)
 
     def test_use_https(self):
-        self._assert_use_https(False, "")
-        self._assert_use_https(False, "http-server.http.enabled=true")
-        self._assert_use_https(False, "http-server.https.enabled=true")
+        self._assert_use_https(False, "", "")
+        self._assert_use_https(False, "http-server.http.enabled=true", "")
+        self._assert_use_https(False, "http-server.https.enabled=true", "")
 
         self._assert_use_https(False, """
 http-server.http.enabled=true
 http-server.https.enabled=true")
-        """)
+        """, "")
 
         self._assert_use_https(True, """
 http-server.http.enabled=false
 http-server.https.enabled=true
-        """)
+        """, "")
 
-        self._assert_use_https(False, self.realworld)
+        self._assert_use_https(False, self.realworld, "")
 
-    def _assert_use_ldap(self, expected, config):
-        presto_config = self._get_presto_config(config)
-        self.assertEqual(presto_config.use_ldap(), expected)
-
-    def test_use_ldap(self):
-        self._assert_use_ldap(False, "")
-        self._assert_use_ldap(False, "http-server.authentication.type=LDAP")
-
-        self._assert_use_ldap(False, """
-http-server.http.enabled=false
-http-server.https.enabled=true
-http-server.authentication.type=A_BIG_BRASS_KEY
-        """)
-
-        self._assert_use_ldap(True, """
-http-server.http.enabled=false
-http-server.https.enabled=true
-http-server.authentication.type=LDAP
-        """)
-
-        self._assert_use_ldap(False, self.realworld)
+    def test_get_node_environment(self):
+        presto_config = self._get_presto_config("", "node.environment=presto")
+        self.assertEqual("presto", presto_config.get_node_environment())
