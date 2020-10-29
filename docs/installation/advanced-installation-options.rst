@@ -1,8 +1,8 @@
 =============================
-Advanced Installation Options
+Advanced installation options
 =============================
 
-Specifying a Certificate Authority for the Online Installer
+Specifying a certificate authority for the online installer
 -----------------------------------------------------------
 The online installer downloads its dependencies from ``pypi.python.org``, the
 standard Python location for hosting packages. For some operating systems,

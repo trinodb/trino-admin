@@ -11,6 +11,7 @@ prestoadmin.egg-info/
 htmlcov/
 log/
 tmp/
+.vscode/
 
 # Ignore generated Sphinx docs
 docs/prestoadmin.*

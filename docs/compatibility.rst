@@ -1,11 +1,11 @@
 ============================
-Presto Version Compatibility
+Presto version compatibility
 ============================
 
 The following matrix details the compatible Presto Admin and Presto versions.
 
 ============================ ==========================
-Presto-Admin Version         Compatible Presto Versions
+Presto Admin version         Compatible Presto versions
 ============================ ==========================
 2.11                         338
 2.10                         332

@@ -1,5 +1,5 @@
 ======================
-Upgrading Presto-Admin
+Upgrading Presto Admin
 ======================
 
 Upgrading to a newer version of ``presto-admin`` requires deleting the old
