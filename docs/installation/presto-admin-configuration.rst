@@ -25,7 +25,10 @@ able to login to all of the nodes via SSH as that user (see
 file should be owned by root with R/W permissions (i.e. 622).
 
 .. NOTE::
-   The sudo setup for a non-root user must have the ability to run /bin/bash as root. This can be a security issue. The IT organization should take the necessary steps to address this security hole and select an appropriate presto-admin user.
+   The sudo setup for a non-root user must have the ability to run /bin/bash
+   as root. This can be a security issue. The IT organization should take the
+   necessary steps to address this security hole and select an appropriate
+   presto-admin user.
 
 Configuration 
 -------------
@@ -59,7 +62,10 @@ Note that ``java_home`` is not set by default.  It only needs to be set if
 Java is in a non-standard location on the Presto nodes.  The property is used
 to tell the Presto RPM where to find Java.
 
-.. NOTE:: If you have installed the JDK, ``java_home`` should be set so refer to the ``jre`` subdirectory of the JDK.
+.. NOTE::
+
+    If you have installed the JDK, ``java_home`` should be set so refer to the
+    ``jre`` subdirectory of the JDK.
 
 You can also specify some but not all of the properties. For example, the
 default configuration is for a single-node installation of Presto on the same
@@ -73,7 +79,8 @@ username and port, a sample ``config.json`` would be:
       "workers": ["slave1","slave2","slave3","slave4","slave5"]
     }
 
-You can specify a range of workers by including the number range in brackets in the worker name.  For example:
+You can specify a range of workers by including the number range in brackets
+in the worker name.  For example:
 
 .. code-block:: none
 
@@ -84,7 +91,6 @@ is the same as
 .. code-block:: none
 
     "workers": ["worker01", "worker02", "worker03"]
-
 
 .. _sudo-password-spec:
 

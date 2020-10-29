@@ -14,7 +14,8 @@ Troubleshooting
    directory.
 #. You can check the status of Presto on your cluster by using
    :ref:`server-status`.
-#. If Presto is not running and you try to execute any command from the Presto CLI you might get:
+#. If Presto is not running and you try to execute any command from the
+   Presto CLI you might get:
 
 .. code-block:: none
 
@@ -40,9 +41,12 @@ Troubleshooting
       cluster again using :ref:`catalog-add`
 
 #. The following error can occur if you do not have passwordless ssh enabled
-   and have not provided a password or if the user requires a sudo password: ::
+   and have not provided a password or if the user requires a sudo password:
 
-    Fatal error: Needed to prompt for a connection or sudo password (host: master), but input would be ambiguous in parallel mode
+.. code-block:: none
+
+    Fatal error: Needed to prompt for a connection or sudo password (host: master),
+    but input would be ambiguous in parallel mode
 
    See :ref:`ssh-configuration-label` for information on setting up
    passwordless ssh and on providing a password, and :ref:`sudo-password-spec`
@@ -52,4 +56,4 @@ Troubleshooting
    enabled is experimental. Make sure to check both the Presto server log and the
    ``presto-admin`` log to troubleshoot problems with your configuration; it may also
    be helpful to verify that you can connect to the cluster via the Presto CLI using
-   HTTPS/LDAP as appropriate.
+   HTTPS or LDAP as appropriate.

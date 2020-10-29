@@ -41,7 +41,8 @@ of the nodes in the cluster.
 .. NOTE::
      For Amazon EMR, use the online installer instead of the offline installer.
 
-3. Extract and run the installation script from within the ``prestoadmin`` directory.
+3. Extract and run the installation script from within the ``prestoadmin``
+directory.
 
 .. code-block:: none
 
@@ -50,12 +51,13 @@ of the nodes in the cluster.
     $ ./install-prestoadmin.sh
 
 The installation script will create a ``presto-admin-install`` directory and an
-executable ``presto-admin`` script. By default, the ``presto-admin`` config and log
-directory locations are configured to be ``~/.prestoadmin`` and ``~/.prestoadmin/log``,
-respectively.  This can be changed by modifying the environment variables,
-PRESTO_ADMIN_CONFIG_DIR and PRESTO_ADMIN_LOG_DIR. The installation script will also create
-the directories pointed to by PRESTO_ADMIN_CONFIG_DIR and PRESTO_ADMIN_LOG_DIR. If those
-directories already exist, the installation script will not erase their contents.
+executable ``presto-admin`` script. By default, the ``presto-admin`` config and
+log directory locations are configured to be ``~/.prestoadmin`` and
+``~/.prestoadmin/log``, respectively. This can be changed by modifying the
+ environment variables, PRESTO_ADMIN_CONFIG_DIR and PRESTO_ADMIN_LOG_DIR.
+ The installation script will also create the directories pointed to by
+ PRESTO_ADMIN_CONFIG_DIR and PRESTO_ADMIN_LOG_DIR. If those directories
+ already exist, the installation script will not erase their contents.
 
 4. Verify that ``presto-admin`` was installed properly by running the following
 command:
