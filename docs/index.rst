@@ -1,4 +1,4 @@
-Presto-Admin
+Presto Admin
 ============
 
 `Presto Community <https://prestosql.io/community.html>`_ |

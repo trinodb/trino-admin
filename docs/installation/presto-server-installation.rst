@@ -1,8 +1,9 @@
 .. _presto-server-installation-label:
 
 ============================
-Installing the Presto Server
+Installing the Presto server
 ============================
+
 Prerequisites: :ref:`presto-admin-installation-label`, :ref:`java-installation-label` and :ref:`presto-admin-configuration-label`
 
 To install the Presto query engine on a cluster of nodes using ``presto-admin``:

@@ -1,7 +1,7 @@
 .. _presto-admin-configuration-label:
 
 ========================
-Configuring Presto-Admin
+Configuring Presto Admin
 ========================
 A Presto cluster consists of a coordinator node and one or more workers nodes.
 A coordinator and worker may be located on the same node, meaning that you can
@@ -88,7 +88,7 @@ is the same as
 
 .. _sudo-password-spec:
 
-Sudo Password Specification
+Sudo password specification
 ---------------------------
 Please note that if the username you specify is not root, and that user needs
 to specify a sudo password, you do so in one of two ways. You can specify it on

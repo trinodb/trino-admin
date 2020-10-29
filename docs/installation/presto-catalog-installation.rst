@@ -1,6 +1,6 @@
 
 ================
-Adding a Catalog
+Adding a catalog
 ================
 
 In Presto, connectors allow you to access different data sources -- e.g.,

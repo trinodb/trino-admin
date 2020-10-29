@@ -1,6 +1,6 @@
-=================================
-Presto-Admin Command-Line Options
-=================================
+=====================================
+``presto-admin`` command line options
+=====================================
 
 A quick overview of the possible CLI options for ``presto-admin`` can be found
 via ``./presto-admin --extended-help``. More details on those options can

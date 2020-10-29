@@ -1,7 +1,7 @@
 .. _comprehensive-guide-label:
 
 **********
-User Guide
+User guide
 **********
 
 A full explanation of the commands and features of ``presto-admin``.

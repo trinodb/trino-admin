@@ -1,6 +1,6 @@
-=====================
-Presto-Admin Commands
-=====================
+=========================
+``presto-admin`` commands
+=========================
 
 .. _catalog-add:
 
@@ -45,7 +45,7 @@ once, you could run ::
     ./presto-admin catalog add
     ./presto-admin server restart
 
-Adding a Custom Connector
+Adding a custom connector
 -------------------------
 In order to install a catalog for a custom connector not included with Presto, the
 jar must be added to the Presto plugin location using the ``plugin add_jar`` command

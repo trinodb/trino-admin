@@ -1,7 +1,7 @@
 .. _quick-start-guide-label:
 
 *****************
-Quick Start Guide
+Quick start guide
 *****************
 
 The following describes installing Presto on one or more nodes via the ``presto-admin`` software. This is an alternative to the installation steps described at `prestosql.io <https://prestosql.io/docs/current/installation.html>`_. Using the ``presto-admin`` tool is the simplest and preferred method for installing and managing a Presto cluster.

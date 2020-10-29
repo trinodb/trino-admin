@@ -1,7 +1,7 @@
 .. _ssh-configuration-label:
 
 *****************
-SSH Configuration
+SSH configuration
 *****************
 
 In order to run ``presto-admin``, the node that is running ``presto-admin`` must be able to connect to all of the nodes running Presto via SSH. ``presto-admin`` makes the SSH connection with the username and port specified in ``~/.prestoadmin/config.json``. Even if you have a single-node installation, ``ssh username@localhost`` needs to work properly.
