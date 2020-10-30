@@ -5,10 +5,11 @@ Installing Presto Admin
 =======================
 
 Prerequisites:
- - `Python 2.6 or Python 2.7 <https://www.python.org/downloads>`_.
- - If you are using the online installer then make sure you've installed the
-   Python development package for your system. For RedHat/Centos that package is
-   ``python2-devel`` and for Debian/Ubuntu it is ``python-dev``.
+
+ *  `Python 2.6 or Python 2.7 <https://www.python.org/downloads>`_.
+ *  If you are using the online installer then make sure you've installed the
+    Python development package for your system. For RedHat/Centos that package is
+    ``python2-devel`` and for Debian/Ubuntu it is ``python-dev``.
 
 Presto Admin is packaged as an offline installer --
 ``prestoadmin-<version>-offline.tar.gz`` -- and as an online
@@ -41,7 +42,7 @@ of the nodes in the cluster.
 .. NOTE::
      For Amazon EMR, use the online installer instead of the offline installer.
 
-3. Extract and run the installation script from within the ``prestoadmin``
+3.  Extract and run the installation script from within the ``prestoadmin``
 directory.
 
 .. code-block:: none
@@ -54,12 +55,12 @@ The installation script will create a ``presto-admin-install`` directory and an
 executable ``presto-admin`` script. By default, the ``presto-admin`` config and
 log directory locations are configured to be ``~/.prestoadmin`` and
 ``~/.prestoadmin/log``, respectively. This can be changed by modifying the
- environment variables, PRESTO_ADMIN_CONFIG_DIR and PRESTO_ADMIN_LOG_DIR.
- The installation script will also create the directories pointed to by
- PRESTO_ADMIN_CONFIG_DIR and PRESTO_ADMIN_LOG_DIR. If those directories
- already exist, the installation script will not erase their contents.
+environment variables, PRESTO_ADMIN_CONFIG_DIR and PRESTO_ADMIN_LOG_DIR.
+The installation script will also create the directories pointed to by
+PRESTO_ADMIN_CONFIG_DIR and PRESTO_ADMIN_LOG_DIR. If those directories
+already exist, the installation script will not erase their contents.
 
-4. Verify that ``presto-admin`` was installed properly by running the following
+4.  Verify that ``presto-admin`` was installed properly by running the following
 command:
 
 .. code-block:: none
@@ -68,3 +69,4 @@ command:
 
 Please note that you should only run one ``presto-admin`` command on your
 cluster at a time.
+

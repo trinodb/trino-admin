@@ -26,22 +26,22 @@ running ``presto-admin``:
 
 .. code-block:: none
 
-ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+    ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 
 While logged in as username, copy the public key to all of the coordinator and
 worker nodes:
 
 .. code-block:: none
 
-ssh <username>@<ip> "mkdir -p ~/.ssh && chmod 700 ~/.ssh"
-scp ~/.ssh/id_rsa.pub <username>@<ip>:~/.ssh/id_rsa.pub
+    ssh <username>@<ip> "mkdir -p ~/.ssh && chmod 700 ~/.ssh"
+    scp ~/.ssh/id_rsa.pub <username>@<ip>:~/.ssh/id_rsa.pub
 
 Log into all of those nodes and append the public key to the authorized key
 file:
 
 .. code-block:: none
 
-ssh <username>@<ip> "cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+    ssh <username>@<ip> "cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
 
 For non-root username, log into all of those nodes and append the root user
 public key to the username authorized key file, provided the passwordless
@@ -49,7 +49,7 @@ ssh has been setup for root user.:
 
 .. code-block:: none
 
-ssh <username>@<ip> "sudo cat /root/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+    ssh <username>@<ip> "sudo cat /root/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
 
 Once you have passwordless SSH set up, you can just run ``presto-admin``
 commands as they appear in the documentation. If your private key is not in
@@ -58,8 +58,7 @@ the -i CLI option:
 
 .. code-block:: none
 
-./presto-admin <command> -i <path_to_private_key> -i <path_to_second_private_key>
-
+    ./presto-admin <command> -i <path_to_private_key> -i <path_to_second_private_key>
 
 Please also note that it is not common for servers to allow passwordless SSH
 for root because of security concerns, so it is preferable for the SSH user
@@ -76,7 +75,7 @@ in plaintext:
 
 .. code-block:: none
 
-./presto-admin <command> -p <password>
+    ./presto-admin <command> -p <password>
 
 However, from a security perspective, it is preferable not to type your
 password in plaintext. Thus, it is also possible to add an interactive
@@ -85,8 +84,8 @@ before running any commands:
 
 .. code-block:: none
 
-./presto-admin <command> -I
-Initial value for env.password: <type your password here>
+    ./presto-admin <command> -I
+    Initial value for env.password: <type your password here>
 
 If you do not specify a password, the command will fail with a parallel
 execution failure, since, by default, ``presto-admin`` runs in parallel and

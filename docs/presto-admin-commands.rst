@@ -162,12 +162,12 @@ This command gathers various system specific information from the cluster.
 The information is saved in a tar file at ``/tmp/presto-debug-sysinfo.tar.gz``.
 The gathered information includes:
 
-* Node specific information from Presto like node uri, last response
-  time, recent failures, recent requests made to the node, etc.
-* List of catalogs configured
-* Catalog configuration files
-* Other system specific information like OS information, Java version,
- ``presto-admin`` versionk, and Presto server version.
+*  Node specific information from Presto like node uri, last response
+   time, recent failures, recent requests made to the node, etc.
+*  List of catalogs configured
+*  Catalog configuration files
+*  Other system specific information like OS information, Java
+   version, ``presto-admin`` version, and Presto server version.
 
 Example
 -------
@@ -279,8 +279,10 @@ For coordinator:
     query.max-memory-per-node=8GB
     query.max-memory=50GB
 
-    # if the coordinator is also a worker, it will have the following property
-    instead: ``node-scheduler.include-coordinator=true``
+if the coordinator is also a worker, it will have the following property
+instead::
+
+    node-scheduler.include-coordinator=true
 
 See :ref:`presto-port-configuration-label` for details on http port configuration.
 
@@ -373,9 +375,8 @@ This command takes an optional ``--nodeps`` flag which indicates whether the
 rpm installed should ignore checking any package dependencies.
 
 .. WARNING::
-
-Using ``--nodeps`` can result in installing the rpm even with any missing
-dependencies, so you may end up with a broken rpm installation.
+    Using ``--nodeps`` can result in installing the rpm even with any missing
+    dependencies, so you may end up with a broken rpm installation.
 
 Example
 -------
@@ -592,11 +593,11 @@ node is inaccessible.
 
 The status output will have the following information:
 
-    * server status
-    * node uri
-    * Presto version installed
-    * node is active/inactive
-    * catalogs deployed
+* server status
+* node uri
+* Presto version installed
+* node is active/inactive
+* catalogs deployed
 
 Example
 -------
