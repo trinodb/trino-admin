@@ -57,11 +57,6 @@ class TestServerUpgrade(BaseProductTestCase):
             self.assert_has_default_config(container)
             self.assert_has_default_catalog(container)
 
-            # However, dummy_rpm.rpm removes /usr/lib/presto/lib and
-            # /usr/lib/presto/plugin
-            self.assert_path_removed(container, '/usr/lib/presto/lib')
-            self.assert_path_removed(container, '/usr/lib/presto/plugin')
-
             # And modifies the text of the readme in
             # /usr/shared/doc/presto/README.txt
             self.assert_file_content_regex(
