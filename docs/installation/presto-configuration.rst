@@ -30,19 +30,19 @@ In order to update the max memory value to 60 GB per node:
         query.max-memory-per-node=8GB
         query.max-memory=50GB
 
-   to:
+to:
 
 .. code-block:: none
 
         query.max-memory-per-node=30GB
         query.max-memory=<30GB * number of nodes>
 
-   We recommend setting ``query.max-memory-per-node`` to half of the JVM config
-   max memory, though if your workload is highly concurrent, you may want
-   to use a lower value for ``query.max-memory-per-node``. If you have large
-   data skew, ``query.max-memory-per-node`` should.
-   By default in Presto 148t and higher, ``query.max-memory-per-node`` is 10%
-   of the ``Xmx`` value specified in ``jvm.config``.
+We recommend setting ``query.max-memory-per-node`` to half of the JVM config
+max memory, though if your workload is highly concurrent, you may want
+to use a lower value for ``query.max-memory-per-node``. If you have large
+data skew, ``query.max-memory-per-node`` should.
+By default in Presto 148t and higher, ``query.max-memory-per-node`` is 10%
+of the ``Xmx`` value specified in ``jvm.config``.
 
 3. Run the following command to deploy the configuration change to the cluster:
 
@@ -56,9 +56,9 @@ In order to update the max memory value to 60 GB per node:
 
      ./presto-admin server restart
 
-   If you are running Presto in a test environment that has less than 16 GB of
-   memory available, you will need to follow similar procedures to set the
-   memory configurations lower.
+If you are running Presto in a test environment that has less than 16 GB of
+memory available, you will need to follow similar procedures to set the
+memory configurations lower.
 
 Log file location configurations
 --------------------------------
@@ -83,34 +83,30 @@ locations. In order to update these:
    ``/data1/presto`` and ``/data2/presto`` for the data directory
    and server logs respectively, the properties in
    ``~/.prestoadmin/coordinator/node.properties`` and
-   ``~/.prestoadmin/workers/node.properties`` will be as follows:
+   ``~/.prestoadmin/workers/node.properties`` will be as follows::
 
-.. code-block:: none
+    node.data-dir=/data1/presto/data
+    node.launcher-log-file=/data2/presto/launcher.log
+    node.server-log-file=/data2/presto/server.log
 
-     node.data-dir=/data1/presto/data
-     node.launcher-log-file=/data2/presto/launcher.log
-     node.server-log-file=/data2/presto/server.log
-
-3. The log directoryies (in the above example, ``/data1/presto`` and
+3. The log directories (in the above example, ``/data1/presto`` and
    ``/data2/presto``; the ``data`` directory for ``node.data-dir`` is
    created by Presto) need to exist on all nodes and be owned by the
    ``presto`` user. The command ``presto-admin run_script`` can be used
    to perform these actions on all of the nodes. First, create a script in
-   the same directory as ``presto-admin``, called ``script.sh``:
+   the same directory as ``presto-admin``, called ``script.sh``::
+
+    #!/bin/bash
+    mkdir -p /data1/presto
+    mkdir -p /data2/presto
+    chown presto:presto /data1/presto
+    chown presto:presto /data2/presto
+
+Then, run the following command:
 
 .. code-block:: none
 
-     #!/bin/bash
-     mkdir -p /data1/presto
-     mkdir -p /data2/presto
-     chown presto:presto /data1/presto
-     chown presto:presto /data2/presto
-
-   Then, run the following command:
-
-.. code-block:: none
-
-     ./presto-admin run_script script.sh
+    ./presto-admin run_script script.sh
 
 4. Run the following command to deploy the log configuration change to the
    cluster:
