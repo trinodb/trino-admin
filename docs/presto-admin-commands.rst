@@ -56,8 +56,8 @@ Adding a custom connector
 -------------------------
 
 In order to install a catalog for a custom connector not included with Presto,
-the jar must be added to the Presto plugin location using the ``plugin add_jar``
-command before running the ``catalog add`` command.
+the jar must be added to the Presto plugin location using their
+``plugin add_jar`` command before running the ``catalog add`` command.
 
 Example:
 
@@ -357,6 +357,27 @@ Example
 .. code-block:: none
 
     ./presto-admin configuration show node
+
+*********
+file copy
+*********
+
+.. code-block:: none
+
+    ./presto-admin file copy <path-to-local-file> <destination>
+
+This command copies an arbitrary file on the current node to all nodes in the
+cluster. The first argument is required. The <destination> parameter specifies
+the full, absolute path to the destination directory on all nodes, which
+defaults to /tmp.
+
+Example
+-------
+
+.. code-block:: none
+
+    ./presto-admin file copy etc/presto/kafka-tabledef.json /etc/presto
+
 
 ***************
 package install
