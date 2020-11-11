@@ -1,3 +1,4 @@
+============
 Presto Admin
 ============
 
@@ -7,7 +8,7 @@ Presto Admin
 
 Introduction
 ------------
-Presto Admin is a tool for installing and managing the Presto query engine
+``presto-admin`` is a tool for installing and managing the Presto query engine
 on a cluster. It provides easy-to-use commands to:
 
 * Install and uninstall Presto across your cluster
@@ -15,8 +16,8 @@ on a cluster. It provides easy-to-use commands to:
 * Start and stop the Presto servers
 * Gather status and log information from your Presto cluster
 
-Content
--------
+Contents
+--------
 
 .. toctree::
    :maxdepth: 3
