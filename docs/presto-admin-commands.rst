@@ -362,7 +362,7 @@ Example
 file copy
 *********
 
-.. code-block:: none
+.. code-block:: text
 
     ./presto-admin file copy <path-to-local-file> <destination>
 
@@ -374,10 +374,30 @@ defaults to /tmp.
 Example
 -------
 
-.. code-block:: none
+.. code-block:: text
 
     ./presto-admin file copy etc/presto/kafka-tabledef.json /etc/presto
 
+
+********
+file run
+********
+
+.. code-block:: text
+
+    presto-admin file run <local-path-to-script> [<remote-dir-to-put-script>]
+
+Use this command to run an arbitrary script on a cluster. It copies the script
+from its local location to the specified remote directory (defaults to /tmp),
+makes the file executable, and runs it.
+
+Example
+-------
+
+.. code-block:: text
+
+    ./presto-admin file run /my/local/script.sh
+    ./presto-admin file run /my/local/script.sh /remote/dir
 
 ***************
 package install
@@ -458,26 +478,6 @@ Example
 The first example will deploy connector.jar to
 ``/usr/lib/presto/plugin/my_connector/connector.jar``
 The second example will deploy it to ``/my/plugin/dir/my_connector/program.jar``.
-
-**********
-script run
-**********
-
-.. code-block:: none
-
-    presto-admin script run <local-path-to-script> [<remote-dir-to-put-script>]
-
-This command can be used to run an arbitrary script on a cluster. It copies the
-script from its local location to the specified remote directory (defaults to
-/tmp), makes the file executable, and runs it.
-
-Example
--------
-
-.. code-block:: none
-
-    ./presto-admin script run /my/local/script.sh
-    ./presto-admin script run /my/local/script.sh /remote/dir
 
 .. _server-install-label:
 
