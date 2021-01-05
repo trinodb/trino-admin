@@ -1,8 +1,8 @@
-# presto-admin [![Build Status](https://travis-ci.org/prestosql/presto-admin.svg?branch=master)](https://travis-ci.org/prestosql/presto-admin)
+# trino-admin [![Build Status](https://api.travis-ci.org/trinodb/trino-admin.svg?branch=master)](https://travis-ci.org/trinodb/trino-admin)
 
-presto-admin installs, configures, and manages Presto installations.
+trino-admin installs, configures, and manages Trino installations.
 
-Comprehensive documentation can be found at https://prestosql.github.io/presto-admin/.
+Comprehensive documentation can be found at https://github.com/trinodb/trino-admin.
 
 ## Requirements
 
@@ -25,20 +25,20 @@ Comprehensive documentation can be found at https://prestosql.github.io/presto-a
 
 ## Building
 
-Presto-admin makes use of `make` as its build tool. `make` in turn calls out to various utilities (e.g.
+Trino-admin makes use of `make` as its build tool. `make` in turn calls out to various utilities (e.g.
 `tox`, `flake8`, `sphinx-apidoc`, `python`) in order to perform the requested actions.
 
-In order to get started with `presto-admin`,
+In order to get started with `trino-admin`,
 
-1. Fork the `presto-admin` repo on GitHub, https://github.com/prestosql/presto-admin.
+1. Fork the `trino-admin` repo on GitHub, https://github.com/trinodb/trino-admin.
 2. Clone your fork locally ::
 
-        $ git clone git@github.com:your_name_here/presto-admin.git
+        $ git clone git@github.com:your_name_here/trino-admin.git
 
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development ::
 
-        $ mkvirtualenv prestoadmin
-        $ cd prestoadmin/
+        $ mkvirtualenv trinoadmin
+        $ cd trinoadmin/
         $ python setup.py develop
 
 4. Create a branch for local development ::
@@ -59,7 +59,8 @@ To run the product tests tests (`make test-all`), you need docker installed. You
 
 ### Building the installer
 
-The two tasks used to build the presto-admin installer are `dist` and
+The two tasks used to build the 
+-admin installer are `dist` and
 `dist-offline`. The `dist` task builds an installer that requires internet
 connectivity during installation. The `dist-offline` task builds an installer
 that does not require internet connectivity during installation. Instead the
