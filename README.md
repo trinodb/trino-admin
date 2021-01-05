@@ -1,4 +1,4 @@
-# trino-admin [![Build Status](https://api.travis-ci.org/trinodb/trino-admin.svg?branch=master)](https://travis-ci.org/trinodb/trino-admin)
+# trino-admin [![Build Status](https://travis-ci.org/trinodb/trino-admin.svg?branch=master)](https://travis-ci.org/trinodb/trino-admin)
 
 trino-admin installs, configures, and manages Trino installations.
 
