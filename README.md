@@ -59,8 +59,7 @@ To run the product tests tests (`make test-all`), you need docker installed. You
 
 ### Building the installer
 
-The two tasks used to build the 
--admin installer are `dist` and
+The two tasks used to build the trino-admin installer are `dist` and
 `dist-offline`. The `dist` task builds an installer that requires internet
 connectivity during installation. The `dist-offline` task builds an installer
 that does not require internet connectivity during installation. Instead the
