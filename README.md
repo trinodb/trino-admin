@@ -2,7 +2,7 @@
 
 trino-admin installs, configures, and manages Trino installations.
 
-Comprehensive documentation can be found at https://github.com/trinodb/trino-admin.
+Comprehensive documentation can be found at https://trinodb.github.io/trino-admin/.
 
 ## Requirements
 
