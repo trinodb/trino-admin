@@ -27,6 +27,7 @@ from fabric.api import env
 import prestoadmin.util.fabricapi as util
 from prestoadmin.node import Node
 from prestoadmin.presto_conf import validate_presto_conf
+from prestoadmin.util import constants
 from prestoadmin.util.exception import ConfigurationError
 from prestoadmin.util.local_config_util import get_workers_directory
 
@@ -35,13 +36,14 @@ _LOGGER = logging.getLogger(__name__)
 
 class Worker(Node):
     DEFAULT_PROPERTIES = {'node.properties':
-                          {'node.environment': 'presto',
-                           'node.data-dir': '/var/lib/presto/data',
-                           'node.launcher-log-file':
-                               '/var/log/presto/launcher.log',
-                           'node.server-log-file':
-                               '/var/log/presto/server.log',
-                           'catalog.config-dir': '/etc/presto/catalog'},
+                              {'node.environment': constants.BRAND,
+                               'node.data-dir': '/var/lib/{}/data'.format(constants.BRAND),
+                               'node.launcher-log-file':
+                                   '/var/log/{}/launcher.log'.format(constants.BRAND),
+                               'node.server-log-file':
+                                   '/var/log/{}/server.log'.format(constants.BRAND),
+                               'catalog.config-dir': '/etc/{}/catalog'.format(constants.BRAND),
+                               'plugin.dir': '/usr/lib/{}/lib/plugin'.format(constants.BRAND)},
                           'jvm.config': ['-server',
                                          '-Xmx16G',
                                          '-XX:-UseBiasedLocking',

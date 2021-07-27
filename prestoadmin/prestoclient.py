@@ -33,6 +33,7 @@ from StringIO import StringIO
 from fabric.operations import get
 from fabric.state import env
 from fabric.utils import error
+from prestoadmin.util import constants
 from prestoadmin.util.exception import InvalidArgumentError
 from prestoadmin.util.httpscacertconnection import HTTPSCaCertConnection
 from prestoadmin.util.local_config_util import get_coordinator_directory, get_topology_path
@@ -115,9 +116,16 @@ class PrestoClient:
 
         self._clear_old_results()
 
-        headers = {"X-Presto-Catalog": catalog,
-                   "X-Presto-Schema": schema,
-                   "X-Presto-Source": "presto-admin"}
+        if constants.BRAND == 'presto':
+            headers = {"X-Presto-Catalog": catalog,
+                       "X-Presto-Schema": schema,
+                       "X-Presto-User": self.user,
+                       "X-Presto-Source": "presto-admin"}
+        else:
+            headers = {"X-Trino-Catalog": catalog,
+                       "X-Trino-Schema": schema,
+                       "X-Trino-User": self.user,
+                       "X-Trino-Source": "presto-admin"}
         answer = ''
         try:
             _LOGGER.info("Connecting to server at: " + self.server +
@@ -162,7 +170,7 @@ class PrestoClient:
         parts[1] = None
         location = urlparse.urlunsplit(parts)
         conn = self._get_connection()
-        headers = {"X-Presto-User": self.user}
+        headers = {"X-" + constants.BRAND.capitalize() + "-User": self.user}
         self._add_auth_headers(headers)
         conn.request("GET", location, headers=headers)
         response = conn.getresponse()
@@ -249,7 +257,7 @@ class PrestoClient:
     def _get_https_connection(self):
         ca_file_path = self._get_pem()
         result = HTTPSCaCertConnection(
-                self.server, self.port, None, None, ca_file_path, False, URL_TIMEOUT_MS)
+            self.server, self.port, None, None, ca_file_path, False, URL_TIMEOUT_MS)
         return result
 
     def _fetch_keystore_data(self):
@@ -283,8 +291,8 @@ class PrestoClient:
         keystore_data = self._fetch_keystore_data()
 
         keystore = jks.KeyStore.loads(
-                keystore_data,
-                self.coordinator_config.get_client_keystore_password())
+            keystore_data,
+            self.coordinator_config.get_client_keystore_password())
 
         if len(keystore.private_keys.items()) == 1:
             _, private_key = keystore.private_keys.items()[0]
@@ -299,8 +307,8 @@ class PrestoClient:
             https://github.com/kurtbrose/pyjks
             """
             self.ca_file_path = self._write_pem_file(
-                    get_coordinator_directory(),
-                    [cert[1] for cert in private_key.cert_chain], 'CERTIFICATE')
+                get_coordinator_directory(),
+                [cert[1] for cert in private_key.cert_chain], 'CERTIFICATE')
 
         return self.ca_file_path
 

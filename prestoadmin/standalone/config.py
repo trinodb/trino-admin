@@ -15,6 +15,7 @@
 """
 Module for setting and validating the presto-admin config
 """
+import os
 import re
 
 from fabric.api import env
@@ -22,6 +23,7 @@ from overrides import overrides
 
 import prestoadmin.util.fabricapi as util
 from prestoadmin import config
+from prestoadmin.util import constants
 from prestoadmin.prestoclient import CERTIFICATE_ALIAS
 from prestoadmin.util.base_config import BaseConfig, SingleConfigItem
 from prestoadmin.util.exception import ConfigurationError
@@ -30,8 +32,8 @@ from prestoadmin.util.validators import validate_username, validate_port, \
     validate_host
 
 # Created by the presto-server RPM package.
-PRESTO_STANDALONE_USER = 'presto'
-PRESTO_STANDALONE_GROUP = 'presto'
+PRESTO_STANDALONE_USER = os.environ.get('PRESTO_USER', constants.BRAND)
+PRESTO_STANDALONE_GROUP = os.environ.get('PRESTO_GROUP', constants.BRAND)
 PRESTO_STANDALONE_USER_GROUP = "%s:%s" % (PRESTO_STANDALONE_USER,
                                           PRESTO_STANDALONE_GROUP)
 
