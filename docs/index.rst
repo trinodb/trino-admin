@@ -3,12 +3,12 @@ Presto Admin
 ============
 
 `Presto Community <https://prestosql.io/community.html>`_ |
-`Issues <https://github.com/prestosql/presto-admin/issues>`_ |
-`Github <https://github.com/prestosql/presto-admin>`_ |
+`Issues <https://github.com/prestosql/trino-admin/issues>`_ |
+`Github <https://github.com/prestosql/trino-admin>`_ |
 
 Introduction
 ------------
-``presto-admin`` is a tool for installing and managing the Presto query engine
+``trino-admin`` is a tool for installing and managing the Presto query engine
 on a cluster. It provides easy-to-use commands to:
 
 * Install and uninstall Presto across your cluster

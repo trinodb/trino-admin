@@ -15,8 +15,8 @@
 from fabric.state import env
 from fabric.operations import _AttributeString
 from mock import patch
-from prestoadmin import package
-from prestoadmin.util import constants
+from trinoadmin import package
+from trinoadmin.util import constants
 from tests.unit.base_unit_case import BaseUnitCase
 
 

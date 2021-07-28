@@ -17,7 +17,7 @@ Tests the script module
 """
 
 from mock import patch, call
-from prestoadmin import file
+from trinoadmin import file
 
 from tests.unit.base_unit_case import BaseUnitCase
 

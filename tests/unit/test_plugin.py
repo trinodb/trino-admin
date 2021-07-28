@@ -16,7 +16,7 @@
 unit tests for plugin module
 """
 from mock import patch
-from prestoadmin import plugin
+from trinoadmin import plugin
 from tests.unit.base_unit_case import BaseUnitCase
 
 

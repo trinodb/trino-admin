@@ -19,11 +19,11 @@ memory to Presto for better performance.
 
 In order to update the max memory value to 60 GB per node:
 
-1. Change the line in ``~/.prestoadmin/coordinator/jvm.config`` and
-   ``~/.prestoadmin/workers/jvm.config`` that says ``-Xmx16G`` to ``-Xmx60G``.
+1. Change the line in ``~/.trinoadmin/coordinator/jvm.config`` and
+   ``~/.trinoadmin/workers/jvm.config`` that says ``-Xmx16G`` to ``-Xmx60G``.
 
-2. Change the following lines in ``~/.prestoadmin/coordinator/config.properties``
-   and ``~/.prestoadmin/workers/config.properties``:
+2. Change the following lines in ``~/.trinoadmin/coordinator/config.properties``
+   and ``~/.trinoadmin/workers/config.properties``:
 
 .. code-block:: none
 
@@ -48,13 +48,13 @@ of the ``Xmx`` value specified in ``jvm.config``.
 
 .. code-block:: none
 
-     ./presto-admin configuration deploy
+     ./trino-admin configuration deploy
 
 4. Restart the Presto servers so that the changes get picked up:
 
 .. code-block:: none
 
-     ./presto-admin server restart
+     ./trino-admin server restart
 
 If you are running Presto in a test environment that has less than 16 GB of
 memory available, you will need to follow similar procedures to set the
@@ -70,7 +70,7 @@ locations. In order to update these:
 
 .. code-block:: none
 
-    ./presto-admin server stop
+    ./trino-admin server stop
 
 2. Presto stores logs and other data in ``node.data-dir``,
    ``node.launcher-log-file``, and ``node.server-log-file``. It is very
@@ -82,8 +82,8 @@ locations. In order to update these:
    ``/var/log/presto/server.log``. Assuming the chosen locations are
    ``/data1/presto`` and ``/data2/presto`` for the data directory
    and server logs respectively, the properties in
-   ``~/.prestoadmin/coordinator/node.properties`` and
-   ``~/.prestoadmin/workers/node.properties`` will be as follows::
+   ``~/.trinoadmin/coordinator/node.properties`` and
+   ``~/.trinoadmin/workers/node.properties`` will be as follows::
 
     node.data-dir=/data1/presto/data
     node.launcher-log-file=/data2/presto/launcher.log
@@ -92,9 +92,9 @@ locations. In order to update these:
 3. The log directories (in the above example, ``/data1/presto`` and
    ``/data2/presto``; the ``data`` directory for ``node.data-dir`` is
    created by Presto) need to exist on all nodes and be owned by the
-   ``presto`` user. The command ``presto-admin run_script`` can be used
+   ``presto`` user. The command ``trino-admin run_script`` can be used
    to perform these actions on all of the nodes. First, create a script in
-   the same directory as ``presto-admin``, called ``script.sh``::
+   the same directory as ``trino-admin``, called ``script.sh``::
 
     #!/bin/bash
     mkdir -p /data1/presto
@@ -106,20 +106,20 @@ Then, run the following command:
 
 .. code-block:: none
 
-    ./presto-admin run_script script.sh
+    ./trino-admin run_script script.sh
 
 4. Run the following command to deploy the log configuration change to the
    cluster:
 
 .. code-block:: none
 
-    ./presto-admin configuration deploy
+    ./trino-admin configuration deploy
 
 5. Restart the Presto servers so that the changes get picked up:
 
 .. code-block:: none
 
-    ./presto-admin server restart
+    ./trino-admin server restart
 
 For detailed documentation on ``configuration deploy``, see
 :ref:`configuration-deploy-label`. For more configuration parameters, see

@@ -23,7 +23,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-from packaging.bdist_prestoadmin import bdist_prestoadmin
+from packaging.bdist_trinoadmin import bdist_trinoadmin
 from release import release
 
 # Import this from util instead of prestoadmin because prestoadmin has third
@@ -42,7 +42,7 @@ with open('README.md') as readme_file:
 # package it up into the third-party directory, and the resulting dist-offline
 # will fail to install if argparse isn't in the system python libraries.
 requirements = [
-    'pycparser==2.18',
+    'pycparser==2.20',
     'argparse==1.4',
     'paramiko==1.16.0',
     'Fabric==1.10.3',
@@ -91,24 +91,24 @@ PyPIRCCommand._get_rc_file = get_custom_rc_file
 # =====================================================
 
 setup(
-    name='prestoadmin',
+    name='trino-admin',
     version=__version__,
-    description="Presto-admin installs, configures, and manages Presto " + \
+    description="Trino-admin installs, configures, and manages Trino/Presto" + \
                 "installations.",
     long_description=readme,
     author="Presto Team",
-    url='https://github.com/prestosql/presto-admin',
+    url='https://github.com/wgzhao/trino-admin',
     packages=find_packages(exclude=['*tests*']),
-    package_dir={'prestoadmin':
-                 'prestoadmin'},
-    package_data={'prestoadmin': ['presto-admin-logging.ini']},
+    package_dir={'trinoadmin':
+                 'trinoadmin'},
+    package_data={'trinoadmin': ['trino-admin-logging.ini']},
     include_package_data=True,
     install_requires=requirements,
     license="APLv2",
     zip_safe=False,
-    keywords='prestoadmin',
+    keywords='trinoadmin',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
         'Natural Language :: English',
@@ -118,7 +118,7 @@ setup(
     ],
     test_suite='tests',
     tests_require=test_requirements,
-    cmdclass={'bdist_prestoadmin': bdist_prestoadmin,
+    cmdclass={'bdist_trinoadmin': bdist_trinoadmin,
               'release': release},
-    entry_points={'console_scripts': ['presto-admin = prestoadmin.main:main']}
+    entry_points={'console_scripts': ['trino-admin = trinoadmin.main:main']}
 )

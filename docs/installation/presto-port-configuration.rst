@@ -19,8 +19,8 @@ already in use on a node by running the following on that node:
 It will return nothing if port 8081 is free.
 
 2. Modify the following properties in
-``~/.prestoadmin/coordinator/config.properties`` and
-``~/.prestoadmin/workers/config.properties``:
+``~/.trinoadmin/coordinator/config.properties`` and
+``~/.trinoadmin/workers/config.properties``:
 
 .. code-block:: none
 
@@ -31,11 +31,11 @@ It will return nothing if port 8081 is free.
 
 .. code-block:: none
 
-   ./presto-admin configuration deploy
+   ./trino-admin configuration deploy
 
 4. Restart the Presto servers so that the changes get picked up:
 
 .. code-block:: none
 
-   ./presto-admin server restart
+   ./trino-admin server restart
 

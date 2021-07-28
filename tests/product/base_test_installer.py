@@ -20,7 +20,7 @@ import os
 import re
 import subprocess
 
-from prestoadmin import main_dir
+from trinoadmin import main_dir
 from tests.docker_cluster import DockerCluster
 from tests.no_hadoop_bare_image_provider import NoHadoopBareImageProvider
 from tests.product.base_product_case import BaseProductTestCase

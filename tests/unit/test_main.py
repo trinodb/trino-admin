@@ -29,14 +29,14 @@ import fabric
 from fabric.state import env
 from mock import patch
 
-import prestoadmin
-from prestoadmin import main
-from prestoadmin import topology
+import trinoadmin
+from trinoadmin import main
+from trinoadmin import topology
 
 # LINTED: the @patch decorators in mock_load_topology and mock_empty_topology
 # require that this import be here in order to work properly.
-from prestoadmin.standalone.config import StandaloneConfig  # noqa
-from prestoadmin.util.exception import ConfigurationError
+from trinoadmin.standalone.config import StandaloneConfig  # noqa
+from trinoadmin.util.exception import ConfigurationError
 from tests.unit.base_unit_case import BaseUnitCase
 
 
@@ -136,13 +136,13 @@ class TestMain(BaseMainCase):
     @patch('prestoadmin.mode.get_mode', return_value='standalone')
     def setUp(self, mode_mock):
         super(TestMain, self).setUp()
-        reload(prestoadmin)
+        reload(trinoadmin)
 
     def test_version(self):
         # Note: this will have to be updated whenever we have a new version.
         self._run_command_compare_to_string(["--version"], 0,
                                             stdout_text="presto-admin %s\n" %
-                                            prestoadmin.__version__)
+                                                        trinoadmin.__version__)
 
     @patch('prestoadmin.main._LOGGER')
     def test_argument_parsing_with_invalid_command(self, logger_mock):

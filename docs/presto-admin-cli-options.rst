@@ -1,16 +1,16 @@
 =====================================
-``presto-admin`` command line options
+``trino-admin`` command line options
 =====================================
 
-A quick overview of the possible CLI options for ``presto-admin`` can be found
-via ``./presto-admin --extended-help``. More details on those options can
+A quick overview of the possible CLI options for ``trino-admin`` can be found
+via ``./trino-admin --extended-help``. More details on those options can
 be found below.
 
 --version
-    Prints out the current ``presto-admin`` version and exits.
+    Prints out the current ``trino-admin`` version and exits.
 
 -h, --help
-    Prints out a usage string, the basic ``presto-admin`` options and the
+    Prints out a usage string, the basic ``trino-admin`` options and the
     available commands, then exits.
 
 -d, --display
@@ -21,17 +21,17 @@ be found below.
 
     .. code-block:: none
 
-        ./presto-admin -d server install
+        ./trino-admin -d server install
 
 --extended-help
-    Prints out a usage string, all the ``presto-admin`` options and the
+    Prints out a usage string, all the ``trino-admin`` options and the
     available commands, then exits.
 
 -I, --initial-password-prompt
     Forces password prompt before running any commands on the cluster.
 
     Either this option or the ``--password`` option is necessary if the user
-    from ``~/.prestoadmin/config.json`` needs a password for sudo.
+    from ``~/.trinoadmin/config.json`` needs a password for sudo.
 
     Note that the SSH password and the sudo password must be the same,
     if passwordless SSH is not used.
@@ -40,17 +40,17 @@ be found below.
     Sets password for use with authentication and/or sudo.
 
     Either this option or the ``--initial-password-prompt`` option is necessary
-    if the user from ``~/.prestoadmin/config.json`` needs a password for sudo.
+    if the user from ``~/.trinoadmin/config.json`` needs a password for sudo.
 
     Note that the SSH password and the sudo password must be the same,
     if passwordless SSH is not used.
 
 --abort-on-error
     Aborts the command, instead of warning, if a command fails on any node. The
-    default for ``presto-admin`` is to warn if a command fails on any node.
+    default for ``trino-admin`` is to warn if a command fails on any node.
 
 -a, --no_agent
-    Forces ``presto-admin`` not to seek out running SSH agents when using
+    Forces ``trino-admin`` not to seek out running SSH agents when using
     key-based authentication.
 
 -A, --forward-agent
@@ -70,7 +70,7 @@ be found below.
     specified gateway host to their final destination.
 
 -H HOSTS, --hosts=HOSTS
-    Sets the list of hosts where a ``presto-admin`` command should be executed.
+    Sets the list of hosts where a ``trino-admin`` command should be executed.
     The values should be comma-separated and exist in your topology.
 
 -i PATH
@@ -89,7 +89,7 @@ be found below.
 
 --port=PORT
     Sets the SSH connection port. If the SSH port is set both in
-    ``~/.prestoadmin/config.json`` and on the command line, the port
+    ``~/.trinoadmin/config.json`` and on the command line, the port
     specified on the command line will be used.
 
 -r, --reject-unknown-hosts
@@ -108,11 +108,11 @@ be found below.
 
 -u USER, --user=USER
     Sets the user that is used for SSH connections. If the SSH username is set
-    both in ``~/.prestoadmin/config.json`` and on the command line, the username
+    both in ``~/.trinoadmin/config.json`` and on the command line, the username
     specified on the command line will be used.
 
 -x HOSTS, --exclude-hosts=HOSTS
-    Sets the list of hosts to be excluded when executing a ``presto-admin``
+    Sets the list of hosts to be excluded when executing a ``trino-admin``
     command. The values should be comma-separated and exist in your topology.
 
 --serial

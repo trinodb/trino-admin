@@ -23,7 +23,7 @@ import shutil
 import tempfile
 import subprocess
 
-import prestoadmin
+import trinoadmin
 from tests.base_installer import BaseInstaller
 from tests.configurable_cluster import ConfigurableCluster
 from tests.product.config_dir_utils import get_install_directory
@@ -86,12 +86,12 @@ class PrestoadminInstaller(BaseInstaller):
 
         try:
             shutil.copytree(
-                prestoadmin.main_dir,
+                trinoadmin.main_dir,
                 temp_dir,
                 ignore=shutil.ignore_patterns('tmp', '.git', 'presto*.rpm')
             )
 
-            cmd = [prestoadmin.main_dir + "/bin/build-artifacts-in-docker.sh",
+            cmd = [trinoadmin.main_dir + "/bin/build-artifacts-in-docker.sh",
                    "--root_dir", temp_dir,
                    "--base_image_name", _BASE_IMAGE_NAME,
                    "--base_image_tag", BASE_IMAGE_TAG,

@@ -17,8 +17,8 @@ Product tests for start/stop/restart of presto-admin server
 """
 from nose.plugins.attrib import attr
 
-from prestoadmin.server import RETRY_TIMEOUT
-from prestoadmin.util import constants
+from trinoadmin.server import RETRY_TIMEOUT
+from trinoadmin.util import constants
 from tests.no_hadoop_bare_image_provider import NoHadoopBareImageProvider
 from tests.product.base_product_case import BaseProductTestCase
 from tests.product.cluster_types import STANDALONE_PRESTO_CLUSTER, STANDALONE_PA_CLUSTER

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from prestoadmin.util.fabric_application import FabricApplication
+from trinoadmin.util.fabric_application import FabricApplication
 
 from tests.base_test_case import BaseTestCase
 

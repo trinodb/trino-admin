@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from prestoadmin.standalone.config import _expand_host
+from trinoadmin.standalone.config import _expand_host
 from tests.unit.base_unit_case import BaseUnitCase
 
 

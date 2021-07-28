@@ -2,15 +2,15 @@
 Troubleshooting
 ===============
 
-1. To troubleshoot problems with presto-admin or Presto, you can use the
-   incident report gathering commands from presto-admin to gather logs and
+1. To troubleshoot problems with trino-admin or Presto, you can use the
+   incident report gathering commands from trino-admin to gather logs and
    other system information from your cluster. Relevant commands:
 
 *    :ref:`collect-logs`
 *    :ref:`collect-query-info`
 *    :ref:`collect-system-info`
 
-2. You can find the ``presto-admin`` logs in the ``~/.prestoadmin/log``
+2. You can find the ``trino-admin`` logs in the ``~/.trinoadmin/log``
    directory.
 
 3. You can check the status of Presto on your cluster by
@@ -27,7 +27,7 @@ To fix this, start Presto with:
 
 .. code-block:: none
 
-    $ ./presto-admin server start
+    $ ./trino-admin server start
 
 5. If the Presto servers fail to start or crash soon after starting, look at
    the presto server logs on the Presto cluster ``/var/log/presto`` for an
@@ -57,7 +57,7 @@ for information on providing a sudo password.
 
 7. Support for connecting to a cluster with internal HTTPS and/or LDAP communication
    enabled is experimental. Make sure to check both the Presto server log and the
-   ``presto-admin`` log to troubleshoot problems with your configuration; it may also
+   ``trino-admin`` log to troubleshoot problems with your configuration; it may also
    be helpful to verify that you can connect to the cluster via the Presto CLI using
    HTTPS or LDAP as appropriate.
 

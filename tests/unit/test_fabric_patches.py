@@ -28,8 +28,8 @@ from mock import call
 from mock import patch
 from tests.base_test_case import BaseTestCase
 
-from prestoadmin.util.application import Application
-from prestoadmin.fabric_patches import execute
+from trinoadmin.util.application import Application
+from trinoadmin.fabric_patches import execute
 
 
 APPLICATION_NAME = 'foo'

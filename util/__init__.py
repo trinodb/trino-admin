@@ -21,5 +21,5 @@ import os
 
 main_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 
-with open(os.path.join(main_dir, 'prestoadmin/_version.py')) as version_file:
+with open(os.path.join(main_dir, 'trinoadmin/_version.py')) as version_file:
     __version__ = version_file.readlines()[-1].split()[-1].strip("\"'")

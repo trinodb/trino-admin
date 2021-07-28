@@ -17,8 +17,8 @@ Test the presto_conf module
 
 import re
 from mock import patch
-from prestoadmin.presto_conf import get_presto_conf, validate_presto_conf
-from prestoadmin.util.exception import ConfigurationError
+from trinoadmin.trino_conf import get_presto_conf, validate_presto_conf
+from trinoadmin.util.exception import ConfigurationError
 from tests.base_test_case import BaseTestCase
 
 

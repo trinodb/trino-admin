@@ -22,7 +22,7 @@ from fabric.context_managers import settings
 from nose.plugins.attrib import attr
 from nose.tools import nottest
 
-from prestoadmin.collect import OUTPUT_FILENAME_FOR_LOGS, TMP_PRESTO_DEBUG, \
+from trinoadmin.collect import OUTPUT_FILENAME_FOR_LOGS, TMP_PRESTO_DEBUG, \
     PRESTOADMIN_LOG_NAME, OUTPUT_FILENAME_FOR_SYS_INFO, TMP_PRESTO_DEBUG_REMOTE, \
     DEFAULT_PATH_FOR_LOGS
 from tests.no_hadoop_bare_image_provider import NoHadoopBareImageProvider

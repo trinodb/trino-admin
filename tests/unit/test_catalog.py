@@ -21,12 +21,12 @@ import fabric.api
 from fabric.operations import _AttributeString
 from mock import patch
 
-from prestoadmin import catalog
-from prestoadmin.util import constants
-from prestoadmin.util.exception import ConfigurationError, \
+from trinoadmin import catalog
+from trinoadmin.util import constants
+from trinoadmin.util.exception import ConfigurationError, \
     ConfigFileNotFoundError
-from prestoadmin.standalone.config import PRESTO_STANDALONE_USER_GROUP
-from prestoadmin.util.local_config_util import get_catalog_directory
+from trinoadmin.standalone.config import PRESTO_STANDALONE_USER_GROUP
+from trinoadmin.util.local_config_util import get_catalog_directory
 from tests.unit.base_unit_case import BaseUnitCase
 
 

@@ -1,11 +1,11 @@
 import os
 
-from prestoadmin.util.constants import COORDINATOR_DIR_NAME, WORKERS_DIR_NAME, CATALOG_DIR_NAME
+from trinoadmin.util.constants import COORDINATOR_DIR_NAME, WORKERS_DIR_NAME, CATALOG_DIR_NAME
 
 
 # gets the information for presto-admin config directories on the cluster
 def get_config_directory():
-    return os.path.join('~', '.prestoadmin')
+    return os.path.join('~', '.trinoadmin')
 
 
 def get_config_file_path():

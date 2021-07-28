@@ -16,8 +16,8 @@ import os
 
 from mock import patch
 
-from prestoadmin import config
-from prestoadmin.util.exception import ConfigurationError, \
+from trinoadmin import config
+from trinoadmin.util.exception import ConfigurationError, \
     ConfigFileNotFoundError
 from tests.base_test_case import BaseTestCase
 

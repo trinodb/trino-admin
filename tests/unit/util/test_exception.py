@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from prestoadmin.util.exception import ExceptionWithCause, \
+from trinoadmin.util.exception import ExceptionWithCause, \
     ConfigFileNotFoundError
 
 import pickle

@@ -14,8 +14,8 @@
 # limitations under the License.
 from fabric.operations import _AttributeString
 from mock import patch
-from prestoadmin.util.exception import ConfigurationError
-from prestoadmin.util.remote_config_util import lookup_port,\
+from trinoadmin.util.exception import ConfigurationError
+from trinoadmin.util.remote_config_util import lookup_port,\
     lookup_string_config, NODE_CONFIG_FILE
 from tests.base_test_case import BaseTestCase
 

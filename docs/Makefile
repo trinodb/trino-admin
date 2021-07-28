@@ -85,17 +85,17 @@ qthelp:
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
-	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/prestoadmin.qhcp"
+	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/trinoadmin.qhcp"
 	@echo "To view the help file:"
-	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/prestoadmin.qhc"
+	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/trinoadmin.qhc"
 
 devhelp:
 	$(SPHINXBUILD) -b devhelp $(ALLSPHINXOPTS) $(BUILDDIR)/devhelp
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/prestoadmin"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/prestoadmin"
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/trinoadmin"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/trinoadmin"
 	@echo "# devhelp"
 
 epub:
