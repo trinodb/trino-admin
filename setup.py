@@ -30,7 +30,7 @@ from release import release
 # party dependencies that can't be resolved by setup.py. Util should not.
 from util import __version__
 
-with open('README.md') as readme_file:
+with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 # Requirements for both development and testing are duplicated here
@@ -93,7 +93,7 @@ PyPIRCCommand._get_rc_file = get_custom_rc_file
 setup(
     name='trino-admin',
     version=__version__,
-    description="Trino-admin installs, configures, and manages Trino/Presto" + \
+    description="Trino-admin installs, configures, and manages Trino/Presto "
                 "installations.",
     long_description=readme,
     author="Presto Team",
