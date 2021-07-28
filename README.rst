@@ -1,10 +1,6 @@
 trino-admin 
 ============
 
-
-.. image:: https://github.com/wgzhao/trino-admin/workflows/Test/badge.svg
-    :target: https://github.com/wgzhao/trino-admin
-
 .. image:: https://img.shields.io/pypi/dm/trino-admin.svg
     :target: https://pypi.org/project/trino-admin/
 
@@ -39,11 +35,10 @@ Requirements
       to run commands without ``sudo``, which is a requirement for some
       unit tests. To enable sudoless docker access run the following:
 
-      .. code:: shell
 
-           $ sudo groupadd docker
-           $ sudo gpasswd -a ${USER} docker
-           $ sudo service docker restart
+      $ sudo groupadd docker
+      $ sudo gpasswd -a ${USER} docker
+      $ sudo service docker restart
 
       If the user you added to the docker group is the same one you’re
       logged in as, you will need to log out and back in so that the
@@ -64,25 +59,20 @@ In order to get started with ``trino-admin``,
 
 2. Clone your fork locally ::
 
-   .. code:: shell
-
-       $ git clone git@github.com:your_name_here/trino-admin.git
+    $ git clone git@github.com:your_name_here/trino-admin.git
 
 3. Install your local copy into a virtualenv. Assuming you have
    virtualenvwrapper installed, this is how you set up your fork for
    local development ::
 
-   .. code:: shell
 
-       $ mkvirtualenv trinoadmin
-       $ cd trinoadmin/
-       $ python setup.py develop
+    $ mkvirtualenv trinoadmin
+    $ cd trinoadmin/
+    $ python setup.py develop
 
 4. Create a branch for local development ::
 
-   .. code:: shell
-
-       $ git checkout -b name-of-your-bugfix-or-feature
+    $ git checkout -b name-of-your-bugfix-or-feature
 
    Now you can make your changes locally.
 
@@ -93,13 +83,11 @@ In order to get started with ``trino-admin``,
    run ``pip install wheel`` in your virtualenv. To install and start
    docker use ::
 
-   .. code:: shell
+    $ wget -qO- https://get.docker.com/ | sh
 
-       $ wget -qO- https://get.docker.com/ | sh
-
-       # Add current user to Docker group to run without sudo
-       $ sudo gpasswd -a ${USER} docker
-       $ sudo service docker restart
+    # Add current user to Docker group to run without sudo
+    $ sudo gpasswd -a ${USER} docker
+    $ sudo service docker restart
 
 Building the installer
 ~~~~~~~~~~~~~~~~~~~~~~
