@@ -29,7 +29,7 @@ To run a query via the Presto CLI:
     helpful to add an alias for the Presto CLI:
     ``alias presto='<path_to_java_11_executable> -jar <path_to_presto>'``.
 
-3. By default, ``presto-admin`` configures a TPC-H catalog, which generates
+3. By default, ``trino-admin`` configures a TPC-H catalog, which generates
    TPC-H data on-the-fly. Using this catalog, issue the following commands to
    run your first Presto query:
 

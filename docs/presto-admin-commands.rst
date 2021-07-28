@@ -1,5 +1,5 @@
 =========================
-``presto-admin`` commands
+``trino-admin`` commands
 =========================
 
 .. _catalog-add:
@@ -10,14 +10,14 @@ catalog add
 
 .. code-block:: none
 
-    presto-admin catalog add [<name>]
+    trino-admin catalog add [<name>]
 
 This command is used to deploy catalog configurations to the Presto cluster.
 `Catalog configurations <https://prestosql.io/docs/current/connector.html>`_
-are kept in the configuration directory ``~/.prestoadmin/catalog``
+are kept in the configuration directory ``~/.trinoadmin/catalog``
 
-To add a catalog using ``presto-admin``, first create a configuration file in
-``~/.prestoadmin/catalog``. The file should be named ``<name>.properties`` and
+To add a catalog using ``trino-admin``, first create a configuration file in
+``~/.trinoadmin/catalog``. The file should be named ``<name>.properties`` and
 contain the configuration for that catalog.
 
 Use the optional ``name`` argument to add a particular catalog to your
@@ -29,19 +29,19 @@ Presto server (see `server restart`_):
 
 .. code-block:: none
 
-    presto-admin server restart
+    trino-admin server restart
 
 Example
 -------
 
 To add a catalog for the jmx connector, create a file
-``~/.prestoadmin/catalog/jmx.properties`` with the content
+``~/.trinoadmin/catalog/jmx.properties`` with the content
 ``connector.name=jmx``. Then run:
 
 .. code-block:: none
 
-    ./presto-admin catalog add jmx
-    ./presto-admin server restart
+    ./trino-admin catalog add jmx
+    ./trino-admin server restart
 
 If you have two catalog configurations in the catalog directory, for example
 ``jmx.properties`` and ``dummy.properties``, and would like to deploy both at
@@ -49,8 +49,8 @@ once, you could run:
 
 .. code-block:: none
 
-    ./presto-admin catalog add
-    ./presto-admin server restart
+    ./trino-admin catalog add
+    ./trino-admin server restart
 
 Adding a custom connector
 -------------------------
@@ -63,9 +63,9 @@ Example:
 
 .. code-block:: none
 
-    ./presto-admin plugin add_jar my_connector.jar my_connector
-    ./presto-admin catalog add my_connector
-    ./presto-admin server restart
+    ./trino-admin plugin add_jar my_connector.jar my_connector
+    ./trino-admin catalog add my_connector
+    ./trino-admin server restart
 
 The ``add_jar`` command assumes the default plugin location of
 ``/usr/lib/presto/plugin`` (see `plugin add_jar`_).  As with the default
@@ -81,7 +81,7 @@ catalog remove
 
 .. code-block:: none
 
-    presto-admin catalog remove <name>
+    trino-admin catalog remove <name>
 
 The catalog remove command is used to remove a catalog from your presto
 cluster configuration. Running the command will remove the catalog from all
@@ -92,7 +92,7 @@ In order for the change to take effect, you will need to restart services.
 
 .. code-block:: none
 
-    presto-admin server restart
+    trino-admin server restart
 
 Example
 -------
@@ -101,8 +101,8 @@ For example: To remove the catalog for the jmx connector, run:
 
 .. code-block:: none
 
-    ./presto-admin catalog remove jmx
-    ./presto-admin server restart
+    ./trino-admin catalog remove jmx
+    ./trino-admin server restart
 
 .. _collect-logs:
 
@@ -112,11 +112,11 @@ collect logs
 
 .. code-block:: none
 
-    presto-admin collect logs
+    trino-admin collect logs
 
 This command gathers Presto server logs and launcher logs from the
 ``/var/log/presto/`` directory across the cluster along with the
-``~/.prestoadmin/log/presto-admin.log`` and creates a tar file. The final
+``~/.trinoadmin/log/trino-admin.log`` and creates a tar file. The final
 tar output is saved at ``/tmp/presto-debug-logs.tar.gz``.
 
 Example
@@ -124,7 +124,7 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin collect logs
+    ./trino-admin collect logs
 
 .. _collect-query-info:
 
@@ -134,7 +134,7 @@ collect query_info
 
 .. code-block:: none
 
-    presto-admin collect query_info <query_id>
+    trino-admin collect query_info <query_id>
 
 This command gathers information about a Presto query identified by the given
 ``query_id`` and stores that information in a JSON file.
@@ -146,7 +146,7 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin collect query_info 20150525_234711_00000_7qwaz
+    ./trino-admin collect query_info 20150525_234711_00000_7qwaz
 
 .. _collect-system-info:
 
@@ -156,7 +156,7 @@ collect system_info
 
 .. code-block:: none
 
-    presto-admin collect system_info
+    trino-admin collect system_info
 
 This command gathers various system specific information from the cluster.
 The information is saved in a tar file at ``/tmp/presto-debug-sysinfo.tar.gz``.
@@ -167,14 +167,14 @@ The gathered information includes:
 *  List of catalogs configured
 *  Catalog configuration files
 *  Other system specific information like OS information, Java
-   version, ``presto-admin`` version, and Presto server version.
+   version, ``trino-admin`` version, and Presto server version.
 
 Example
 -------
 
 .. code-block:: none
 
-    ./presto-admin collect system_info
+    ./trino-admin collect system_info
 
 .. _configuration-deploy-label:
 
@@ -184,21 +184,21 @@ configuration deploy
 
 .. code-block:: none
 
-    presto-admin configuration deploy [coordinator|workers]
+    trino-admin configuration deploy [coordinator|workers]
 
 This command deploys `Presto configuration files
 <https://prestosql.io/docs/current/installation/deployment.html>`_
-onto the cluster. ``presto-admin`` uses different configuration directories for
+onto the cluster. ``trino-admin`` uses different configuration directories for
 worker and coordinator configurations so that you can easily create different
 configurations for your coordinator and worker nodes. Create a
-``~/.prestoadmin/coordinator`` directory for your coordinator
-configurations and a ``~/.prestoadmin/workers`` directory for your
-workers configuration. If you have the ``presto-admin`` configuration
+``~/.trinoadmin/coordinator`` directory for your coordinator
+configurations and a ``~/.trinoadmin/workers`` directory for your
+workers configuration. If you have the ``trino-admin`` configuration
 directory path set using the environment variable ``PRESTO_ADMIN_CONFIG_DIR``
 then the coordinator and worker configuration directories must be created
 under ``$PRESTO_ADMIN_CONFIG_DIR``.  Place the configuration files for the
 coordinator and workers in their respective directories. The optional
-``coordinator`` or ``workers`` argument tells ``presto-admin`` to only deploy
+``coordinator`` or ``workers`` argument tells ``trino-admin`` to only deploy
 the coordinator or workers configurations. To deploy both configurations at
 once, don't specify either option.
 
@@ -290,7 +290,7 @@ Example
 -------
 If you want to change the jvm configuration on the coordinator and the
 ``node.environment`` property from ``node.properties`` on all nodes, add the
-following ``jvm.config`` to ``~/.prestoadmin/coordinator``
+following ``jvm.config`` to ``~/.trinoadmin/coordinator``
 
 .. code-block:: none
 
@@ -306,7 +306,7 @@ following ``jvm.config`` to ``~/.prestoadmin/coordinator``
     -XX:ReservedCodeCacheSize=512M
 
 Further, add the following ``node.properties`` to
-``~/.prestoadmin/coordinator`` and ``~/.prestoadmin/workers``: ::
+``~/.trinoadmin/coordinator`` and ``~/.trinoadmin/workers``: ::
 
     node.environment=test
     node.data-dir=/var/lib/presto/data
@@ -318,7 +318,7 @@ Then run:
 
 .. code-block:: none
 
-    ./presto-admin configuration deploy
+    ./trino-admin configuration deploy
 
 This will distribute to the coordinator a default ``config.properties``, the new
 ``jvm.config`` and ``node.properties``.  The workers will
@@ -329,7 +329,7 @@ If instead you just want to update the coordinator configuration, run:
 
 .. code-block:: none
 
-    ./presto-admin configuration deploy coordinator
+    ./trino-admin configuration deploy coordinator
 
 This will leave the workers configuration as it was, but update the
 coordinator's configuration
@@ -340,7 +340,7 @@ configuration show
 
 .. code-block:: none
 
-    presto-admin configuration show [node|jvm|config|log]
+    trino-admin configuration show [node|jvm|config|log]
 
 This command prints the contents of the Presto configuration files deployed
 in the cluster. It takes an optional configuration name argument for the
@@ -356,7 +356,7 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin configuration show node
+    ./trino-admin configuration show node
 
 *********
 file copy
@@ -364,7 +364,7 @@ file copy
 
 .. code-block:: text
 
-    ./presto-admin file copy <path-to-local-file> <destination>
+    ./trino-admin file copy <path-to-local-file> <destination>
 
 This command copies an arbitrary file on the current node to all nodes in the
 cluster. The first argument is required. The <destination> parameter specifies
@@ -376,7 +376,7 @@ Example
 
 .. code-block:: text
 
-    ./presto-admin file copy etc/presto/kafka-tabledef.json /etc/presto
+    ./trino-admin file copy etc/presto/kafka-tabledef.json /etc/presto
 
 
 ********
@@ -385,7 +385,7 @@ file run
 
 .. code-block:: text
 
-    presto-admin file run <local-path-to-script> [<remote-dir-to-put-script>]
+    trino-admin file run <local-path-to-script> [<remote-dir-to-put-script>]
 
 Use this command to run an arbitrary script on a cluster. It copies the script
 from its local location to the specified remote directory (defaults to /tmp),
@@ -396,8 +396,8 @@ Example
 
 .. code-block:: text
 
-    ./presto-admin file run /my/local/script.sh
-    ./presto-admin file run /my/local/script.sh /remote/dir
+    ./trino-admin file run /my/local/script.sh
+    ./trino-admin file run /my/local/script.sh /remote/dir
 
 ***************
 package install
@@ -405,11 +405,11 @@ package install
 
 .. code-block:: none
 
-    presto-admin package install local_path [--nodeps]
+    trino-admin package install local_path [--nodeps]
 
 This command copies any rpm from ``local_path`` to all the nodes in the cluster
 and installs it. Similar to ``server install`` the cluster topology is obtained
-from the file ``~/.prestoadmin/config.json``. If this file is missing, then the
+from the file ``~/.trinoadmin/config.json``. If this file is missing, then the
 command prompts for user input to get the topology information.
 
 This command takes an optional ``--nodeps`` flag which indicates whether the
@@ -424,7 +424,7 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin package install /tmp/jdk-8u45-linux-x64.rpm
+    ./trino-admin package install /tmp/jdk-8u45-linux-x64.rpm
 
 *****************
 package uninstall
@@ -432,11 +432,11 @@ package uninstall
 
 .. code-block:: none
 
-    presto-admin package uninstall rpm_package_name [--nodeps]
+    trino-admin package uninstall rpm_package_name [--nodeps]
 
 This command uninstalls an rpm package from all the nodes in the cluster.
 Similar to ``server uninstall`` the cluster topology is obtained from the
-file ``~/.prestoadmin/config.json``. If this file is missing, then the command
+file ``~/.trinoadmin/config.json``. If this file is missing, then the command
 prompts for user input to get the topology information.
 
 This command takes an optional ``--nodeps`` flag which indicates whether
@@ -452,7 +452,7 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin package uninstall jdk
+    ./trino-admin package uninstall jdk
 
 **************
 plugin add_jar
@@ -460,7 +460,7 @@ plugin add_jar
 
 .. code-block:: none
 
-    presto-admin plugin add_jar <local-path> <plugin-name> [<plugin-dir>]
+    trino-admin plugin add_jar <local-path> <plugin-name> [<plugin-dir>]
 
 This command deploys the jar at ``local-path`` to the plugin directory for
 ``plugin-name``.  By default ``/usr/lib/presto/plugin`` is used as the
@@ -472,8 +472,8 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin plugin add_jar connector.jar my_connector
-    ./presto-admin plugin add_jar connector.jar my_connector /my/plugin/dir
+    ./trino-admin plugin add_jar connector.jar my_connector
+    ./trino-admin plugin add_jar connector.jar my_connector /my/plugin/dir
 
 The first example will deploy connector.jar to
 ``/usr/lib/presto/plugin/my_connector/connector.jar``
@@ -487,7 +487,7 @@ server install
 
 .. code-block:: none
 
-    presto-admin server install <rpm_specifier> [--rpm-source] [--nodeps]
+    trino-admin server install <rpm_specifier> [--rpm-source] [--nodeps]
 
 This command takes a parameter ``rpm_specifier``, which can be one of the
 following forms, listed in order of decreasing precedence:
@@ -496,7 +496,7 @@ following forms, listed in order of decreasing precedence:
 -  url - This downloads the presto rpm found at the given url.
 -  version number - This downloads the presto rpm of the specified version.
 -  local path - This uses a previously downloaded rpm. The local path should
-   be accessible by ``presto-admin``.
+   be accessible by ``trino-admin``.
 
 If ``rpm_specifier`` matches multiple forms, it is interpreted only as the
 form with highest precedence. For forms that require the rpm to be downloaded,
@@ -508,18 +508,18 @@ or download the requested presto-server rpm.
 After successfully finding the rpm, this command copies the presto-server
 rpm to all the nodes in the cluster, installs it, deploys the general presto
 configuration along with tpch connector configuration. The topology used to
-configure the nodes are obtained from ``~/.prestoadmin/config.json``.
-See :ref:`presto-admin-configuration-label` on how to configure your cluster
+configure the nodes are obtained from ``~/.trinoadmin/config.json``.
+See :ref:`trino-admin-configuration-label` on how to configure your cluster
 using config.json. If this file is missing, then the command prompts for user
 input to get the topology information.
 
 The general configurations for Presto's coordinator and workers are taken
-from the directories ``~/.prestoadmin/coordinator`` and
-``~/.prestoadmin/workers`` respectively. If these directories or any required
+from the directories ``~/.trinoadmin/coordinator`` and
+``~/.trinoadmin/workers`` respectively. If these directories or any required
 configuration files are absent when you run ``server install``, a default
 configuration will be deployed. See `configuration deploy`_ for details.
 
-The catalog directory ``~/.prestoadmin/catalog/`` should contain the
+The catalog directory ``~/.trinoadmin/catalog/`` should contain the
 configuration files for any catalogs that you would like to connect to in
 your Presto cluster. The ``server install`` command will configure the cluster
 with all the catalogs in the directory. If the directory does not exist or
@@ -540,10 +540,10 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin server install /tmp/presto.rpm
-    ./presto-admin server install 316
-    ./presto-admin server install http://search.maven.org/remotecontent?filepath=io/prestosql/presto-server-rpm/316/presto-server-rpm-316.rpm
-    ./presto-admin server install latest
+    ./trino-admin server install /tmp/presto.rpm
+    ./trino-admin server install 316
+    ./trino-admin server install http://search.maven.org/remotecontent?filepath=io/prestosql/presto-server-rpm/316/presto-server-rpm-316.rpm
+    ./trino-admin server install latest
 
 **Standalone RPM Install**
 
@@ -565,7 +565,7 @@ server restart
 
 .. code-block:: none
 
-    presto-admin server restart
+    trino-admin server restart
 
 This command first stops any Presto servers running and then starts them.
 A status check is performed on the entire cluster and is reported at the end.
@@ -575,7 +575,7 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin server restart
+    ./trino-admin server restart
 
 .. _server-start-label:
 
@@ -585,7 +585,7 @@ server start
 
 .. code-block:: none
 
-    presto-admin server start
+    trino-admin server start
 
 This command starts the Presto servers on the cluster. A status check is
 performed on the entire cluster and is reported at the end.
@@ -595,7 +595,7 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin server start
+    ./trino-admin server start
 
 .. _server-status:
 
@@ -605,7 +605,7 @@ server status
 
 .. code-block:: none
 
-    presto-admin server status
+    trino-admin server status
 
 This command prints the status information of Presto in the cluster. This
 command will fail to report the correct status if the Presto installed is
@@ -625,7 +625,7 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin server status
+    ./trino-admin server status
 
 ***********
 server stop
@@ -633,7 +633,7 @@ server stop
 
 .. code-block:: none
 
-    presto-admin server stop
+    trino-admin server stop
 
 This command stops the Presto servers on the cluster.
 
@@ -642,7 +642,7 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin server stop
+    ./trino-admin server stop
 
 ****************
 server uninstall
@@ -650,7 +650,7 @@ server uninstall
 
 .. code-block:: none
 
-    presto-admin server uninstall [--nodeps]
+    trino-admin server uninstall [--nodeps]
 
 This command stops the Presto server if running on the cluster and uninstalls
 the Presto rpm. The uninstall command removes any presto related files
@@ -665,7 +665,7 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin server uninstall
+    ./trino-admin server uninstall
 
 **************
 server upgrade
@@ -673,7 +673,7 @@ server upgrade
 
 .. code-block:: none
 
-    presto-admin server upgrade path/to/new/package.rpm [local_config_dir] [--nodeps]
+    trino-admin server upgrade path/to/new/package.rpm [local_config_dir] [--nodeps]
 
 This command upgrades the Presto RPM on all of the nodes in the cluster to the
 RPM at ``path/to/new/package.rpm``, preserving the existing configuration on
@@ -686,7 +686,7 @@ at ``path/to/new/package.rpm`` is an earlier version than the Presto installed
 on the cluster.
 
 Note that if the configuration files on the cluster differ from the
-presto-admin configuration files found in ``~/.prestoadmin``, the presto-admin
+trino-admin configuration files found in ``~/.trinoadmin``, the trino-admin
 configuration files are not updated.
 
 This command takes an optional ``--nodeps`` flag which indicates whether the
@@ -702,8 +702,8 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin server upgrade path/to/new/package.rpm /tmp/cluster-configuration
-    ./presto-admin server upgrade /path/to/new/package.rpm /tmp/cluster-configuration
+    ./trino-admin server upgrade path/to/new/package.rpm /tmp/cluster-configuration
+    ./trino-admin server upgrade /path/to/new/package.rpm /tmp/cluster-configuration
 
 *************
 topology show
@@ -711,7 +711,7 @@ topology show
 
 .. code-block:: none
 
-    presto-admin topology show
+    trino-admin topology show
 
 This command shows the current topology configuration for the cluster
  (including the coordinators, workers, SSH port, and SSH username).
@@ -721,4 +721,4 @@ Example
 
 .. code-block:: none
 
-    ./presto-admin topology show
+    ./trino-admin topology show

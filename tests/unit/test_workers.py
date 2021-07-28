@@ -19,8 +19,8 @@ Tests the workers module
 from fabric.api import env
 from mock import patch
 
-from prestoadmin import workers
-from prestoadmin.util.exception import ConfigurationError
+from trinoadmin import workers
+from trinoadmin.util.exception import ConfigurationError
 from tests.base_test_case import BaseTestCase
 
 

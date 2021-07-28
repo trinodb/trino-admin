@@ -26,7 +26,7 @@ from subprocess import check_call
 
 import paramiko
 import yaml
-from prestoadmin import main_dir
+from trinoadmin import main_dir
 from tests.base_cluster import BaseCluster
 from tests.product.config_dir_utils import get_config_file_path, get_install_directory, get_config_directory
 from tests.product.constants import PRESTO_RPM_NAME

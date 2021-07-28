@@ -20,10 +20,10 @@ import unittest
 from mock import patch
 from fabric.state import env
 
-from prestoadmin import topology
-from prestoadmin.standalone import config
-from prestoadmin.standalone.config import StandaloneConfig
-from prestoadmin.util.exception import ConfigurationError
+from trinoadmin import topology
+from trinoadmin.standalone import config
+from trinoadmin.standalone.config import StandaloneConfig
+from trinoadmin.util.exception import ConfigurationError
 from tests.unit.base_unit_case import BaseUnitCase
 
 

@@ -30,7 +30,7 @@ from docker.errors import APIError
 from docker.utils.utils import kwargs_from_env
 from retrying import retry
 
-from prestoadmin import main_dir
+from trinoadmin import main_dir
 from tests.base_cluster import BaseCluster
 from tests.product.constants import \
     DEFAULT_DOCKER_MOUNT_POINT, DEFAULT_LOCAL_MOUNT_POINT

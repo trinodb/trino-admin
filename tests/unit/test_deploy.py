@@ -18,7 +18,7 @@ Tests deploying the presto configuration
 from mock import patch
 
 from fabric.api import env
-from prestoadmin import deploy
+from trinoadmin import deploy
 from tests.base_test_case import BaseTestCase
 from tests.unit import SudoResult
 

@@ -19,7 +19,7 @@ Module for installing presto on a cluster.
 import fnmatch
 import os
 
-import prestoadmin
+import trinoadmin
 
 from tests.base_installer import BaseInstaller
 from tests.product.constants import PRESTO_RPM_NAME
@@ -106,7 +106,7 @@ class StandalonePrestoInstaller(BaseInstaller):
         Detects the Presto RPM in the main directory of presto-admin.
         Returns the name of the RPM, if it exists, else raises an OSError.
         """
-        rpm_names = fnmatch.filter(os.listdir(prestoadmin.main_dir),
+        rpm_names = fnmatch.filter(os.listdir(trinoadmin.main_dir),
                                    PRESTO_RPM_GLOB)
         if rpm_names:
             # Choose the last RPM name if you sort the list, since if there
@@ -115,7 +115,7 @@ class StandalonePrestoInstaller(BaseInstaller):
         else:
             raise OSError(1, 'Presto RPM not detected.')
 
-        return prestoadmin.main_dir, rpm_name
+        return trinoadmin.main_dir, rpm_name
 
     @staticmethod
     def _check_if_corrupted_rpm(rpm_name, cluster):

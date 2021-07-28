@@ -4,7 +4,7 @@
 User guide
 **********
 
-A full explanation of the commands and features of ``presto-admin``.
+A full explanation of the commands and features of ``trino-admin``.
 
 .. toctree::
     :maxdepth: 2
@@ -13,6 +13,6 @@ A full explanation of the commands and features of ``presto-admin``.
     installation/advanced-installation-options
     installation/presto-port-configuration
     ssh-configuration
-    presto-admin-commands
-    presto-admin-cli-options
+    trino-admin-commands
+    trino-admin-cli-options
 

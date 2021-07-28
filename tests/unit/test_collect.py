@@ -22,14 +22,14 @@ import requests
 from fabric.api import env
 from mock import patch
 
-import prestoadmin
-from prestoadmin import collect
-from prestoadmin.collect import \
+import trinoadmin
+from trinoadmin import collect
+from trinoadmin.collect import \
     TMP_PRESTO_DEBUG, \
     PRESTOADMIN_LOG_NAME, \
     OUTPUT_FILENAME_FOR_SYS_INFO, \
     TMP_PRESTO_DEBUG_REMOTE, DEFAULT_PATH_FOR_LOGS
-from prestoadmin.util.local_config_util import get_log_directory
+from trinoadmin.util.local_config_util import get_log_directory
 from tests.unit.base_unit_case import BaseUnitCase, PRESTO_CONFIG
 
 
@@ -220,7 +220,7 @@ class TestCollect(BaseUnitCase):
 
         append_mock.assert_any_call(version_info_file_name,
                                     'Presto-admin version: ' +
-                                    prestoadmin.__version__ + '\n')
+                                    trinoadmin.__version__ + '\n')
 
         append_mock.assert_any_call(version_info_file_name,
                                     'Presto server version: ' +

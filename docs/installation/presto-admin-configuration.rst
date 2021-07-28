@@ -1,4 +1,4 @@
-.. _presto-admin-configuration-label:
+.. _trino-admin-configuration-label:
 
 ========================
 Configuring Presto Admin
@@ -9,17 +9,17 @@ have a single-node installation of Presto, but having a dedicated node for the
 coordinator is recommended for better performance, especially on larger
 clusters.
 
-In order to use ``presto-admin`` to manage software on a cluster of nodes,
-you must specify a configuration for ``presto-admin``. This configuration
+In order to use ``trino-admin`` to manage software on a cluster of nodes,
+you must specify a configuration for ``trino-admin``. This configuration
 indicates the nodes on which to install as well as other credentials.
 
-To set up a configuration, create a file ``~/.prestoadmin/config.json``
-(or ``$PRESTO_ADMIN_CONFIG_DIR/config.json`` if you have the ``presto-admin``
+To set up a configuration, create a file ``~/.trinoadmin/config.json``
+(or ``$PRESTO_ADMIN_CONFIG_DIR/config.json`` if you have the ``trino-admin``
 config directory set using the environment variable) with the content below as
 appropriate for your cluster setup. Replace the variables denoted with
 brackets <> with actual values enclosed in double quotations. The user
 specified by ``username`` must have sudo access, unless the username
-is root, on all the Presto nodes, and ``presto-admin`` also must be
+is root, on all the Presto nodes, and ``trino-admin`` also must be
 able to login to all of the nodes via SSH as that user (see
 :ref:`ssh-configuration-label` for details on how to set that up). The
 file should be owned by root with R/W permissions (i.e. 622).
@@ -28,7 +28,7 @@ file should be owned by root with R/W permissions (i.e. 622).
    The sudo setup for a non-root user must have the ability to run /bin/bash
    as root. This can be a security issue. The IT organization should take the
    necessary steps to address this security hole and select an appropriate
-   presto-admin user.
+   trino-admin user.
 
 Configuration 
 -------------
@@ -69,7 +69,7 @@ to tell the Presto RPM where to find Java.
 
 You can also specify some but not all of the properties. For example, the
 default configuration is for a single-node installation of Presto on the same
-node that ``presto-admin`` is installed on. For a 6 node cluster with default
+node that ``trino-admin`` is installed on. For a 6 node cluster with default
 username and port, a sample ``config.json`` would be:
 
 .. code-block:: none
@@ -102,14 +102,14 @@ the command line:
 
 .. code-block:: none
 
-    ./presto-admin <command> -p <password>
+    ./trino-admin <command> -p <password>
 
 Alternatively, you can opt to use an interactive password prompt, which prompts
 you for the initial value of your password before running any commands:
 
 .. code-block:: none
 
-    ./presto-admin <command> -I
+    ./trino-admin <command> -I
     Initial value for env.password: <type your password here>
 
 The sudo password for the user must be the same as the SSH password.

@@ -14,8 +14,8 @@
 
 from mock import patch
 
-from prestoadmin.standalone.config import StandaloneConfig
-from prestoadmin.util.presto_config import PrestoConfig
+from trinoadmin.standalone.config import StandaloneConfig
+from trinoadmin.util.presto_config import PrestoConfig
 
 from tests.base_test_case import BaseTestCase
 

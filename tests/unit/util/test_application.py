@@ -19,9 +19,9 @@ import logging
 from mock import patch
 from mock import call
 
-from prestoadmin.util import constants
-from prestoadmin.util.application import Application
-from prestoadmin.util.local_config_util import get_log_directory
+from trinoadmin.util import constants
+from trinoadmin.util.application import Application
+from trinoadmin.util.local_config_util import get_log_directory
 
 from tests.base_test_case import BaseTestCase
 

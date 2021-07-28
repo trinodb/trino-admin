@@ -16,7 +16,7 @@
 Tests for version ranges
 """
 
-from prestoadmin.util.version_util import VersionRange, VersionRangeList, \
+from trinoadmin.util.version_util import VersionRange, VersionRangeList, \
     strip_tag, split_version
 
 from tests.unit.base_unit_case import BaseUnitCase

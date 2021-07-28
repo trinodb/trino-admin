@@ -16,7 +16,7 @@ import os
 
 from nose.plugins.attrib import attr
 
-import prestoadmin
+import trinoadmin
 
 from tests.no_hadoop_bare_image_provider import NoHadoopBareImageProvider
 from tests.product.base_product_case import BaseProductTestCase
@@ -32,7 +32,7 @@ class TestServerUpgrade(BaseProductTestCase):
         super(TestServerUpgrade, self).setUp()
         self.setup_cluster(NoHadoopBareImageProvider(), STANDALONE_PRESTO_CLUSTER)
         self.dummy_installer = StandalonePrestoInstaller(
-            self, (os.path.join(prestoadmin.main_dir, 'tests', 'product',
+            self, (os.path.join(trinoadmin.main_dir, 'tests', 'product',
                                 'resources'), DUMMY_RPM))
         self.real_installer = StandalonePrestoInstaller(self)
 

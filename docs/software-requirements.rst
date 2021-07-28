@@ -14,12 +14,12 @@ Software requirements
 
 **SSH configuration**
 
-* Passwordless SSH from the node running ``presto-admin`` to the nodes where Presto will be installed OR
-* Ability to SSH with a password from the node running ``presto-admin`` to the nodes where Presto will be installed
+* Passwordless SSH from the node running ``trino-admin`` to the nodes where Presto will be installed OR
+* Ability to SSH with a password from the node running ``trino-admin`` to the nodes where Presto will be installed
 
 For more on SSH configuration, see :ref:`ssh-configuration-label`.
 
 **Other configuration**
 
-* Sudo privileges are required on both the node running ``presto-admin`` and
+* Sudo privileges are required on both the node running ``trino-admin`` and
   the nodes where Presto is installed.

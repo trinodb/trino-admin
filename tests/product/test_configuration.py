@@ -20,7 +20,7 @@ import os
 
 from nose.plugins.attrib import attr
 
-from prestoadmin.util import constants
+from trinoadmin.util import constants
 from tests.no_hadoop_bare_image_provider import NoHadoopBareImageProvider
 from tests.product.base_product_case import BaseProductTestCase
 from tests.product.cluster_types import STANDALONE_PRESTO_CLUSTER

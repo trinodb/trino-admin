@@ -25,10 +25,10 @@ from StringIO import StringIO
 from nose.tools import nottest
 from retrying import Retrying
 
-from prestoadmin.prestoclient import PrestoClient
-from prestoadmin.util import constants
-from prestoadmin.util.constants import CONFIG_PROPERTIES, COORDINATOR_DIR_NAME, LOCAL_CONF_DIR, NODE_PROPERTIES
-from prestoadmin.util.presto_config import PrestoConfig
+from trinoadmin.trinoclient import TrinoClient
+from trinoadmin.util import constants
+from trinoadmin.util.constants import CONFIG_PROPERTIES, COORDINATOR_DIR_NAME, LOCAL_CONF_DIR, NODE_PROPERTIES
+from trinoadmin.util.presto_config import PrestoConfig
 from tests.base_test_case import BaseTestCase
 from tests.configurable_cluster import ConfigurableCluster
 from tests.docker_cluster import DockerCluster
@@ -485,7 +485,7 @@ query.max-memory=50GB\n"""
         user = 'root'
         if host is None:
             host = self.cluster.master
-        return PrestoClient(ips[host], user, PrestoConfig.from_file(
+        return TrinoClient(ips[host], user, PrestoConfig.from_file(
             StringIO(config),
             StringIO(node_config),
             config_path,

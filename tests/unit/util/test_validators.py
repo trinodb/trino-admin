@@ -15,8 +15,8 @@
 """
 Test the various validators
 """
-from prestoadmin.util import validators
-from prestoadmin.util.exception import ConfigurationError
+from trinoadmin.util import validators
+from trinoadmin.util.exception import ConfigurationError
 from tests.base_test_case import BaseTestCase
 
 

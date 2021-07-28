@@ -17,10 +17,10 @@ import os
 import tempfile
 from unittest import TestCase
 
-from prestoadmin.util import constants
-from prestoadmin.util.application import Application
-from prestoadmin.util.constants import LOG_DIR_ENV_VARIABLE
-from prestoadmin.util.local_config_util import get_log_directory
+from trinoadmin.util import constants
+from trinoadmin.util.application import Application
+from trinoadmin.util.constants import LOG_DIR_ENV_VARIABLE
+from trinoadmin.util.local_config_util import get_log_directory
 
 EXECUTABLE_NAME = 'foo.py'
 APPLICATION_NAME = 'foo'

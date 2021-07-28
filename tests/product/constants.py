@@ -18,8 +18,8 @@ Module defining constants global to the product tests
 import json
 import os
 
-import prestoadmin
-from prestoadmin import main_dir
+import trinoadmin
+from trinoadmin import main_dir
 
 BASE_IMAGES_TAG_CONFIG = 'base-images-tag.json'
 
@@ -43,7 +43,7 @@ BASE_IMAGE_NAME_RUNTIME = _BASE_IMAGE_NAME + "-runtime"
 print "using test build IMAGE %s:%s" % (BASE_IMAGE_NAME_BUILD, BASE_IMAGE_TAG)
 print "using test runtime IMAGE %s:%s" % (BASE_IMAGE_NAME_RUNTIME, BASE_IMAGE_TAG)
 
-LOCAL_RESOURCES_DIR = os.path.join(prestoadmin.main_dir,
+LOCAL_RESOURCES_DIR = os.path.join(trinoadmin.main_dir,
                                    'tests/product/resources/')
 
 DEFAULT_DOCKER_MOUNT_POINT = '/mnt/presto-admin'

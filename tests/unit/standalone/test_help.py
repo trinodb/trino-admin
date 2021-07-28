@@ -16,8 +16,8 @@
 from mock import patch
 import os
 
-import prestoadmin
-from prestoadmin import main
+import trinoadmin
+from trinoadmin import main
 
 from tests.unit.test_main import BaseMainCase
 
@@ -27,7 +27,7 @@ class TestStandaloneHelp(BaseMainCase):
     @patch('prestoadmin.mode.get_mode', return_value='standalone')
     def setUp(self, mode_mock):
         super(TestStandaloneHelp, self).setUp()
-        reload(prestoadmin)
+        reload(trinoadmin)
         reload(main)
 
     def get_short_help_path(self):

@@ -13,7 +13,7 @@
 # limitations under the License.
 from StringIO import StringIO
 
-from prestoadmin.util.presto_config import PrestoConfig
+from trinoadmin.util.presto_config import PrestoConfig
 from tests.unit.base_unit_case import BaseUnitCase
 
 

@@ -8,7 +8,7 @@ Hive, PostgreSQL, or MySQL.
 
 To add a catalog for the Hive connector:
 
-1. Create a file ``hive.properties`` in ``~/.prestoadmin/catalog`` with the
+1. Create a file ``hive.properties`` in ``~/.trinoadmin/catalog`` with the
 following content:
 
 .. code-block:: none
@@ -21,13 +21,13 @@ following content:
 
 .. code-block:: none
 
-    ./presto-admin catalog add hive
+    ./trino-admin catalog add hive
 
 3. Restart Presto:
 
 .. code-block:: none
 
-    ./presto-admin server restart
+    ./trino-admin server restart
 
 
 You may need to add additional properties for the Hive connector to work

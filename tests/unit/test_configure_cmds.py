@@ -15,8 +15,8 @@
 import os
 from fabric.state import env
 from mock import patch
-from prestoadmin.util import constants
-from prestoadmin import configure_cmds
+from trinoadmin.util import constants
+from trinoadmin import configure_cmds
 from tests.unit.base_unit_case import BaseUnitCase
 
 

@@ -14,7 +14,7 @@
 
 import errno
 from mock import patch
-from prestoadmin.util import filesystem
+from trinoadmin.util import filesystem
 from tests.base_test_case import BaseTestCase
 
 

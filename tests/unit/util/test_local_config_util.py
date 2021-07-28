@@ -15,8 +15,8 @@
 import os
 
 from mock import patch
-from prestoadmin.util import local_config_util
-from prestoadmin.util.constants import DEFAULT_LOCAL_CONF_DIR
+from trinoadmin.util import local_config_util
+from trinoadmin.util.constants import DEFAULT_LOCAL_CONF_DIR
 from tests.base_test_case import BaseTestCase
 
 

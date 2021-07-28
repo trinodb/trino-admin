@@ -20,8 +20,8 @@ Installers for installing mode.json onto clusters
 import json
 
 from overrides import overrides
-from prestoadmin import config
-from prestoadmin.mode import VALID_MODES, MODE_KEY, MODE_STANDALONE
+from trinoadmin import config
+from trinoadmin.mode import VALID_MODES, MODE_KEY, MODE_STANDALONE
 from tests.base_installer import BaseInstaller
 from tests.product.config_dir_utils import get_mode_config_path
 

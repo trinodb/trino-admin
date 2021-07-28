@@ -22,14 +22,14 @@ from fabric.api import env
 from fabric.operations import _AttributeString
 from mock import patch, call, MagicMock
 
-from prestoadmin import server
-from prestoadmin.prestoclient import PrestoClient
-from prestoadmin.server import INIT_SCRIPTS
-from prestoadmin.util import constants
-from prestoadmin.util.exception import ConfigFileNotFoundError, \
+from trinoadmin import server
+from trinoadmin.trinoclient import TrinoClient
+from trinoadmin.server import INIT_SCRIPTS
+from trinoadmin.util import constants
+from trinoadmin.util.exception import ConfigFileNotFoundError, \
     ConfigurationError
-from prestoadmin.util.fabricapi import get_host_list
-from prestoadmin.util.local_config_util import get_catalog_directory
+from trinoadmin.util.fabricapi import get_host_list
+from trinoadmin.util.local_config_util import get_catalog_directory
 from tests.unit.base_unit_case import BaseUnitCase, PRESTO_CONFIG
 
 
@@ -517,7 +517,7 @@ class TestInstall(BaseUnitCase):
            return_value=PRESTO_CONFIG)
     @patch('prestoadmin.server.run')
     @patch('prestoadmin.server.lookup_string_config')
-    @patch.object(PrestoClient, 'run_sql')
+    @patch.object(TrinoClient, 'run_sql')
     def test_check_success_status(self, mock_run_sql, string_config_mock, mock_run, mock_presto_config):
         env.roledefs = {
             'coordinator': ['Node1'],
@@ -553,7 +553,7 @@ class TestInstall(BaseUnitCase):
     @patch('prestoadmin.server.execute')
     @patch('prestoadmin.server.get_presto_version')
     @patch('prestoadmin.server.presto_installed')
-    @patch.object(PrestoClient, 'run_sql')
+    @patch.object(TrinoClient, 'run_sql')
     def test_status_from_each_node(
             self, mock_run_sql, mock_presto_installed, mock_get_presto_version, mock_execute, mock_presto_config):
         env.roledefs = {
@@ -611,7 +611,7 @@ class TestInstall(BaseUnitCase):
 
     @patch('prestoadmin.server.sudo')
     def test_get_external_ip(self, mock_nodeuuid):
-        client_mock = MagicMock(PrestoClient)
+        client_mock = MagicMock(TrinoClient)
         client_mock.run_sql.return_value = [['IP']]
         self.assertEqual(server.get_ext_ip_of_node(client_mock), 'IP')
 
@@ -619,7 +619,7 @@ class TestInstall(BaseUnitCase):
     @patch('prestoadmin.server.warn')
     def test_warn_external_ip(self, mock_warn, mock_nodeuuid):
         env.host = 'node'
-        client_mock = MagicMock(PrestoClient)
+        client_mock = MagicMock(TrinoClient)
         client_mock.run_sql.return_value = [['IP1'], ['IP2']]
         server.get_ext_ip_of_node(client_mock)
         mock_warn.assert_called_with("More than one external ip found for "
@@ -635,7 +635,7 @@ class TestInstall(BaseUnitCase):
 
     @patch('prestoadmin.util.presto_config.PrestoConfig.coordinator_config',
            return_value=PRESTO_CONFIG)
-    @patch.object(PrestoClient, 'run_sql')
+    @patch.object(TrinoClient, 'run_sql')
     @patch('prestoadmin.server.run')
     @patch('prestoadmin.server.warn')
     def test_warning_presto_version_not_installed(self, mock_warn, mock_run,

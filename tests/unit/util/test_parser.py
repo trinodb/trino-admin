@@ -17,8 +17,8 @@ Tests the LoggingOptionParser
 """
 from StringIO import StringIO
 
-from prestoadmin.util.parser import LoggingOptionParser
-from prestoadmin.util.hiddenoptgroup import HiddenOptionGroup
+from trinoadmin.util.parser import LoggingOptionParser
+from trinoadmin.util.hiddenoptgroup import HiddenOptionGroup
 from tests.base_test_case import BaseTestCase
 
 

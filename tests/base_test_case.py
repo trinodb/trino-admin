@@ -29,7 +29,7 @@ import unittest
 
 from fabric.state import env
 
-from prestoadmin.util.constants import LOG_DIR_ENV_VARIABLE
+from trinoadmin.util.constants import LOG_DIR_ENV_VARIABLE
 
 
 class BaseTestCase(unittest.TestCase):

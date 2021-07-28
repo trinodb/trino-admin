@@ -19,7 +19,7 @@ from fabric.api import env
 
 from mock import Mock
 
-from prestoadmin.util import fabricapi
+from trinoadmin.util import fabricapi
 
 from tests.base_test_case import BaseTestCase
 

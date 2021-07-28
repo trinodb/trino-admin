@@ -16,10 +16,10 @@
 Tests for the base_config module.
 '''
 
-from prestoadmin.yarn_slider.config import SliderConfig
-from prestoadmin.standalone.config import StandaloneConfig
-from prestoadmin.util.base_config import requires_config
-from prestoadmin.util.exception import ConfigFileNotFoundError, \
+from trinoadmin.yarn_slider.config import SliderConfig
+from trinoadmin.standalone.config import StandaloneConfig
+from trinoadmin.util.base_config import requires_config
+from trinoadmin.util.exception import ConfigFileNotFoundError, \
     ConfigurationError
 
 from mock import patch
