@@ -18,6 +18,7 @@ the presto admin project.
 """
 
 import os
+import sys
 
 import prestoadmin
 
@@ -26,6 +27,17 @@ LOGGING_CONFIG_FILE_NAME = 'presto-admin-logging.ini'
 LOGGING_CONFIG_FILE_DIRECTORIES = [
     os.path.join(prestoadmin.main_dir, 'prestoadmin')
 ]
+
+# Use the BRAND variable to define whether facebook's presto or trinodb's trino is being used at the time
+# with the default value being the former.
+# You can override the default by defining the environment variable PRESTO_TYPE.
+# For example, PRESTO_TYPE=trino means use the latter
+BRAND = os.environ.get('PRESTO_TYPE', 'presto').lower()
+if BRAND == 'trinodb':
+    BRAND = 'trino'
+if BRAND not in ['trino', 'presto']:
+    print >> sys.stderr, "PRESTO_TYPE only support trino and presto"
+    BRAND = 'presto'
 
 # local configuration
 LOG_DIR_ENV_VARIABLE = 'PRESTO_ADMIN_LOG_DIR'
@@ -38,12 +50,12 @@ WORKERS_DIR_NAME = 'workers'
 CATALOG_DIR_NAME = 'catalog'
 
 # remote configuration
-REMOTE_CONF_DIR = '/etc/presto'
+REMOTE_CONF_DIR = '/etc/' + BRAND
 REMOTE_CATALOG_DIR = os.path.join(REMOTE_CONF_DIR, 'catalog')
 REMOTE_PACKAGES_PATH = '/opt/prestoadmin/packages'
-DEFAULT_PRESTO_SERVER_LOG_FILE = '/var/log/presto/server.log'
-DEFAULT_PRESTO_LAUNCHER_LOG_FILE = '/var/log/presto/launcher.log'
-REMOTE_PLUGIN_DIR = '/usr/lib/presto/plugin'
+DEFAULT_PRESTO_SERVER_LOG_FILE = '/var/log/' + BRAND + '/server.log'
+DEFAULT_PRESTO_LAUNCHER_LOG_FILE = '/var/log/' + BRAND + '/launcher.log'
+REMOTE_PLUGIN_DIR = '/usr/lib/' + BRAND + '/plugin'
 REMOTE_COPY_DIR = '/tmp'
 
 # Presto configuration files

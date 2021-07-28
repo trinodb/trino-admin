@@ -33,6 +33,7 @@ from fabric.utils import warn, error, abort
 from retrying import retry, RetryError
 
 import util.filesystem
+from prestoadmin.util import constants
 from prestoadmin import catalog
 from prestoadmin import configure_cmds
 from prestoadmin import package
@@ -51,7 +52,11 @@ from prestoadmin.util.version_util import VersionRange, VersionRangeList, \
 __all__ = ['install', 'uninstall', 'upgrade', 'start', 'stop', 'restart',
            'status']
 
-INIT_SCRIPTS = '/etc/init.d/presto'
+if constants.BRAND == 'presto':
+    INIT_SCRIPTS = '/etc/init.d/presto'
+else:
+    INIT_SCRIPTS = '/etc/init.d/trino'
+
 RETRY_TIMEOUT = 120
 SYSTEM_RUNTIME_NODES = 'select * from system.runtime.nodes'
 
@@ -86,10 +91,16 @@ CATALOG_INFO_SQL = 'select catalog_name from system.metadata.catalogs'
 _LOGGER = logging.getLogger(__name__)
 
 DOWNLOAD_DIRECTORY = '/tmp'
-DEFAULT_RPM_NAME = 'presto-server-rpm.rpm'
-LATEST_RPM_URL = 'https://repository.sonatype.org/service/local/artifact/maven' \
-                 '/content?r=central-proxy&g=io.prestosql' \
-                 '&a=presto-server-rpm&e=rpm&v=RELEASE'
+if constants.BRAND == 'presto':
+    DEFAULT_RPM_NAME = 'presto-server-rpm.rpm'
+    LATEST_RPM_URL = 'https://repository.sonatype.org/service/local/artifact/maven' \
+                     '/content?r=central-proxy&g=com.facebook.presto' \
+                     '&a=presto-server-rpm&e=rpm&v=RELEASE'
+else:
+    DEFAULT_RPM_NAME = 'trino-server-rpm.rpm'
+    LATEST_RPM_URL = 'https://repository.sonatype.org/service/local/artifact/maven' \
+                     '/content?r=central-proxy&g=io.trinodb' \
+                     '&a=trino-server-rpm&e=rpm&v=RELEASE'
 
 
 class LocalPrestoRpmFinder:
@@ -185,7 +196,7 @@ class UrlHandler:
             if not version:
                 return DEFAULT_RPM_NAME
             else:
-                return 'presto-server-rpm-' + version + '.rpm'
+                return DEFAULT_RPM_NAME.rsplit('.', 1)[0] + version + '.rpm'
 
     def read_block(self, block_size):
         return self.url_response.read(block_size)
@@ -248,8 +259,13 @@ class PrestoRpmFetcher:
 
     def _find_or_download_rpm_by_version(self, rpm_version):
         # See here for more information: http://search.maven.org/#api
-        download_url = 'http://search.maven.org/remotecontent?filepath=io/prestosql/' \
+        if constants.BRAND == 'presto':
+            download_url = 'http://search.maven.org/remotecontent?filepath=com/facebook/presto/' \
                        'presto-server-rpm/' + rpm_version + '/presto-server-rpm-' + \
+                       rpm_version + '.rpm'
+        else:
+            download_url = 'http://search.maven.org/remotecontent?filepath=io/trinodb/' \
+                       'trino-server-rpm/' + rpm_version + '/trino-server-rpm-' + \
                        rpm_version + '.rpm'
         return self.find_or_download_rpm_by_url(download_url, rpm_version)
 
@@ -432,16 +448,16 @@ def uninstall():
     """
     stop()
 
-    if package.is_rpm_installed('presto'):
-        package.rpm_uninstall('presto')
-    elif package.is_rpm_installed('presto-server'):
-        package.rpm_uninstall('presto-server')
-    elif package.is_rpm_installed('presto-server-rpm'):
-        package.rpm_uninstall('presto-server-rpm')
-    elif package.is_rpm_installed('starburst-presto-server-rpm'):
-        package.rpm_uninstall('starburst-presto-server-rpm')
+
+    if package.is_rpm_installed(constants.BRAND):
+        package.rpm_uninstall(constants.BRAND)
+    elif package.is_rpm_installed(constants.BRAND + '-server'):
+        package.rpm_uninstall(constants.BRAND + '-server')
+    elif package.is_rpm_installed(constants.BRAND + '-server-rpm'):
+        package.rpm_uninstall(constants.BRAND + '-server-rpm')
     else:
         abort('Unable to uninstall package on: ' + env.host)
+
 
 
 @task
@@ -581,7 +597,7 @@ def check_presto_version():
         Error string if applicable
     """
     if not presto_installed():
-        not_installed_str = 'Presto is not installed.'
+        not_installed_str = constants.BRAND.capitalize() + ' is not installed.'
         warn(not_installed_str)
         return not_installed_str
 
@@ -590,9 +606,9 @@ def check_presto_version():
 
 def presto_installed():
     with settings(hide('warnings', 'stdout'), warn_only=True):
-        package_search = run('rpm -q presto')
+        package_search = run('rpm -q ' + constants.BRAND)
         if not package_search.succeeded:
-            package_search = run('rpm -q presto-server-rpm')
+            package_search = run('rpm -q ' + constants.BRAND + '-server-rpm')
         if not package_search.succeeded:
             package_search = run('rpm -q starburst-presto-server-rpm')
         return package_search.succeeded
@@ -600,14 +616,13 @@ def presto_installed():
 
 def get_presto_version():
     with settings(hide('warnings', 'stdout'), warn_only=True):
-        version = run('rpm -q --qf \"%{VERSION}\\n\" presto')
+        version = run('rpm -q --qf \"%{VERSION}\\n\" ' + constants.BRAND)
         # currently we have two rpm names out so we need this retry
         if not version.succeeded:
-            version = run('rpm -q --qf \"%{VERSION}\\n\" presto-server-rpm')
-        if not version.succeeded:
-            version = run('rpm -q --qf \"%{VERSION}\\n\" starburst-presto-server-rpm')
+            version = run('rpm -q --qf \"%{VERSION}\\n\" ' + constants.BRAND + '-server-rpm')
         version = version.strip()
-        _LOGGER.debug('Presto rpm version: ' + version)
+        _LOGGER.debug('{} rpm version: {}'.format(constants.BRAND.capitalize(), version))
+
         return version
 
 
@@ -729,7 +744,7 @@ def get_roles_for(host):
 def print_node_info(node_status, catalog_status):
     for k in node_status:
         print('\tNode URI(http): ' + str(k) +
-              '\n\tPresto Version: ' + str(node_status[k][0]) +
+              '\n\t' + constants.BRAND.capitalize() + ' Version: ' + str(node_status[k][0]) +
               '\n\tNode status:    ' + str(node_status[k][1]))
         if catalog_status:
             print('\tCatalogs:     ' + catalog_status)

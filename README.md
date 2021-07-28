@@ -1,7 +1,5 @@
 # trino-admin [![Build Status](https://travis-ci.org/github/trinodb/trino-admin.svg?branch=master)](https://travis-ci.org/github/trinodb/trino-admin)
 
-## Trino-admin (formerly known as presto-admin) is deprecated and will not work with new versions of Trino (>350)
-
 Trino-admin installs, configures, and manages Trino installations.
 
 Comprehensive documentation(deprecated) can be found at https://trinodb.github.io/trino-admin/docs/current/index.html 
@@ -15,7 +13,7 @@ Comprehensive documentation(deprecated) can be found at https://trinodb.github.i
       Ubuntu 14.04. 
     * If you have Docker already installed, you need to make sure that your user has
       been added to the docker group. This will enable you to run commands without `sudo`,
-      which is a requirement for some of the unit tests. To enable sudoless docker access
+      which is a requirement for some unit tests. To enable sudoless docker access
       run the following:
 
             $ sudo groupadd docker
@@ -50,7 +48,7 @@ In order to get started with `trino-admin`,
      Now you can make your changes locally.
 
 5. When you're done making changes, check that your changes pass `make clean lint test`, which runs flake8 and the unit tests (which test both Python 2.6 and 2.7).
-To run the product tests tests (`make test-all`), you need docker installed. You may also need to run `pip install wheel` in your virtualenv. To install and start docker use ::
+To run the product tests (`make test-all`), you need docker installed. You may also need to run `pip install wheel` in your virtualenv. To install and start docker use ::
 
         $ wget -qO- https://get.docker.com/ | sh
 
