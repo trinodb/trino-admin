@@ -39,7 +39,7 @@ if [ -d "third-party" ]; then
 else
     wget --no-check-certificate https://pypi.python.org/packages/source/v/virtualenv/virtualenv-%VIRTUALENV_VERSION%.tar.gz
     tar xvzf virtualenv-%VIRTUALENV_VERSION%.tar.gz || true
-    "$PYTHON_BIN" virtualenv-%VIRTUALENV_VERSION%/virtualenv.py presto-admin-install
+    "$PYTHON_BIN" virtualenv-%VIRTUALENV_VERSION%/virtualenv.py trino-admin-install
 fi
 
 source trino-admin-install/bin/activate
@@ -53,8 +53,8 @@ if [ -n "$1" ]; then
         cert_options='--cert '$cert_file
     fi
 fi
-
-pip install $cert_options %WHEEL_NAME%.whl %ONLINE_OR_OFFLINE_INSTALL%
+WHEEL_NAME=$(ls -w1 *.whl)
+pip install $cert_options ${WHEEL_NAME} %ONLINE_OR_OFFLINE_INSTALL%
 if ! `"$PYTHON_BIN" -c "import paramiko" > /dev/null 2>&1` ; then
     printf "\nERROR\n"
     echo "Paramiko could not be imported. This usually means that pycrypto (a dependency of paramiko)"

@@ -177,11 +177,11 @@ release-builds: clean-build clean-pyc dist dist-offline docs
 dist: dist-online
 
 dist-online: clean-build clean-pyc
-	python setup.py bdist_prestoadmin --online-install
+	python setup.py bdist_trinoadmin --online-install
 	ls -l dist
 
 dist-offline: clean-build clean-pyc
-	python setup.py bdist_prestoadmin
+	python setup.py bdist_trinoadmin
 	ls -l dist
 
 wheel: clean

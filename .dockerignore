@@ -1,0 +1,5 @@
+venv*
+docs
+tests
+build
+dist
