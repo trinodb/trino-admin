@@ -5,7 +5,7 @@
 *.egg
 *.yaml
 *.bak
-prestoadmin.egg-info/
+trinoadmin.egg-info/
 .tox/
 .coverage
 htmlcov/
@@ -14,7 +14,7 @@ tmp/
 .vscode/
 
 # Ignore generated Sphinx docs
-docs/prestoadmin.*
+docs/trinoadmin.*
 docs/modules.rst
 docs/_build
 
@@ -32,10 +32,10 @@ dist/
 .#*
 
 #mvn targets
-presto-admin-test/target
+trino-admin-test/target
 
 # presto yarn package for product tests
-presto-yarn-package.zip
+trino-yarn-package.zip
 
 # python virtual env
 venv/
