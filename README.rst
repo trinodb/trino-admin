@@ -17,12 +17,12 @@ trino-admin
 Trino-admin installs, configures, and manages Trino/Presto installations.
 
 Comprehensive documentation(deprecated) can be found at
-https://trinodb.github.io/trino-admin/docs/current/index.html
+https://trino-admin.readthedocs.org/
 
 Requirements
 ------------
 
-1. Python 2.6 or 2.7
+1. Python 2.7
 2. `Docker <https://www.docker.com/>`__. (Only required for development,
    if you want to run the system tests)
 

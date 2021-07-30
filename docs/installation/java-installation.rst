@@ -5,8 +5,8 @@ Installing Java
 ===============
 Prerequisites: :ref:`trino-admin-installation-label` and :ref:`trino-admin-configuration-label`
 
-A Java 11 runtime environment is a `requirement for running Presto
-<https://prestosql.io/docs/current/installation/deployment.html#requirements>`_.
+A Java 11 runtime environment is a `requirement for running Trino
+<https://trino.io/docs/current/installation/deployment.html#requirements>`_.
 
 If a suitable 64-bit version of Java 11 is already installed on the nodes, you
 can skip this step. Otherwise you have to install Java via RPM or a tarball.

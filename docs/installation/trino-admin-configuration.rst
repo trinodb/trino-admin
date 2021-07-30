@@ -1,7 +1,7 @@
 .. _trino-admin-configuration-label:
 
 ========================
-Configuring Presto Admin
+Configuring Trino Admin
 ========================
 A Presto cluster consists of a coordinator node and one or more workers nodes.
 A coordinator and worker may be located on the same node, meaning that you can
@@ -42,7 +42,7 @@ Use the following configuration as a template for clusters:
       "port": "<ssh_port>",
       "coordinator": "<host_name>",
       "workers": ["<host_name_1>", "<host_name_2>", ... "<host_name_n>"],
-      "java_home":"<path/to/java/on/presto/nodes>"
+      "java_home":"<path/to/java/on/trino/nodes>"
     }
 
 Do not use localhost as host_name for a multi-node cluster.

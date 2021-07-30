@@ -1,7 +1,7 @@
 .. _presto-server-installation-label:
 
 ============================
-Installing the Presto server
+Installing the Trino server
 ============================
 
 Prerequisites: :ref:`trino-admin-installation-label`,
@@ -9,7 +9,7 @@ Prerequisites: :ref:`trino-admin-installation-label`,
 
 To install the Presto query engine on a cluster of nodes using ``trino-admin``:
 
-1. Download ``presto-server-rpm-VERSION.ARCH.rpm``
+1. Download ``trino-server-rpm-VERSION.ARCH.rpm``
 
 2. Copy the RPM to a location accessible by ``trino-admin``.
 
@@ -24,10 +24,10 @@ your ``~/.trinoadmin/config.json`` file.
 
 The default port for Presto is 8080.  If that port is already in use on your
 cluster, you will not be able to start Presto. In order to change the port
-that Presto uses, proceed to :ref:`presto-port-configuration-label`.
+that Presto uses, proceed to :ref:`trino-port-configuration-label`.
 
 There are additional configuration properties described at
-:ref:`presto-configuration-label` that must be changed for optimal performance.
+:ref:`trino-configuration-label` that must be changed for optimal performance.
 These configuration changes can be done either before or after starting the
 Presto server and running queries for the first time, though all configuration
 changes require a restart of the Presto servers.

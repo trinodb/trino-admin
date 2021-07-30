@@ -1,7 +1,7 @@
 .. _presto-port-configuration-label:
 
 ===========================
-Configuring the Presto port
+Configuring the Trino port
 ===========================
 
 By default, Presto uses 8080 for the HTTP port. If the port is already

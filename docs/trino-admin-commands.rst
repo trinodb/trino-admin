@@ -12,8 +12,8 @@ catalog add
 
     trino-admin catalog add [<name>]
 
-This command is used to deploy catalog configurations to the Presto cluster.
-`Catalog configurations <https://prestosql.io/docs/current/connector.html>`_
+This command is used to deploy catalog configurations to the Trino cluster.
+`Catalog configurations <https://trino.io/docs/current/connector.html>`_
 are kept in the configuration directory ``~/.trinoadmin/catalog``
 
 To add a catalog using ``trino-admin``, first create a configuration file in
@@ -25,7 +25,7 @@ cluster. To deploy all catalogs in the catalog configuration directory,
 leave the name argument out.
 
 In order to query using the newly added catalog, you need to restart the
-Presto server (see `server restart`_):
+Trino server (see `server restart`_):
 
 .. code-block:: none
 
@@ -55,8 +55,8 @@ once, you could run:
 Adding a custom connector
 -------------------------
 
-In order to install a catalog for a custom connector not included with Presto,
-the jar must be added to the Presto plugin location using their
+In order to install a catalog for a custom connector not included with Trino,
+the jar must be added to the Trino plugin location using their
 ``plugin add_jar`` command before running the ``catalog add`` command.
 
 Example:
@@ -85,7 +85,7 @@ catalog remove
 
 The catalog remove command is used to remove a catalog from your presto
 cluster configuration. Running the command will remove the catalog from all
-nodes in the Presto cluster. Additionally, it will remove the local
+nodes in the Trino cluster. Additionally, it will remove the local
 configuration file for the catalog.
 
 In order for the change to take effect, you will need to restart services.
@@ -114,7 +114,7 @@ collect logs
 
     trino-admin collect logs
 
-This command gathers Presto server logs and launcher logs from the
+This command gathers Trino server logs and launcher logs from the
 ``/var/log/presto/`` directory across the cluster along with the
 ``~/.trinoadmin/log/trino-admin.log`` and creates a tar file. The final
 tar output is saved at ``/tmp/presto-debug-logs.tar.gz``.
@@ -136,10 +136,10 @@ collect query_info
 
     trino-admin collect query_info <query_id>
 
-This command gathers information about a Presto query identified by the given
+This command gathers information about a Trino query identified by the given
 ``query_id`` and stores that information in a JSON file.
 The output file will be saved at
-``/tmp/presto-debug/query_info_<query_id>.json``.
+``/tmp/trino-debug/query_info_<query_id>.json``.
 
 Example
 -------
@@ -159,15 +159,15 @@ collect system_info
     trino-admin collect system_info
 
 This command gathers various system specific information from the cluster.
-The information is saved in a tar file at ``/tmp/presto-debug-sysinfo.tar.gz``.
+The information is saved in a tar file at ``/tmp/trino-debug-sysinfo.tar.gz``.
 The gathered information includes:
 
-*  Node specific information from Presto like node uri, last response
+*  Node specific information from Trino like node uri, last response
    time, recent failures, recent requests made to the node, etc.
 *  List of catalogs configured
 *  Catalog configuration files
 *  Other system specific information like OS information, Java
-   version, ``trino-admin`` version, and Presto server version.
+   version, ``trino-admin`` version, and Trino server version.
 
 Example
 -------
@@ -186,8 +186,8 @@ configuration deploy
 
     trino-admin configuration deploy [coordinator|workers]
 
-This command deploys `Presto configuration files
-<https://prestosql.io/docs/current/installation/deployment.html>`_
+This command deploys `Trino configuration files
+<https://trino.io/docs/current/installation/deployment.html>`_
 onto the cluster. ``trino-admin`` uses different configuration directories for
 worker and coordinator configurations so that you can easily create different
 configurations for your coordinator and worker nodes. Create a
@@ -203,7 +203,7 @@ the coordinator or workers configurations. To deploy both configurations at
 once, don't specify either option.
 
 When you run configuration deploy, the following files will be deployed to
-the ``/etc/presto`` directory on your Presto cluster:
+the ``/etc/trino`` directory on your Trino cluster:
 
 * node.properties
 * config.properties
@@ -227,17 +227,17 @@ configurations:
 
 .. code-block:: none
 
-    node.environment=presto
-    node.data-dir=/var/lib/presto/data
-    node.launcher-log-file=/var/log/presto/launcher.log
-    node.server-log-file=/var/log/presto/server.log
-    catalog.config-dir=/etc/presto/catalog
+    node.environment=trino
+    node.data-dir=/var/lib/trino/data
+    node.launcher-log-file=/var/log/trino/launcher.log
+    node.server-log-file=/var/log/trino/server.log
+    catalog.config-dir=/etc/trino/catalog
 
 .. NOTE::
 
     Do not change the value of catalog.config-dir=/etc/presto/catalog as it
-    is necessary for Presto to be able to find the catalog directory when
-    Presto has been installed by RPM.
+    is necessary for Trino to be able to find the catalog directory when
+    Trino has been installed by RPM.
 
 *jvm.config*
 
@@ -284,7 +284,7 @@ instead::
 
     node-scheduler.include-coordinator=true
 
-See :ref:`presto-port-configuration-label` for details on http port configuration.
+See :ref:`trino-port-configuration-label` for details on http port configuration.
 
 Example
 -------
@@ -309,10 +309,10 @@ Further, add the following ``node.properties`` to
 ``~/.trinoadmin/coordinator`` and ``~/.trinoadmin/workers``: ::
 
     node.environment=test
-    node.data-dir=/var/lib/presto/data
-    node.launcher-log-file=/var/log/presto/launcher.log
-    node.server-log-file=/var/log/presto/server.log
-    catalog.config-dir=/etc/presto/catalog
+    node.data-dir=/var/lib/trino/data
+    node.launcher-log-file=/var/log/trino/launcher.log
+    node.server-log-file=/var/log/trino/server.log
+    catalog.config-dir=/etc/trino/catalog
 
 Then run:
 
@@ -342,12 +342,12 @@ configuration show
 
     trino-admin configuration show [node|jvm|config|log]
 
-This command prints the contents of the Presto configuration files deployed
+This command prints the contents of the Trino configuration files deployed
 in the cluster. It takes an optional configuration name argument for the
 configuration files node.properties, jvm.config, config.properties and
 log.properties. For missing configuration files, a warning will be printed
 except for log.properties file, since it is an optional configuration file
-in your Presto cluster.
+in your Trino cluster.
 
 If no argument is specified, then all four configurations will be printed.
 
@@ -376,7 +376,7 @@ Example
 
 .. code-block:: text
 
-    ./trino-admin file copy etc/presto/kafka-tabledef.json /etc/presto
+    ./trino-admin file copy etc/presto/kafka-tabledef.json /etc/trino
 
 
 ********
@@ -476,7 +476,7 @@ Example
     ./trino-admin plugin add_jar connector.jar my_connector /my/plugin/dir
 
 The first example will deploy connector.jar to
-``/usr/lib/presto/plugin/my_connector/connector.jar``
+``/usr/lib/trino/plugin/my_connector/connector.jar``
 The second example will deploy it to ``/my/plugin/dir/my_connector/program.jar``.
 
 .. _server-install-label:
@@ -513,7 +513,7 @@ See :ref:`trino-admin-configuration-label` on how to configure your cluster
 using config.json. If this file is missing, then the command prompts for user
 input to get the topology information.
 
-The general configurations for Presto's coordinator and workers are taken
+The general configurations for Trino's coordinator and workers are taken
 from the directories ``~/.trinoadmin/coordinator`` and
 ``~/.trinoadmin/workers`` respectively. If these directories or any required
 configuration files are absent when you run ``server install``, a default
@@ -521,7 +521,7 @@ configuration will be deployed. See `configuration deploy`_ for details.
 
 The catalog directory ``~/.trinoadmin/catalog/`` should contain the
 configuration files for any catalogs that you would like to connect to in
-your Presto cluster. The ``server install`` command will configure the cluster
+your Trino cluster. The ``server install`` command will configure the cluster
 with all the catalogs in the directory. If the directory does not exist or
 is empty prior to ``server install``, then by default the tpch connector
 is configured. See `catalog add`_ on how to add catalog configuration files
@@ -540,9 +540,9 @@ Example
 
 .. code-block:: none
 
-    ./trino-admin server install /tmp/presto.rpm
+    ./trino-admin server install /tmp/trino.rpm
     ./trino-admin server install 316
-    ./trino-admin server install http://search.maven.org/remotecontent?filepath=io/prestosql/presto-server-rpm/316/presto-server-rpm-316.rpm
+    ./trino-admin server install http://search.maven.org/remotecontent?filepath=io/trino/trino-server-rpm/359/trino-server-rpm-359.rpm
     ./trino-admin server install latest
 
 **Standalone RPM Install**
@@ -554,7 +554,7 @@ co-located, you can just use:
 
     rpm -i presto.rpm
 
-This will deploy the necessary configurations for the presto-server to operate
+This will deploy the necessary configurations for the trino-server to operate
 in single-node mode.
 
 .. _server-restart-label:
@@ -567,7 +567,7 @@ server restart
 
     trino-admin server restart
 
-This command first stops any Presto servers running and then starts them.
+This command first stops any Trino servers running and then starts them.
 A status check is performed on the entire cluster and is reported at the end.
 
 Example
@@ -587,7 +587,7 @@ server start
 
     trino-admin server start
 
-This command starts the Presto servers on the cluster. A status check is
+This command starts the Trino servers on the cluster. A status check is
 performed on the entire cluster and is reported at the end.
 
 Example
@@ -607,8 +607,8 @@ server status
 
     trino-admin server status
 
-This command prints the status information of Presto in the cluster. This
-command will fail to report the correct status if the Presto installed is
+This command prints the status information of Trino in the cluster. This
+command will fail to report the correct status if the Trino installed is
 older than version 0.100. It will not print any status information if a given
 node is inaccessible.
 
@@ -616,7 +616,7 @@ The status output will have the following information:
 
 * server status
 * node uri
-* Presto version installed
+* Trino version installed
 * node is active/inactive
 * catalogs deployed
 
@@ -635,7 +635,7 @@ server stop
 
     trino-admin server stop
 
-This command stops the Presto servers on the cluster.
+This command stops the Trino servers on the cluster.
 
 Example
 -------
@@ -652,10 +652,10 @@ server uninstall
 
     trino-admin server uninstall [--nodeps]
 
-This command stops the Presto server if running on the cluster and uninstalls
-the Presto rpm. The uninstall command removes any presto related files
-deployed during ``server install`` but retains the Presto logs at
-``/var/log/presto``.
+This command stops the Trino server if running on the cluster and uninstalls
+the Trino rpm. The uninstall command removes any presto related files
+deployed during ``server install`` but retains the Trino logs at
+``/var/log/trino``.
 
 This command takes an optional ``--nodeps`` flag which indicates whether the
 rpm uninstalled should ignore checking any package dependencies.
@@ -675,14 +675,14 @@ server upgrade
 
     trino-admin server upgrade path/to/new/package.rpm [local_config_dir] [--nodeps]
 
-This command upgrades the Presto RPM on all of the nodes in the cluster to the
+This command upgrades the Trino RPM on all of the nodes in the cluster to the
 RPM at ``path/to/new/package.rpm``, preserving the existing configuration on
 the cluster. The existing cluster configuration is saved locally to
 local_config_dir (which defaults to a temporary folder if not specified).
 The path can either be absolute or relative to the current directory.
 
-This command can also be used to downgrade the Presto installation, if the RPM
-at ``path/to/new/package.rpm`` is an earlier version than the Presto installed
+This command can also be used to downgrade the Trino installation, if the RPM
+at ``path/to/new/package.rpm`` is an earlier version than the Trino installed
 on the cluster.
 
 Note that if the configuration files on the cluster differ from the

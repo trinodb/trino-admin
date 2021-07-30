@@ -2,11 +2,12 @@
 Presto version compatibility
 ============================
 
-The following matrix details the compatible Presto Admin and Presto versions.
+The following matrix details the compatible Trino Admin and Presto versions.
 
 ============================ ==========================
-Presto Admin version         Compatible Presto versions
+Trino Admin version         Compatible Trino/Presto versions
 ============================ ==========================
+2.13                         345+
 2.12                         345
 2.11                         338
 2.10                         332

@@ -30,13 +30,13 @@ To fix this, start Presto with:
     $ ./trino-admin server start
 
 5. If the Presto servers fail to start or crash soon after starting, look at
-   the presto server logs on the Presto cluster ``/var/log/presto`` for an
+   the presto server logs on the Trino cluster ``/var/log/trino`` for an
    error message.  You can collect the logs locally using :ref:`collect-logs`.
    The relevant error messages should be at the end of the log with the most
    recent timestamp.  Below are tips for some common errors:
 
 *    Specifying a port that is already in use: Look at
-     :ref:`presto-port-configuration-label` to learn how to change the port
+     :ref:`trino-port-configuration-label` to learn how to change the port
      configuration.
 
 *    An error in a catalog configuration file, such as a syntax error or

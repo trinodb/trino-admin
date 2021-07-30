@@ -1,7 +1,7 @@
-.. _presto-configuration-label:
+.. _trino-configuration-label:
 
 ==================
-Configuring Presto
+Configuring Trino
 ==================
 
 Presto configuration parameters can be modified to
@@ -76,31 +76,31 @@ locations. In order to update these:
    ``node.launcher-log-file``, and ``node.server-log-file``. It is very
    important that these locations have enough space for the logs on the
    filesystem on each node where Presto is running. The default location
-   for ``node.data-dir`` is ``/var/lib/presto/data``, the default location
-   for ``node.launcher-log-file`` is ``/var/log/presto/launcher.log``, and
+   for ``node.data-dir`` is ``/var/lib/trino/data``, the default location
+   for ``node.launcher-log-file`` is ``/var/log/trino/launcher.log``, and
    the default location for ``node.server-log-file`` is
-   ``/var/log/presto/server.log``. Assuming the chosen locations are
-   ``/data1/presto`` and ``/data2/presto`` for the data directory
+   ``/var/log/trino/server.log``. Assuming the chosen locations are
+   ``/data1/trino`` and ``/data2/trino`` for the data directory
    and server logs respectively, the properties in
    ``~/.trinoadmin/coordinator/node.properties`` and
    ``~/.trinoadmin/workers/node.properties`` will be as follows::
 
-    node.data-dir=/data1/presto/data
-    node.launcher-log-file=/data2/presto/launcher.log
-    node.server-log-file=/data2/presto/server.log
+    node.data-dir=/data1/trino/data
+    node.launcher-log-file=/data2/trino/launcher.log
+    node.server-log-file=/data2/trino/server.log
 
-3. The log directories (in the above example, ``/data1/presto`` and
-   ``/data2/presto``; the ``data`` directory for ``node.data-dir`` is
+3. The log directories (in the above example, ``/data1/trino`` and
+   ``/data2/trino``; the ``data`` directory for ``node.data-dir`` is
    created by Presto) need to exist on all nodes and be owned by the
-   ``presto`` user. The command ``trino-admin run_script`` can be used
+   ``trino`` user. The command ``trino-admin run_script`` can be used
    to perform these actions on all of the nodes. First, create a script in
    the same directory as ``trino-admin``, called ``script.sh``::
 
     #!/bin/bash
-    mkdir -p /data1/presto
-    mkdir -p /data2/presto
-    chown presto:presto /data1/presto
-    chown presto:presto /data2/presto
+    mkdir -p /data1/trino
+    mkdir -p /data2/trino
+    chown trino:trino /data1/trino
+    chown trino:trino /data2/trino
 
 Then, run the following command:
 

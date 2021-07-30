@@ -4,7 +4,7 @@ Software requirements
 
 **Operating systems**
 
-* RedHat Linux version 6.x		
+* RedHat Linux version 7.x
 * CentOS (equivalent to above)
 
 **Python**

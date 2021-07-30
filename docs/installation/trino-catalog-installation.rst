@@ -33,8 +33,8 @@ following content:
 You may need to add additional properties for the Hive connector to work
 properly, such as if your Hadoop cluster is set up for high availability.
 For these and other properties, see the
-`Hive connector documentation <https://prestosql.io/docs/current/connector/hive.html>`_.
+`Hive connector documentation <https://trino.io/docs/current/connector/hive.html>`_.
 
 For detailed documentation on ``catalog add``, see :ref:`catalog-add`.
 For more on which catalogs Presto supports, see the
-`Presto connector documentation <https://prestosql.io/docs/current/connector.html>`_.
+`Presto connector documentation <https://trino.io/docs/current/connector.html>`_.

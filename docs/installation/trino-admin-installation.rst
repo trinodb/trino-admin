@@ -1,17 +1,17 @@
 .. _trino-admin-installation-label:
 
 =======================
-Installing Presto Admin
+Installing Trino Admin
 =======================
 
 Prerequisites:
 
- *  `Python 2.6 or Python 2.7 <https://www.python.org/downloads>`_.
+ *  `Python 2.7 <https://www.python.org/downloads>`_.
  *  If you are using the online installer then make sure you've installed the
     Python development package for your system. For RedHat/Centos that package is
     ``python2-devel`` and for Debian/Ubuntu it is ``python-dev``.
 
-Presto Admin is packaged as an offline installer --
+Trino Admin is packaged as an offline installer --
 ``trinoadmin-<version>-offline.tar.gz`` -- and as an online
 installer -- ``trinoadmin-<version>-online.tar.gz``.
 
@@ -31,7 +31,7 @@ work.
 To install ``trino-admin``:
 
 1. Download an offline installer from
-`releases page <https://github.com/prestosql/trino-admin/releases>`_.
+`releases page <https://github.com/wgzhao/trino-admin/releases>`_.
 
 2. Copy the installer ``trinoadmin-<version>-offline.tar.gz`` to the
 location where you want ``trino-admin`` to run.

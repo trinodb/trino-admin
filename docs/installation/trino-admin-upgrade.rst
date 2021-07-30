@@ -1,5 +1,5 @@
 ======================
-Upgrading Presto Admin
+Upgrading Trino Admin
 ======================
 
 Upgrading to a newer version of ``trino-admin`` requires deleting the old

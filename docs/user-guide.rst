@@ -11,7 +11,7 @@ A full explanation of the commands and features of ``trino-admin``.
 
     quick-start-guide
     installation/advanced-installation-options
-    installation/presto-port-configuration
+    installation/trino-port-configuration
     ssh-configuration
     trino-admin-commands
     trino-admin-cli-options
