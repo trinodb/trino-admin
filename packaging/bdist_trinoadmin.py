@@ -57,7 +57,7 @@ class bdist_trinoadmin(Command):
         cmd = self.reinitialize_command('bdist_wheel')
         cmd.dist_dir = build_dir
         self.run_command('bdist_wheel')
-
+        cmd.compression = 'deflated'
         # Ensure that you get the finalized archive name
         cmd.finalize_options()
         # wheel_name = cmd.get_archive_basename()
@@ -143,8 +143,7 @@ class bdist_trinoadmin(Command):
     def finalize_options(self):
         if self.bdist_dir is None:
             bdist_base = self.get_finalized_command('bdist').bdist_base
-            self.bdist_dir = os.path.join(bdist_base,
-                                          self.distribution.get_name())
+            self.bdist_dir = os.path.join(bdist_base, self.distribution.get_name())
 
         if self.dist_dir is None:
             self.dist_dir = 'dist'
