@@ -1,4 +1,4 @@
-.. _presto-server-installation-label:
+.. _trino-server-installation-label:
 
 ============================
 Installing the Trino server

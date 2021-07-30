@@ -16,8 +16,7 @@ trino-admin
 
 Trino-admin installs, configures, and manages Trino/Presto installations.
 
-Comprehensive documentation(deprecated) can be found at
-https://trino-admin.readthedocs.org/
+documentation can be found at https://trino-admin.readthedocs.io/en/latest/
 
 Requirements
 ------------

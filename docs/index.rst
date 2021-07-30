@@ -29,11 +29,6 @@ Contents
    compatibility
 
 
-.. toctree::
-   :hidden:
-
-   modules
-
 Indices and tables
 ------------------
 

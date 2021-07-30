@@ -1,8 +1,8 @@
 .. _presto-cli-installation-label:
 
-======================
+============================
 Running Trino/Presto queries
-======================
+============================
 
 The Presto CLI provides a terminal-based interactive shell for running queries.
 The CLI is a self-executing JAR file, which means it acts like a normal UNIX

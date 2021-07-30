@@ -1,4 +1,4 @@
-.. _presto-port-configuration-label:
+.. _trino-port-configuration-label:
 
 ===========================
 Configuring the Trino port

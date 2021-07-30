@@ -265,7 +265,7 @@ texinfo_documents = [
      u'trino-admin Documentation',
      u'',
      'trinoadmin',
-     'One line description of project.',
+     'A tool to install, configure and manage Presto/Trino installations',
      'Miscellaneous'),
 ]
 
