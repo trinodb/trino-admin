@@ -60,17 +60,17 @@ class bdist_trinoadmin(Command):
 
         # Ensure that you get the finalized archive name
         cmd.finalize_options()
-        wheel_name = cmd.get_archive_basename()
-        logger.info('creating %s in %s', wheel_name + '.whl', build_dir)
+        # wheel_name = cmd.get_archive_basename()
+        # logger.info('creating %s in %s', wheel_name + '.whl', build_dir)
 
-        return wheel_name
+        return ""
 
     def generate_install_script(self, wheel_name, build_dir):
         with open(os.path.join(package_dir, 'install-trinoadmin.template'), 'r') as template:
             with open(os.path.join(build_dir, 'install-trinoadmin.sh'), 'w') as install_script_file:
                 install_script = self._fill_in_template(template.readlines(), wheel_name)
                 install_script_file.write(install_script)
-                os.chmod(os.path.join(build_dir, 'install-trinoadmin.sh'), 0755)
+                os.chmod(os.path.join(build_dir, 'install-trinoadmin.sh'), 0o755)
 
     def _fill_in_template(self, template_lines, wheel_name):
         if self.online_install:
@@ -97,11 +97,12 @@ class bdist_trinoadmin(Command):
                       '--no-cache',
                       requirement])
 
-        pip.main(['install',
+        pip.main(['download',
                   '-d',
                   thirdparty_dir,
-                  '--no-cache',
-                  '--no-use-wheel',
+                  '--no-cache-dir',
+                  '--no-binary',
+                  ':all:',
                   'virtualenv=={0}'.format(self.virtualenv_version)])
 
     def archive_dist(self, build_dir, dist_dir):

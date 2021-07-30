@@ -95,7 +95,6 @@ if cfg_mode is not None:
                 submodule = submodule.__dict__[c]
             globals()[subcommand_name] = submodule
 
-
 env.roledefs = {
     'coordinator': [],
     'worker': [],

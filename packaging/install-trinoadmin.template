@@ -43,6 +43,7 @@ else
 fi
 
 source trino-admin-install/bin/activate
+
 cert_file=$1
 # trust pypi.python.org by default, otherwise use cert_file provided
 cert_options='--trusted-host pypi.python.org'
@@ -53,6 +54,9 @@ if [ -n "$1" ]; then
         cert_options='--cert '$cert_file
     fi
 fi
+# must upgrade pip and setuptools first
+pip install --upgrade pip setuptools %ONLINE_OR_OFFLINE_INSTALL%
+
 WHEEL_NAME=$(ls -w1 *.whl)
 pip install $cert_options ${WHEEL_NAME} %ONLINE_OR_OFFLINE_INSTALL%
 if ! `"$PYTHON_BIN" -c "import paramiko" > /dev/null 2>&1` ; then

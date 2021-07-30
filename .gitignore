@@ -5,7 +5,7 @@
 *.egg
 *.yaml
 *.bak
-trinoadmin.egg-info/
+trino_admin.egg-info/
 .tox/
 .coverage
 htmlcov/

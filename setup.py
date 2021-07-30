@@ -43,29 +43,29 @@ with open('README.rst') as readme_file:
 # will fail to install if argparse isn't in the system python libraries.
 requirements = [
     'pycparser==2.20',
-    'argparse==1.4',
-    'paramiko==1.16.0',
-    'Fabric==1.10.3',
-    'requests==2.7.0',
-    'overrides==0.5',
-    'pip==9.0.2',
-    'setuptools==20.1.1',
-    'wheel==0.29.0',
-    'flake8==2.5.4',
+    'argparse==1.4.0',
+    'paramiko==2.7.2',
+    'Fabric==1.14.1',
+    'requests==2.26.0',
+    'overrides==2.8.0',
+    'pip==20.3.4',
+    'setuptools==42.0.2',
+    'wheel==0.36.2',
+    'flake8==3.9.2',
     'retrying==1.3.3',
-    'pyjks==0.3.0.1',
+    'pyjks==20.0.0',
     'pyjwt==1.7.1'
 ]
 
 test_requirements = [
-    'tox==2.9.1',
-    'nose==1.3.7',
-    'nose-timer==0.6',
-    'mock==1.0.1',
-    'docker-py==1.5.0',
-    'certifi==2015.4.28',
-    'fudge==1.1.0',
-    'PyYAML==3.11'
+    'tox>=2.9.1',
+    'nose>=1.3.7',
+    'nose-timer>=0.6',
+    'mock>=1.0.1',
+    'docker-py>=1.5.0',
+    'certifi>=2015.4.28',
+    'fudge>=1.1.0',
+    'PyYAML>=3.11'
 ]
 
 # =====================================================
@@ -87,16 +87,13 @@ def get_custom_rc_file(self):
         else home_pypi
 
 PyPIRCCommand._get_rc_file = get_custom_rc_file
-# Thank you for visiting HackLand!
-# =====================================================
 
 setup(
     name='trino-admin',
     version=__version__,
-    description="Trino-admin installs, configures, and manages Trino/Presto "
-                "installations.",
+    description="Trino-admin installs, configures, and manages Trino/Presto installations.",
     long_description=readme,
-    author="Presto Team",
+    author="wgzhao",
     url='https://github.com/wgzhao/trino-admin',
     packages=find_packages(exclude=['*tests*']),
     package_dir={'trinoadmin':
