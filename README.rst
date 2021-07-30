@@ -13,6 +13,9 @@ trino-admin
 .. image:: https://img.shields.io/pypi/implementation/trino-admin.svg
     :target: https://pypi.org/project/trino-admin/
 
+.. image:: https://readthedocs.org/projects/trino-admin/badge/?version=latest
+    :target: https://trino-admin.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 
 Trino-admin installs, configures, and manages Trino/Presto installations.
 
@@ -32,12 +35,13 @@ Requirements
    -  If you have Docker already installed, you need to make sure that
       your user has been added to the docker group. This will enable you
       to run commands without ``sudo``, which is a requirement for some
-      unit tests. To enable sudoless docker access run the following:
+      unit tests. To enable sudoless docker access run the following::
 
 
-      $ sudo groupadd docker
-      $ sudo gpasswd -a ${USER} docker
-      $ sudo service docker restart
+          $ sudo groupadd docker
+          $ sudo gpasswd -a ${USER} docker
+          $ sudo service docker restart
+
 
       If the user you added to the docker group is the same one you’re
       logged in as, you will need to log out and back in so that the
@@ -54,6 +58,7 @@ actions.
 In order to get started with ``trino-admin``,
 
 1. Fork the ``trino-admin`` repo on GitHub,
+
    https://github.com/wgzhao/trino-admin.
 
 2. Clone your fork locally ::
