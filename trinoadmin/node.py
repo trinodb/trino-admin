@@ -36,7 +36,7 @@ class Node():
 
     def get_conf(self):
         conf = get_presto_conf(self._get_conf_dir())
-        for name in presto_conf.REQUIRED_FILES:
+        for name in trino_conf.REQUIRED_FILES:
             if name not in conf:
                 _LOGGER.debug('%s configuration for %s not found.  '
                               'Default configuration will be deployed',
@@ -64,6 +64,6 @@ class Node():
 
     def build_all_defaults(self):
         conf = {}
-        for name in presto_conf.REQUIRED_FILES:
+        for name in trino_conf.REQUIRED_FILES:
             conf[name] = self.default_config(name)
         return conf
