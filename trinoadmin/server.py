@@ -39,7 +39,6 @@ from trinoadmin import configure_cmds
 from trinoadmin import package
 from trinoadmin.trinoclient import TrinoClient
 from trinoadmin.standalone.config import StandaloneConfig
-from trinoadmin.util import constants
 from trinoadmin.util.base_config import requires_config
 from trinoadmin.util.exception import ConfigFileNotFoundError, ConfigurationError
 from trinoadmin.util.fabricapi import get_host_list, get_coordinator_role
@@ -100,7 +99,6 @@ else:
     LATEST_RPM_URL = 'https://repository.sonatype.org/service/local/artifact/maven' \
                      '/content?r=central-proxy&g=com.facebook.presto' \
                      '&a=presto-server-rpm&e=rpm&v=RELEASE'
-
 
 
 class LocalPrestoRpmFinder:
@@ -607,9 +605,9 @@ def check_presto_version():
 
 def presto_installed():
     with settings(hide('warnings', 'stdout'), warn_only=True):
-        package_search = run('rpm -q ' + constants.BRAND)
+        package_search = run('rpm -q ' + constants.BRAND + '-server-rpm')
         if not package_search.succeeded:
-            package_search = run('rpm -q ' + constants.BRAND + '-server-rpm')
+            package_search = run('rpm -q ' + constants.BRAND)
         if not package_search.succeeded:
             package_search = run('rpm -q starburst-presto-server-rpm')
         return package_search.succeeded
@@ -617,10 +615,10 @@ def presto_installed():
 
 def get_presto_version():
     with settings(hide('warnings', 'stdout'), warn_only=True):
-        version = run('rpm -q --qf \"%{VERSION}\\n\" ' + constants.BRAND)
+        version = run('rpm -q --qf \"%{VERSION}\\n\" ' + constants.BRAND + '-server-rpm')
         # currently we have two rpm names out so we need this retry
         if not version.succeeded:
-            version = run('rpm -q --qf \"%{VERSION}\\n\" ' + constants.BRAND + '-server-rpm')
+            version = run('rpm -q --qf \"%{VERSION}\\n\" ' + constants.BRAND)
         version = version.strip()
         _LOGGER.debug('{} rpm version: {}'.format(constants.BRAND.capitalize(), version))
 
@@ -642,7 +640,6 @@ def check_server_status():
         warn('No coordinator defined.  Cannot verify server status.')
     with closing(TrinoClient(get_coordinator_role()[0], env.user)) as client:
         node_id = lookup_string_config('node.id', os.path.join(constants.REMOTE_CONF_DIR, 'node.properties'), env.host)
-
         try:
             return query_server_for_status(client, node_id)
         except RetryError:

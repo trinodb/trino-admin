@@ -23,9 +23,9 @@ import sys
 import trinoadmin
 
 # Logging Config File Locations
-LOGGING_CONFIG_FILE_NAME = 'presto-admin-logging.ini'
+LOGGING_CONFIG_FILE_NAME = 'trino-admin-logging.ini'
 LOGGING_CONFIG_FILE_DIRECTORIES = [
-    os.path.join(trinoadmin.main_dir, 'prestoadmin')
+    os.path.join(trinoadmin.main_dir, 'trinoadmin')
 ]
 
 # Use the BRAND variable to define whether facebook's presto or trinodb's trino is being used at the time

@@ -16,6 +16,7 @@
 Simple client to communicate with a Presto server.
 """
 import base64
+from re import sub
 import jks
 import json
 import logging
@@ -26,6 +27,7 @@ import urlparse
 import datetime
 import jwt
 import hashlib
+import subprocess
 from httplib import HTTPConnection, HTTPException
 from tempfile import mkstemp
 
@@ -65,6 +67,18 @@ class TrinoClient:
         self.next_uri = ''
         self.response_from_server = {}
 
+        # find the presto/trino client
+        res = subprocess.check_output("which trino")
+        if res:
+            self.cli = res
+        else:
+            res = subprocess.check_output("which presto")
+            if res == 0:
+                self.cli = res
+            else:
+                _LOGGER.warn("Can not find presto/trino command line")
+                self.cli = None
+
     @staticmethod
     def _remove_silently(path):
         try:
@@ -98,6 +112,14 @@ class TrinoClient:
         Returns:
             list of rows or None if client was unable to connect to Presto
         """
+        if self.cli:
+            cmd = "%s --server %s:%s --catalog %s --schema %s --execute \"%s\"" % \
+                    (self.cli, self.server, self.port, catalog, schema, sql)
+            output = subprocess.check_output(cmd).split("\n")
+            result = []
+            for row in output:
+                result.append(row.split(","))
+            return result
         status = self._execute_query(sql, schema, catalog)
         if status:
             return self._get_rows()
