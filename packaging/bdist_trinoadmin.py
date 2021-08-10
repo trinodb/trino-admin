@@ -46,7 +46,10 @@ class bdist_trinoadmin(Command):
                     ('online-install', None, 'boolean flag indicating if ' +
                      'the installation should pull dependencies from the ' +
                      'Internet or use the ones supplied in the third party ' +
-                     'directory')
+                     'directory'),
+                    ('plat-name=', 'p',
+                     'platform name to embed in generated filenames' +
+                     '(default: linux_x86_64)')
                     ]
 
     default_virtualenv_version = '12.0.7'
@@ -139,6 +142,7 @@ class bdist_trinoadmin(Command):
         self.virtualenv_version = None
         self.keep_temp = False
         self.online_install = False
+        self.plat_name = None
 
     def finalize_options(self):
         if self.bdist_dir is None:
@@ -150,3 +154,6 @@ class bdist_trinoadmin(Command):
 
         if self.virtualenv_version is None:
             self.virtualenv_version = self.default_virtualenv_version
+
+        self.plat_name_supplied = self.plat_name is not None
+

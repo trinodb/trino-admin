@@ -70,13 +70,13 @@ def put_secure(user_group, mode, *args, **kwargs):
 
     files = put(*args, mode=mode, **kwargs)
 
-    for file in files:
+    for pfile in files:
         with settings(warn_only=True):
             command = \
                 "( getent passwd {user} >/dev/null || ( rm -f {file} ; " \
                 "exit {missing_owner_code} ) ) && " \
                 "chown {user_group} {file}".format(
-                    user=user, file=file, user_group=user_group,
+                    user=user, file=pfile, user_group=user_group,
                     missing_owner_code=missing_owner_code)
 
             result = sudo(command)
@@ -85,4 +85,4 @@ def put_secure(user_group, mode, *args, **kwargs):
                 abort("User %s does not exist. Make sure the Presto "
                       "server RPM is installed and try again" % (user,))
             elif result.failed:
-                abort("Failed to chown file %s" % (file,))
+                abort("Failed to chown file %s" % (pfile,))

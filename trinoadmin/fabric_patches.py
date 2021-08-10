@@ -97,6 +97,7 @@ fabric.api.sudo = sudo
 
 
 def log_output(out):
+    return
     _LOGGER.info('\nCOMMAND: ' + out.command + '\nFULL COMMAND: ' +
                  out.real_command + '\nSTDOUT: ' + out + '\nSTDERR: ' +
                  out.stderr)

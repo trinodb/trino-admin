@@ -19,6 +19,7 @@ using presto-admin
 import cgi
 import logging
 import re
+import socket
 import sys
 import urllib2
 import urlparse
@@ -26,27 +27,25 @@ from contextlib import closing
 
 from fabric.api import task, sudo, env
 from fabric.context_managers import settings, hide
-from fabric.decorators import runs_once, with_settings, parallel
+from fabric.decorators import runs_once, with_settings
 from fabric.operations import run, os
 from fabric.tasks import execute
 from fabric.utils import warn, error, abort
 from retrying import retry, RetryError
 
 import util.filesystem
-from trinoadmin.util import constants
 from trinoadmin import catalog
 from trinoadmin import configure_cmds
 from trinoadmin import package
-from trinoadmin.trinoclient import TrinoClient
 from trinoadmin.standalone.config import StandaloneConfig
+from trinoadmin.trinoclient import TrinoClient
+from trinoadmin.util import constants
 from trinoadmin.util.base_config import requires_config
 from trinoadmin.util.exception import ConfigFileNotFoundError, ConfigurationError
 from trinoadmin.util.fabricapi import get_host_list, get_coordinator_role
 from trinoadmin.util.local_config_util import get_catalog_directory
 from trinoadmin.util.remote_config_util import lookup_port, \
     lookup_server_log_file, lookup_launcher_log_file, lookup_string_config
-from trinoadmin.util.version_util import VersionRange, VersionRangeList, \
-    split_version, strip_tag
 
 __all__ = ['install', 'uninstall', 'upgrade', 'start', 'stop', 'restart',
            'status']
@@ -71,18 +70,21 @@ def new_sysnode_processor(node_info_rows):
     return get_sysnode_info_from(node_info_rows, lambda x: x)
 
 
-NODE_INFO_PER_URI_SQL = VersionRangeList(
-    VersionRange((0, 0), (0, 128),
-                 ('select http_uri, node_version, active from '
-                  'system.runtime.nodes where '
-                  'url_extract_host(http_uri) = \'%s\'',
-                  old_sysnode_processor)),
-    VersionRange((0, 128), (sys.maxsize,),
-                 ('select http_uri, node_version, state from '
-                  'system.runtime.nodes where '
-                  'url_extract_host(http_uri) = \'%s\'',
-                  new_sysnode_processor))
-)
+# NODE_INFO_PER_URI_SQL = VersionRangeList(
+#     VersionRange((0, 0), (0, 128),
+#                  ('select http_uri, node_version, active from '
+#                   'system.runtime.nodes where '
+#                   'url_extract_host(http_uri) = \'%s\'',
+#                   old_sysnode_processor)),
+#     VersionRange((0, 128), (sys.maxsize,),
+#                  ('select http_uri, node_version, state from '
+#                   'system.runtime.nodes where '
+#                   'url_extract_host(http_uri) = \'%s\'',
+#                   new_sysnode_processor))
+# )
+NODE_INFO_PER_URI_SQL = 'select http_uri, node_version, state from ' + \
+                        'system.runtime.nodes where ' + \
+                        'url_extract_host(http_uri) = \'%s\''
 
 EXTERNAL_IP_SQL = 'select url_extract_host(http_uri) from ' \
                   'system.runtime.nodes WHERE node_id = \'%s\''
@@ -259,12 +261,12 @@ class PrestoRpmFetcher:
         # See here for more information: http://search.maven.org/#api
         if constants.BRAND == 'trino':
             download_url = 'http://search.maven.org/remotecontent?filepath=io/trinodb/' \
-                       'trino-server-rpm/' + rpm_version + '/trino-server-rpm-' + \
-                       rpm_version + '.rpm'
+                           'trino-server-rpm/' + rpm_version + '/trino-server-rpm-' + \
+                           rpm_version + '.rpm'
         else:
             download_url = 'http://search.maven.org/remotecontent?filepath=com/facebook/presto/' \
-                       'presto-server-rpm/' + rpm_version + '/presto-server-rpm-' + \
-                       rpm_version + '.rpm'
+                           'presto-server-rpm/' + rpm_version + '/presto-server-rpm-' + \
+                           rpm_version + '.rpm'
 
         return self.find_or_download_rpm_by_url(download_url, rpm_version)
 
@@ -447,7 +449,6 @@ def uninstall():
     """
     stop()
 
-
     if package.is_rpm_installed(constants.BRAND):
         package.rpm_uninstall(constants.BRAND)
     elif package.is_rpm_installed(constants.BRAND + '-server'):
@@ -456,7 +457,6 @@ def uninstall():
         package.rpm_uninstall(constants.BRAND + '-server-rpm')
     else:
         abort('Unable to uninstall package on: ' + env.host)
-
 
 
 @task
@@ -724,13 +724,6 @@ def get_catalog_info_from(client):
     return ', '.join(syscatalog)
 
 
-def is_server_up(status):
-    if status:
-        return 'Running'
-    else:
-        return 'Not Running'
-
-
 def get_roles_for(host):
     roles = []
     for role in ['coordinator', 'worker']:
@@ -740,88 +733,67 @@ def get_roles_for(host):
 
 
 def print_node_info(node_status, catalog_status):
-    for k in node_status:
-        print('\tNode URI(http): ' + str(k) +
-              '\n\t' + constants.BRAND.capitalize() + ' Version: ' + str(node_status[k][0]) +
-              '\n\tNode status:    ' + str(node_status[k][1]))
-        if catalog_status:
-            print('\tCatalogs:     ' + catalog_status)
+    """
 
+    Args:
+        node_status: list, [node_id, http_uri, node_version, coordinator, state]
+        catalog_status: list of catalogies
 
-def get_ext_ip_of_node(client):
-    node_properties_file = os.path.join(constants.REMOTE_CONF_DIR,
-                                        'node.properties')
-    with settings(hide('stdout')):
-        node_uuid = sudo('sed -n s/^node.id=//p ' + node_properties_file)
-    external_ip_row = execute_external_ip_sql(client, node_uuid)
-    external_ip = ''
-    if len(external_ip_row) > 1:
-        warn_more_than_one_ip = 'More than one external ip found for ' + env.host + \
-                                '. There could be multiple nodes associated with the same node.id'
-        _LOGGER.debug(warn_more_than_one_ip)
-        warn(warn_more_than_one_ip)
-        return external_ip
-    for row in external_ip_row:
-        if row:
-            external_ip = row[0]
-    if not external_ip:
-        _LOGGER.debug('Cannot get external IP for ' + env.host)
-        external_ip = 'Unknown'
-    return external_ip
+    Returns:
+
+    """
+
+    print('\tNode URI(http): ' + node_status[1] +
+          '\n\t' + constants.BRAND.capitalize() + ' Version: ' + node_status[2] +
+          '\n\tNode status:    ' + node_status[4])
+    if catalog_status:
+        print('\tCatalogs:     ' + catalog_status)
+    # for k in node_status:
+    #     print('\tNode URI(http): ' + str(k) +
+    #           '\n\t' + constants.BRAND.capitalize() + ' Version: ' + str(node_status[k][0]) +
+    #           '\n\tNode status:    ' + str(node_status[k][1]))
+    #     if catalog_status:
+    #         print('\tCatalogs:     ' + catalog_status)
 
 
 def print_status_header(external_ip, server_status, host):
     print('Server Status:')
-    print('\t%s(IP: %s, Roles: %s): %s' % (host, external_ip,
-                                           ', '.join(get_roles_for(host)),
-                                           is_server_up(server_status)))
-
-
-@parallel
-def collect_node_information():
-    with closing(TrinoClient(get_coordinator_role()[0], env.user)) as client:
-        with settings(hide('warnings')):
-            error_message = check_presto_version()
-        if error_message:
-            external_ip = 'Unknown'
-            is_running = False
-        else:
-            with settings(hide('warnings', 'aborts', 'stdout')):
-                try:
-                    external_ip = get_ext_ip_of_node(client)
-                except:
-                    external_ip = 'Unknown'
-                try:
-                    is_running = service('status')
-                except:
-                    is_running = False
-        return external_ip, is_running, error_message
+    print('\t{}(IP: {}, Roles: {}): {}'.format(host, external_ip, ', '.join(get_roles_for(host)), server_status))
 
 
 def get_status_from_coordinator():
+    """
+    get all nodes' status according to query "select * from system.runtime.nodes"
+
+    Returns: list of node status, each element is a list, like
+        1b6055c4-7e03-4c27-a809-a8284b3fd0e9,http://10.1.1.1:8080,356,true,active
+        the first field is node_id, followed by http_uri, node_version, coordinator, state
+    """
+    _LOGGER.info("Begin to get status from coordinator")
     with closing(TrinoClient(get_coordinator_role()[0], env.user)) as client:
         try:
             coordinator_status = client.run_sql(SYSTEM_RUNTIME_NODES)
             catalog_status = get_catalog_info_from(client)
-        except BaseException as e:
+        except Exception as e:
             # Just log errors that come from a missing port or anything else; if
             # we can't connect to the coordinator, we just want to print out a
             # minimal status anyway.
-            _LOGGER.warn(e.message)
+            _LOGGER.warn("Failed to get coordinator status: " + e.message)
             coordinator_status = []
             catalog_status = []
 
-        with settings(hide('running')):
-            node_information = execute(collect_node_information,
-                                       hosts=get_host_list())
-
         for host in get_host_list():
-            if isinstance(node_information[host], Exception):
-                external_ip = 'Unknown'
-                is_running = False
-                error_message = node_information[host].message
-            else:
-                (external_ip, is_running, error_message) = node_information[host]
+            try:
+                external_ip = socket.gethostbyname(host)
+                if get_node_status(coordinator_status, external_ip):
+                    is_running = "Running"
+                else:
+                    is_running = "Not Running"
+                error_message = ""
+            except socket.gaierror as e:
+                external_ip = 'Unknow'
+                is_running = "Not Running"
+                error_message = e.message
 
             print_status_header(external_ip, is_running, host)
             if error_message:
@@ -831,17 +803,28 @@ def get_status_from_coordinator():
             elif not is_running:
                 print('\tNo information available')
             else:
-                version_string = get_presto_version()
-                version = strip_tag(split_version(version_string))
-                query, processor = NODE_INFO_PER_URI_SQL.for_version(version)
-                # just get the node_info row for the host if server is up
-                node_info_row = client.run_sql(query % external_ip)
-                node_status = processor(node_info_row)
+                node_status = get_node_status(coordinator_status, external_ip)
                 if node_status:
                     print_node_info(node_status, catalog_status)
                 else:
                     print('\tNo information available: the coordinator has not yet'
                           ' discovered this node')
+
+
+def get_node_status(coordinator_status, ip):
+    """
+
+    Args:
+        coordinator_status: list of node status
+        ip: node ip
+
+    Returns: node status
+
+    """
+    for row in coordinator_status:
+        if ip in row[1]:
+            return row
+    return None
 
 
 @task

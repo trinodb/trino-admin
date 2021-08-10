@@ -16,6 +16,7 @@
 This modules contains read-only constants used throughout
 the presto admin project.
 """
+from __future__ import print_function
 
 import os
 import sys
@@ -36,7 +37,7 @@ BRAND = os.environ.get('PRESTO_TYPE', 'trino').lower()
 if BRAND == 'trinodb':
     BRAND = 'trino'
 if BRAND not in ['trino', 'presto']:
-    print >> sys.stderr, "PRESTO_TYPE only support trino and presto"
+    print("PRESTO_TYPE only support trino and presto")
     BRAND = 'trino'
 
 # local configuration

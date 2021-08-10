@@ -71,8 +71,7 @@ from trinoadmin.util.parser import LoggingOptionParser
 # One-time calculation of "all internal callables" to avoid doing this on every
 # check of a given fabfile callable (in is_classic_task()).
 _modules = [api, project, files, console]
-_internals = reduce(lambda x, y: x + filter(callable, vars(y).values()),
-                    _modules, [])
+_internals = reduce(lambda x, y: x + filter(callable, vars(y).values()), _modules, [])
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -905,7 +904,7 @@ def main(args=sys.argv[1:]):
     commands_to_run = parse_and_validate_commands(args)
 
     names = ", ".join(x[0] for x in commands_to_run)
-    _LOGGER.debug("Commands to run: %s" % names)
+    _LOGGER.info("Commands to run: %s" % names)
 
     # At this point all commands must exist, so execute them in order.
     return _exit_code(run_tasks(commands_to_run))

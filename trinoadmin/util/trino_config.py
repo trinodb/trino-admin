@@ -13,6 +13,7 @@
 # limitations under the License.
 import logging
 import os
+import time
 from StringIO import StringIO
 
 from fabric.context_managers import settings, hide

@@ -16,25 +16,25 @@
 Simple client to communicate with a Presto server.
 """
 import base64
-from re import sub
-import jks
+import datetime
+import hashlib
 import json
 import logging
 import os
 import socket
+import subprocess
 import textwrap
 import urlparse
-import datetime
-import jwt
-import hashlib
-import subprocess
+from StringIO import StringIO
 from httplib import HTTPConnection, HTTPException
 from tempfile import mkstemp
 
-from StringIO import StringIO
+import jks
+import jwt
 from fabric.operations import get
 from fabric.state import env
 from fabric.utils import error
+
 from trinoadmin.util import constants
 from trinoadmin.util.exception import InvalidArgumentError
 from trinoadmin.util.httpscacertconnection import HTTPSCaCertConnection
@@ -52,32 +52,30 @@ CERTIFICATE_ALIAS = 'certificate_alias'
 
 class TrinoClient:
     def __init__(self, server, user, coordinator_config=None):
+        _LOGGER.info("Begin to initital TrinoClient class")
         # immutable stuff
         self.server = server
         self.user = user
-        if (coordinator_config is None):
+        if coordinator_config is None:
             coordinator_config = PrestoConfig.coordinator_config()
         self.coordinator_config = coordinator_config
         self.port = TrinoClient._get_configured_port(self.coordinator_config)
-
         # mutable stuff
         self.ca_file_path = ""
         self.keystore_data = ""
         self.rows = []
         self.next_uri = ''
         self.response_from_server = {}
-
+        self.cli = None
         # find the presto/trino client
-        res = subprocess.check_output("which trino")
+        _LOGGER.debug("Try to find trino/presto command line")
+        find_cli = "which " + constants.BRAND
+        res = subprocess.check_output(find_cli, shell=True)
         if res:
-            self.cli = res
+            self.cli = res.decode().strip()
+            _LOGGER.info("use command line {}".format(self.cli))
         else:
-            res = subprocess.check_output("which presto")
-            if res == 0:
-                self.cli = res
-            else:
-                _LOGGER.warn("Can not find presto/trino command line")
-                self.cli = None
+            _LOGGER.warn("Can not find presto/trino command line")
 
     @staticmethod
     def _remove_silently(path):
@@ -112,19 +110,21 @@ class TrinoClient:
         Returns:
             list of rows or None if client was unable to connect to Presto
         """
+        result = []
         if self.cli:
-            cmd = "%s --server %s:%s --catalog %s --schema %s --execute \"%s\"" % \
-                    (self.cli, self.server, self.port, catalog, schema, sql)
-            output = subprocess.check_output(cmd).split("\n")
-            result = []
+            cmd = "%s --server %s:%s --catalog %s --schema %s --output-format=CSV_UNQUOTED --execute \"%s\"" % \
+                  (self.cli, self.server, self.port, catalog, schema, sql)
+            output = subprocess.check_output(cmd, shell=True).strip().split('\n')
+
             for row in output:
                 result.append(row.split(","))
             return result
-        status = self._execute_query(sql, schema, catalog)
-        if status:
-            return self._get_rows()
         else:
-            return None
+            status = self._execute_query(sql, schema, catalog)
+            if status:
+                return self._get_rows()
+            else:
+                return None
 
     def _execute_query(self, sql, schema, catalog):
         if not sql:
